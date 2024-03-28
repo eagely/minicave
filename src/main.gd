@@ -1,26 +1,39 @@
 extends Node
 
+var in_game = false
+var menu
+var level
+var player
+
 func _ready():
-	$Level.visible = false	
-	$Player.visible = false
-	$Mob.visible = false
-
-
+	menu = $Menu
+	level = $Level
+	player = $Player
+	level.visible = false	
+	player.visible = false
+	
+	
 func _process(delta):
 	if Input.is_action_just_pressed("escape"):
-		pause_game()
+		pause()
 
 func _on_menu_start_game():
-	start_game()
+	if (in_game):
+		unpause()
+	else:
+		start()
+		in_game = true
 
-func start_game():
-	$Menu.hide()
-	$Level.show()
-	$Player.start($StartPosition.position)
-	$Mob.show()
+func start():
+	player.start($StartPosition.position)
+	unpause()
+		
+func pause():
+	player.pause()
+	level.hide()
+	menu.show()
 	
-func pause_game():
-	$Player.hide()
-	$Mob.hide()
-	$Level.hide()
-	$Menu.show()
+func unpause():
+	menu.hide()
+	level.show()
+	player.unpause()

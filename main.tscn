@@ -9,21 +9,15 @@
 [node name="Main" type="Node"]
 script = ExtResource("1_rwanx")
 
-[node name="Menu" parent="." instance=ExtResource("1_0kc2i")]
-
-[node name="Timer" type="Timer" parent="."]
-
-[node name="Timer2" type="Timer" parent="."]
-
-[node name="Timer3" type="Timer" parent="."]
-
 [node name="StartPosition" type="Marker2D" parent="."]
-position = Vector2(10, 38)
+position = Vector2(72, 128)
 
 [node name="Player" parent="." instance=ExtResource("1_sfphe")]
 
 [node name="Mob" parent="." instance=ExtResource("4_x0pux")]
 
 [node name="Level" parent="." instance=ExtResource("5_ejken")]
+
+[node name="Menu" parent="." instance=ExtResource("1_0kc2i")]
 
 [connection signal="start_game" from="Menu" to="." method="_on_menu_start_game"]
