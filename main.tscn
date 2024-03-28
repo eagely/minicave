@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3weat1gqoefh"]
+[gd_scene load_steps=6 format=3 uid="uid://b3weat1gqoefh"]
 
 [ext_resource type="PackedScene" uid="uid://bukr5hyq68ulg" path="res://menu.tscn" id="1_0kc2i"]
 [ext_resource type="Script" path="res://src/main.gd" id="1_rwanx"]
 [ext_resource type="PackedScene" uid="uid://dxuaxee66xh0s" path="res://player.tscn" id="1_sfphe"]
 [ext_resource type="PackedScene" uid="uid://hh2806lqpc2u" path="res://mob.tscn" id="4_x0pux"]
+[ext_resource type="PackedScene" uid="uid://c6vbsu06m5n2" path="res://level.tscn" id="5_ejken"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_rwanx")
@@ -17,10 +18,12 @@ script = ExtResource("1_rwanx")
 [node name="Timer3" type="Timer" parent="."]
 
 [node name="StartPosition" type="Marker2D" parent="."]
-position = Vector2(160, 90)
+position = Vector2(10, 38)
 
 [node name="Player" parent="." instance=ExtResource("1_sfphe")]
 
 [node name="Mob" parent="." instance=ExtResource("4_x0pux")]
+
+[node name="Level" parent="." instance=ExtResource("5_ejken")]
 
 [connection signal="start_game" from="Menu" to="." method="_on_menu_start_game"]

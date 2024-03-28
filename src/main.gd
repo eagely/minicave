@@ -1,6 +1,7 @@
 extends Node
 
 func _ready():
+	$Level.visible = false	
 	$Player.visible = false
 	$Mob.visible = false
 
@@ -14,10 +15,12 @@ func _on_menu_start_game():
 
 func start_game():
 	$Menu.hide()
-	$Player.show()
+	$Level.show()
+	$Player.start($StartPosition.position)
 	$Mob.show()
 	
 func pause_game():
 	$Player.hide()
 	$Mob.hide()
+	$Level.hide()
 	$Menu.show()

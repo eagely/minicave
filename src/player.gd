@@ -1,50 +1,41 @@
-extends Node2D
+extends CharacterBody2D
 
-signal hit
-@export var speed = 400
+
+@export var SPEED = 100.0
+@export var JUMP_VELOCITY = -150.0
 var screen_size
+
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
 	hide()
 	screen_size = get_viewport_rect().size
 
+func _physics_process(delta):
+	if not is_on_floor():
+		velocity.y += gravity * delta
 
-func _process(delta):
-	var velocity = Vector2.ZERO
-	if Input.is_action_pressed("move_right"):
-		velocity.x += 1
-	if Input.is_action_pressed("move_left"):
-		velocity.x -= 1
-	if Input.is_action_pressed("move_down"):
-		velocity.y += 1
-	if Input.is_action_pressed("move_up"):
-		velocity.y -= 1
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
 
-	if velocity.length() > 0:
-		velocity = velocity.normalized() * speed
-		$Animation.play()
+	var direction = Input.get_axis("move_left", "move_right")
+	if direction:
+		velocity.x = direction * SPEED
 	else:
-		$Animation.stop()
-		
-	position += velocity * delta
-	position = position.clamp(Vector2.ZERO, screen_size)
+		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
-	if velocity.x != 0:
-		$Animation.animation = "walk"
-		$Animation.flip_v = false
-		$Animation.flip_h = velocity.x < 0
-	elif velocity.y != 0:
-		$Animation.animation = "jump"
-		$Animation.flip_v = velocity.y > 0
+	if velocity.y != 0:
+		$Animation.play("jump")
+	elif velocity.x != 0:
+		$Animation.play("walk")
+	else:
+		$Animation.play("idle")
+		
+	$Animation.flip_h = velocity.x < 0
+	move_and_slide()
 
 
 func start(pos):
 	position = pos
 	show()
 	$Hitbox.disabled = false
-
-
-func _on_body_entered(body):
-	hide()
-	hit.emit()
-	$Hitbox.set_deferred("disabled", true)

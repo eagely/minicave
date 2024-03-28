@@ -1,15 +1,54 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxuaxee66xh0s"]
+[gd_scene load_steps=12 format=3 uid="uid://dxuaxee66xh0s"]
 
 [ext_resource type="Script" path="res://src/player.gd" id="1_65cv8"]
 [ext_resource type="Texture2D" uid="uid://bxm0xylnxujdp" path="res://assets/player.png" id="2_6aung"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5c0dv"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_omxsg"]
+atlas = ExtResource("2_6aung")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sihib"]
+atlas = ExtResource("2_6aung")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7l1lo"]
+atlas = ExtResource("2_6aung")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ieuf2"]
+atlas = ExtResource("2_6aung")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbiku"]
+atlas = ExtResource("2_6aung")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bppw1"]
+atlas = ExtResource("2_6aung")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_keua7"]
+atlas = ExtResource("2_6aung")
+region = Rect2(0, 32, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_an3xs"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_6aung")
+"texture": SubResource("AtlasTexture_omxsg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sihib")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7l1lo")
 }],
 "loop": true,
 "name": &"jump",
@@ -17,14 +56,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_6aung")
+"texture": SubResource("AtlasTexture_ieuf2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbiku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bppw1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_keua7")
 }],
 "loop": true,
 "name": &"walk",
 "speed": 5.0
 }]
 
-[node name="Player" type="Area2D"]
+[node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_65cv8")
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
@@ -32,6 +80,4 @@ shape = SubResource("CapsuleShape2D_5c0dv")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_an3xs")
-animation = &"jump"
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+animation = &"idle"
