@@ -2,11 +2,13 @@ extends Node
 
 var in_game = false
 var menu
+var keybinds
 var level
 var player
 
 func _ready():
-	menu = $Menu
+	menu = $UI/Menu
+	keybinds = $UI/KeybindMenu
 	level = $Level
 	player = $Player
 	level.visible = false	
@@ -24,6 +26,11 @@ func _on_menu_start_game():
 		start()
 		in_game = true
 
+func _on_menu_open_keybinds():
+	pause()
+	menu.hide()
+	keybinds.show()
+
 func start():
 	player.start($StartPosition.position)
 	unpause()
@@ -31,9 +38,13 @@ func start():
 func pause():
 	player.pause()
 	level.hide()
+	keybinds.hide()
 	menu.show()
 	
 func unpause():
 	menu.hide()
 	level.show()
 	player.unpause()
+
+
+
