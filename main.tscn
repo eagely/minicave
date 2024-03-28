@@ -1,3 +1,26 @@
-[gd_scene format=3 uid="uid://b3weat1gqoefh"]
+[gd_scene load_steps=5 format=3 uid="uid://b3weat1gqoefh"]
+
+[ext_resource type="PackedScene" uid="uid://bukr5hyq68ulg" path="res://menu.tscn" id="1_0kc2i"]
+[ext_resource type="Script" path="res://src/main.gd" id="1_rwanx"]
+[ext_resource type="PackedScene" uid="uid://dxuaxee66xh0s" path="res://player.tscn" id="1_sfphe"]
+[ext_resource type="PackedScene" uid="uid://hh2806lqpc2u" path="res://mob.tscn" id="4_x0pux"]
 
 [node name="Main" type="Node"]
+script = ExtResource("1_rwanx")
+
+[node name="Menu" parent="." instance=ExtResource("1_0kc2i")]
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Timer2" type="Timer" parent="."]
+
+[node name="Timer3" type="Timer" parent="."]
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(160, 90)
+
+[node name="Player" parent="." instance=ExtResource("1_sfphe")]
+
+[node name="Mob" parent="." instance=ExtResource("4_x0pux")]
+
+[connection signal="start_game" from="Menu" to="." method="_on_menu_start_game"]
