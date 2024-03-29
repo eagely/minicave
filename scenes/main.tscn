@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bukr5hyq68ulg" path="res://scenes/menu.tscn" id="1_0kc2i"]
 [ext_resource type="Script" path="res://src/main.gd" id="1_rwanx"]
 [ext_resource type="PackedScene" uid="uid://dxuaxee66xh0s" path="res://scenes/player.tscn" id="1_sfphe"]
-[ext_resource type="PackedScene" uid="uid://c6vbsu06m5n2" path="res://scenes/level.tscn" id="5_ejken"]
+[ext_resource type="PackedScene" uid="uid://cu2erer4c0gaq" path="res://levels/level0.tscn" id="6_b3vnx"]
 [ext_resource type="PackedScene" uid="uid://w2gyww87g5j3" path="res://scenes/keybind_menu.tscn" id="6_kmhoo"]
 [ext_resource type="PackedScene" uid="uid://csaidm4ve14hg" path="res://scenes/options_menu.tscn" id="7_rkhj1"]
 
@@ -15,9 +15,6 @@ script = ExtResource("1_rwanx")
 position = Vector2(100, 128)
 
 [node name="Player" parent="." instance=ExtResource("1_sfphe")]
-process_mode = 1
-
-[node name="Level" parent="." instance=ExtResource("5_ejken")]
 process_mode = 1
 
 [node name="UI" type="CanvasLayer" parent="."]
@@ -35,6 +32,8 @@ visible = false
 
 [node name="OptionsMenu" parent="UI" instance=ExtResource("7_rkhj1")]
 visible = false
+
+[node name="Level" parent="." instance=ExtResource("6_b3vnx")]
 
 [connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="level_completed" from="Player" to="." method="_on_player_level_completed"]

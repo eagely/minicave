@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c6vbsu06m5n2"]
+[gd_scene load_steps=6 format=3 uid="uid://dad343s6j6ni7"]
 
 [ext_resource type="PackedScene" uid="uid://dn1xkadhtfg5e" path="res://scenes/finish.tscn" id="2_0nfgk"]
 [ext_resource type="Texture2D" uid="uid://cml6o4r8qb6f3" path="res://assets/bricks.png" id="2_p0ytl"]

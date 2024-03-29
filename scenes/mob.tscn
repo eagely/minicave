@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://hh2806lqpc2u"]
+[gd_scene load_steps=9 format=3 uid="uid://hh2806lqpc2u"]
 
 [ext_resource type="Script" path="res://src/mob.gd" id="1_wx6sb"]
 [ext_resource type="Texture2D" uid="uid://sph8m3gnti0u" path="res://assets/kenney/platformer/PNG/Enemies/slimeGreen_hit.png" id="2_ied6w"]
 [ext_resource type="Texture2D" uid="uid://gcioqjgu4pyy" path="res://assets/kenney/platformer/PNG/Enemies/slimeGreen_dead.png" id="3_22m2j"]
 [ext_resource type="Texture2D" uid="uid://btg7f3ermx8gf" path="res://assets/kenney/platformer/PNG/Enemies/slimeGreen.png" id="3_kucto"]
 [ext_resource type="Texture2D" uid="uid://78xl6ndnly8h" path="res://assets/kenney/platformer/PNG/Enemies/slimeGreen_move.png" id="4_sanqe"]
+[ext_resource type="PackedScene" uid="uid://d1lnkbgnkc0hj" path="res://scenes/health_bar.tscn" id="6_dxy8y"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_22gk7"]
 radius = 16.0
@@ -65,6 +66,12 @@ collide_with_areas = true
 [node name="Capsule" type="CollisionShape2D" parent="HitboxArea"]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_22gk7")
+
+[node name="HealthBar" parent="." instance=ExtResource("6_dxy8y")]
+offset_left = -32.0
+offset_top = -35.0
+offset_right = 32.0
+offset_bottom = -24.0
 
 [connection signal="animation_finished" from="Animation" to="." method="_on_animation_finished"]
 [connection signal="area_entered" from="HitboxArea" to="." method="_on_hitbox_area_entered"]

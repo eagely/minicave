@@ -3,15 +3,17 @@ extends CharacterBody2D
 signal level_completed
 signal died
 
+@onready var health_bar = $HealthBarLayer/HealthBar
+
 const SPEED = 300
 const JUMP_FORCE = -300
 const DOUBLE_JUMP_FORCE = -200
 const CLIMB_SPEED = -100
 const STANDING_HEIGHT = 80
 const DUCKING_HEIGHT = 40
-var max_health = 10
-var hp = max_health
-var str = 5
+var max_hp = 100
+var hp = max_hp
+var str = 60
 var can_take_damage = true
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var screen_size
@@ -113,7 +115,8 @@ func _physics_process(delta):
 
 func start(pos):
 	position = pos
-	hp = 10
+	hp = max_hp
+	health_bar.init_health(hp)
 
 func can_unduck():
 	$UnduckRayCast.target_position = Vector2(0, -(STANDING_HEIGHT - DUCKING_HEIGHT))
@@ -154,6 +157,9 @@ func hit(damage):
 		hp -= damage
 		if hp <= 0:
 			emit_signal("died")
+			health_bar.health = 0
+		else:
+			health_bar.health = hp
 		$Camera.shake()
 		$Camera.frame_freeze(0.05, 0.5)
 

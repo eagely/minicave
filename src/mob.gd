@@ -1,13 +1,20 @@
 extends CharacterBody2D
 
+signal flipped
+
+@onready var health_bar = $HealthBar
 var speed = 150
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var facing_right = true
 var last_animation = ""
 var dying = false
-var hp = 10
-var str = 5
+var max_hp = 100
+var hp = max_hp
+var str = 30
 var hurt = false
+
+func _ready():
+	health_bar.init_health(hp)
 
 func _physics_process(delta):
 	if dying:
@@ -32,7 +39,9 @@ func _physics_process(delta):
 
 func flip():
 	facing_right = !facing_right
-	scale.x = -abs(scale.x)
+	scale.x *= -1
+	health_bar.scale.x *= -1
+	health_bar.position.x = health_bar.size.x * (-1 if facing_right else 1) / 2
 	speed = -speed
 
 func play(name):
@@ -47,9 +56,12 @@ func hit(damage):
 	hp -= damage
 	if hp <= 0:
 		die()
+		health_bar.health = 0
 	else:
 		play("hit")
 		hurt = true
+		health_bar.health = hp	
+		
 
 func _on_animation_finished():
 	if last_animation == "die":

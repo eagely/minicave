@@ -21,6 +21,8 @@ func _ready():
 	set_process_input(true)
 	if level.has_node("Tutorial"):
 		level.get_node("Tutorial").hide()
+	if player.has_node("HealthBarLayer"):
+		player.get_node("HealthBarLayer").hide()
 	
 func _process(delta):
 	if Input.is_action_just_pressed("escape"):
@@ -55,19 +57,23 @@ func unpause():
 	options.hide()
 	menu.hide()
 	level.show()
-	player.show()	
 	if level.has_node("Tutorial"):
 		level.get_node("Tutorial").show()
+	player.show()
+	if player.has_node("HealthBarLayer"):
+		player.get_node("HealthBarLayer").show()
 	for mob in mobs:
 		if is_instance_valid(mob):		
 			mob.show()
 
 func main_menu():
 	get_tree().paused = true
+	level.hide()	
 	if level.has_node("Tutorial"):
 		level.get_node("Tutorial").hide()
-	level.hide()
 	player.hide()
+	if player.has_node("HealthBarLayer"):
+		player.get_node("HealthBarLayer").hide()
 	for mob in mobs:
 		if is_instance_valid(mob):
 			mob.hide()
