@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://w2gyww87g5j3"]
+[gd_scene load_steps=5 format=3 uid="uid://w2gyww87g5j3"]
 
-[ext_resource type="PackedScene" uid="uid://m8y8lml1kf11" path="res://input_button.tscn" id="1_2b0sf"]
+[ext_resource type="PackedScene" uid="uid://m8y8lml1kf11" path="res://scenes/input_button.tscn" id="1_2b0sf"]
 [ext_resource type="Script" path="res://src/keybind_menu.gd" id="1_iigj6"]
-[ext_resource type="FontFile" uid="uid://d2nanr55e7tpq" path="res://assets/fonts/m5x7.ttf" id="3_8kqhg"]
+[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/options.tres" id="1_po5pi"]
+[ext_resource type="FontFile" uid="uid://bdgapwjgd2q4f" path="res://assets/fonts/m6x11plus.ttf" id="3_v3cqh"]
 
 [node name="KeybindMenu" type="Control"]
 layout_mode = 3
@@ -11,6 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_po5pi")
 script = ExtResource("1_iigj6")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -20,10 +22,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -680.0
-offset_top = -444.0
-offset_right = 680.0
-offset_bottom = 444.0
+offset_left = -536.0
+offset_top = -364.0
+offset_right = 536.0
+offset_bottom = 364.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -50,8 +52,8 @@ layout_mode = 2
 
 [node name="ResetButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_8kqhg")
+theme_override_fonts/font = ExtResource("3_v3cqh")
 theme_override_font_sizes/font_size = 96
 text = "Reset to Default"
 
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/ResetButton" to="." method="create_action_list"]

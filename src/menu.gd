@@ -1,7 +1,7 @@
 extends Control
 
 signal start_game
-signal open_keybinds
+signal open_options
 
 func _ready():
 	pass
@@ -16,7 +16,7 @@ func _on_play_pressed():
 
 
 func _on_options_pressed():
-	emit_signal("open_keybinds")
+	emit_signal("open_options")
 
 
 func _on_quit_pressed():

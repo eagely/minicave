@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://dxuaxee66xh0s"]
+[gd_scene load_steps=63 format=3 uid="uid://dxuaxee66xh0s"]
 
 [ext_resource type="Script" path="res://src/player.gd" id="1_65cv8"]
 [ext_resource type="Texture2D" uid="uid://2a6063bew80f" path="res://assets/hooded.png" id="2_s65be"]
@@ -7,6 +7,38 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g3rof"]
 radius = 20.0
 height = 80.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w26c3"]
+atlas = ExtResource("2_s65be")
+region = Rect2(0, 1536, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_phs08"]
+atlas = ExtResource("2_s65be")
+region = Rect2(192, 1536, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqp3k"]
+atlas = ExtResource("2_s65be")
+region = Rect2(384, 1536, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hu5e"]
+atlas = ExtResource("2_s65be")
+region = Rect2(576, 1536, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_klt8o"]
+atlas = ExtResource("2_s65be")
+region = Rect2(768, 1536, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7r5w"]
+atlas = ExtResource("2_s65be")
+region = Rect2(960, 1536, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kl11m"]
+atlas = ExtResource("2_s65be")
+region = Rect2(1152, 1536, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ch2u3"]
+atlas = ExtResource("2_s65be")
+region = Rect2(1344, 1536, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p25j1"]
 atlas = ExtResource("2_s65be")
@@ -200,6 +232,35 @@ region = Rect2(1344, 576, 192, 192)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_w26c3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_phs08")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vqp3k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hu5e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_klt8o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f7r5w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kl11m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ch2u3")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_p25j1")
 }, {
 "duration": 1.0,
@@ -384,28 +445,61 @@ animations = [{
 radius = 20.0
 height = 80.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_grihh"]
+size = Vector2(64, 72)
+
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_65cv8")
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)
-rotation = 6.28319
 shape = SubResource("CapsuleShape2D_g3rof")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_an3xs")
-animation = &"unteleport"
+animation = &"attack"
+frame = 5
+frame_progress = 1.0
 
 [node name="Camera" type="Camera2D" parent="."]
-enabled = false
+limit_left = 0
+limit_top = 0
+limit_right = 1920
+limit_bottom = 1080
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
 script = ExtResource("3_7fpw5")
 
-[node name="RayCastUp" type="RayCast2D" parent="."]
+[node name="UnduckRayCast" type="RayCast2D" parent="."]
 
-[node name="TeleportChecker" type="ShapeCast2D" parent="."]
+[node name="TeleportShapeCast" type="ShapeCast2D" parent="."]
 shape = SubResource("CapsuleShape2D_ur73w")
-target_position = Vector2(0, 0)
+target_position = Vector2(0, 8)
+
+[node name="HitboxArea" type="Area2D" parent="." groups=["Hittable"]]
+
+[node name="Capsule" type="CollisionShape2D" parent="HitboxArea"]
+position = Vector2(0, 8)
+shape = SubResource("CapsuleShape2D_g3rof")
+
+[node name="HitCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="MeleeArea" type="Area2D" parent="."]
+
+[node name="Rectangle" type="CollisionShape2D" parent="MeleeArea"]
+position = Vector2(48, 12)
+shape = SubResource("RectangleShape2D_grihh")
+disabled = true
+
+[node name="HitCollisionDelay" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="animation_finished" from="Animation" to="." method="_on_animation_finished"]
+[connection signal="timeout" from="HitCooldown" to="." method="_on_hit_cooldown_timeout"]
+[connection signal="area_entered" from="MeleeArea" to="." method="_on_melee_area_area_entered"]
+[connection signal="timeout" from="HitCollisionDelay" to="." method="_on_hit_collision_delay_timeout"]

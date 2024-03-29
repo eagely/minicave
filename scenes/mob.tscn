@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://hh2806lqpc2u"]
+
+[ext_resource type="Script" path="res://src/mob.gd" id="1_wx6sb"]
+[ext_resource type="Texture2D" uid="uid://sph8m3gnti0u" path="res://assets/kenney/platformer/PNG/Enemies/slimeGreen_hit.png" id="2_ied6w"]
+[ext_resource type="Texture2D" uid="uid://gcioqjgu4pyy" path="res://assets/kenney/platformer/PNG/Enemies/slimeGreen_dead.png" id="3_22m2j"]
+[ext_resource type="Texture2D" uid="uid://btg7f3ermx8gf" path="res://assets/kenney/platformer/PNG/Enemies/slimeGreen.png" id="3_kucto"]
+[ext_resource type="Texture2D" uid="uid://78xl6ndnly8h" path="res://assets/kenney/platformer/PNG/Enemies/slimeGreen_move.png" id="4_sanqe"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_22gk7"]
+radius = 16.0
+height = 50.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4l7d8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_22m2j")
+}],
+"loop": false,
+"name": &"die",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ied6w")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_kucto")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_sanqe")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Mob" type="CharacterBody2D" groups=["Attackable"]]
+process_mode = 1
+collision_layer = 2
+script = ExtResource("1_wx6sb")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_22gk7")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -16)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_4l7d8")
+animation = &"hit"
+
+[node name="VisibleNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="RayCastDown" type="RayCast2D" parent="."]
+position = Vector2(20, 0)
+target_position = Vector2(0, 30)
+collide_with_areas = true
+
+[node name="HitboxArea" type="Area2D" parent="."]
+
+[node name="Capsule" type="CollisionShape2D" parent="HitboxArea"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_22gk7")
+
+[connection signal="animation_finished" from="Animation" to="." method="_on_animation_finished"]
+[connection signal="screen_exited" from="VisibleNotifier" to="." method="_on_visible_notifier_screen_exited"]
+[connection signal="area_entered" from="HitboxArea" to="." method="_on_hitbox_area_entered"]

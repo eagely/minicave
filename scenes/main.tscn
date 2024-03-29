@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://b3weat1gqoefh"]
+
+[ext_resource type="PackedScene" uid="uid://bukr5hyq68ulg" path="res://scenes/menu.tscn" id="1_0kc2i"]
+[ext_resource type="Script" path="res://src/main.gd" id="1_rwanx"]
+[ext_resource type="PackedScene" uid="uid://dxuaxee66xh0s" path="res://scenes/player.tscn" id="1_sfphe"]
+[ext_resource type="PackedScene" uid="uid://c6vbsu06m5n2" path="res://scenes/level.tscn" id="5_ejken"]
+[ext_resource type="PackedScene" uid="uid://w2gyww87g5j3" path="res://scenes/keybind_menu.tscn" id="6_kmhoo"]
+[ext_resource type="PackedScene" uid="uid://csaidm4ve14hg" path="res://scenes/options_menu.tscn" id="7_rkhj1"]
+
+[node name="Main" type="Node"]
+process_mode = 3
+script = ExtResource("1_rwanx")
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(100, 128)
+
+[node name="Player" parent="." instance=ExtResource("1_sfphe")]
+process_mode = 1
+
+[node name="Level" parent="." instance=ExtResource("5_ejken")]
+process_mode = 1
+
+[node name="UI" type="CanvasLayer" parent="."]
+process_mode = 2
+layer = 0
+
+[node name="Menu" parent="UI" instance=ExtResource("1_0kc2i")]
+offset_left = -304.0
+offset_top = -308.5
+offset_right = 304.0
+offset_bottom = 308.5
+
+[node name="KeybindMenu" parent="UI" instance=ExtResource("6_kmhoo")]
+visible = false
+
+[node name="OptionsMenu" parent="UI" instance=ExtResource("7_rkhj1")]
+visible = false
+
+[connection signal="level_completed" from="Player" to="." method="_on_player_level_completed"]
+[connection signal="open_options" from="UI/Menu" to="." method="options_menu"]
+[connection signal="start_game" from="UI/Menu" to="." method="start"]
+[connection signal="open_keybinds" from="UI/OptionsMenu" to="." method="keybinds_menu"]
