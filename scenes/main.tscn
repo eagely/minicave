@@ -36,6 +36,7 @@ visible = false
 [node name="OptionsMenu" parent="UI" instance=ExtResource("7_rkhj1")]
 visible = false
 
+[connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="level_completed" from="Player" to="." method="_on_player_level_completed"]
 [connection signal="open_options" from="UI/Menu" to="." method="options_menu"]
 [connection signal="start_game" from="UI/Menu" to="." method="start"]

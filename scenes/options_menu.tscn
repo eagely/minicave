@@ -115,4 +115,6 @@ size_flags_horizontal = 3
 
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/FullscreenCheck" to="." method="_on_fullscreen_check_toggled"]
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/ScreenShakeCheck" to="." method="_on_screen_shake_check_toggled"]
+[connection signal="drag_ended" from="PanelContainer/MarginContainer/VBoxContainer/MasterVolumeContainer/MasterVolumeSlider" to="." method="_on_master_volume_slider_drag_ended"]
+[connection signal="drag_ended" from="PanelContainer/MarginContainer/VBoxContainer/SfxVolumeContainer/SfxVolumeSlider" to="." method="_on_sfx_volume_slider_drag_ended"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/KeybindingContainer/KeybindingButton" to="." method="_on_keybinding_button_pressed"]

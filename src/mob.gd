@@ -6,6 +6,8 @@ var facing_right = true
 var last_animation = ""
 var dying = false
 var hp = 10
+var str = 5
+var hurt = false
 
 func _physics_process(delta):
 	if dying:
@@ -20,23 +22,23 @@ func _physics_process(delta):
 		play("walk")
 		
 	$Animation.flip_h = true
-	velocity.x = speed	
+	velocity.x = speed if not hurt else 0
+	var areas = $HitboxArea.get_overlapping_areas()
+	if areas.size() > 0:
+		for area in areas:
+			if not dying and area.get_parent().name == "Player":
+				area.get_parent().hit(str)
 	move_and_slide()
-	
 
 func flip():
 	facing_right = !facing_right
 	scale.x = -abs(scale.x)
 	speed = -speed
-	
+
 func play(name):
 	last_animation = name
 	$Animation.play(name)
 
-func _on_hitbox_area_entered(area):
-	if not dying and area.is_in_group("Hittable") and area.get_parent().name == "Player":
-		area.get_parent().die()
-		
 func die():
 	play("die")
 	dying = true
@@ -47,7 +49,10 @@ func hit(damage):
 		die()
 	else:
 		play("hit")
+		hurt = true
 
 func _on_animation_finished():
 	if last_animation == "die":
 		queue_free()
+	elif last_animation == "hit":
+		hurt = false

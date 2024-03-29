@@ -84,19 +84,19 @@ region = Rect2(1152, 1344, 192, 192)
 atlas = ExtResource("2_s65be")
 region = Rect2(960, 1344, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0747o"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_af31k"]
 atlas = ExtResource("2_s65be")
 region = Rect2(0, 384, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ebtcd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7i1dh"]
 atlas = ExtResource("2_s65be")
 region = Rect2(192, 384, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rj2sq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sur0a"]
 atlas = ExtResource("2_s65be")
 region = Rect2(384, 384, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_aorp0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_kq11e"]
 atlas = ExtResource("2_s65be")
 region = Rect2(576, 384, 192, 192)
 
@@ -286,7 +286,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"duck",
-"speed": 20.0
+"speed": 16.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -304,16 +304,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0747o")
+"texture": SubResource("AtlasTexture_af31k")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ebtcd")
+"texture": SubResource("AtlasTexture_7i1dh")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rj2sq")
+"texture": SubResource("AtlasTexture_sur0a")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_aorp0")
+"texture": SubResource("AtlasTexture_kq11e")
 }],
 "loop": true,
 "name": &"idle",
@@ -392,7 +392,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"unduck",
-"speed": 8.0
+"speed": 16.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -459,9 +459,8 @@ shape = SubResource("CapsuleShape2D_g3rof")
 [node name="Animation" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_an3xs")
-animation = &"attack"
-frame = 5
-frame_progress = 1.0
+animation = &"idle"
+frame_progress = 0.418234
 
 [node name="Camera" type="Camera2D" parent="."]
 limit_left = 0
@@ -478,7 +477,7 @@ script = ExtResource("3_7fpw5")
 shape = SubResource("CapsuleShape2D_ur73w")
 target_position = Vector2(0, 8)
 
-[node name="HitboxArea" type="Area2D" parent="." groups=["Hittable"]]
+[node name="HitboxArea" type="Area2D" parent="."]
 
 [node name="Capsule" type="CollisionShape2D" parent="HitboxArea"]
 position = Vector2(0, 8)

@@ -53,9 +53,7 @@ shape = SubResource("CapsuleShape2D_22gk7")
 position = Vector2(0, -16)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_4l7d8")
-animation = &"hit"
-
-[node name="VisibleNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+animation = &"walk"
 
 [node name="RayCastDown" type="RayCast2D" parent="."]
 position = Vector2(20, 0)
@@ -69,5 +67,4 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_22gk7")
 
 [connection signal="animation_finished" from="Animation" to="." method="_on_animation_finished"]
-[connection signal="screen_exited" from="VisibleNotifier" to="." method="_on_visible_notifier_screen_exited"]
 [connection signal="area_entered" from="HitboxArea" to="." method="_on_hitbox_area_entered"]

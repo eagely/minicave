@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://dn1xkadhtfg5e"]
+
+[ext_resource type="Script" path="res://src/finish.gd" id="1_1nibo"]
+[ext_resource type="Texture2D" uid="uid://coye72a7e736" path="res://assets/kenney/platformer/PNG/Items/flagBlue1.png" id="2_odijv"]
+[ext_resource type="Texture2D" uid="uid://6cfl727aw4vq" path="res://assets/kenney/platformer/PNG/Items/flagBlue2.png" id="4_5sejs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l4y1u"]
+size = Vector2(64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q1gft"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_odijv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_5sejs")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Finish" type="Area2D"]
+script = ExtResource("1_1nibo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_l4y1u")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_q1gft")
+frame_progress = 0.164242
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
