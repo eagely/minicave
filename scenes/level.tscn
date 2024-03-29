@@ -1,13 +1,13 @@
 [gd_scene load_steps=12 format=3 uid="uid://c6vbsu06m5n2"]
 
-[ext_resource type="Script" path="res://src/level.gd" id="1_doqbh"]
-[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/options.tres" id="2_4j634"]
-[ext_resource type="Texture2D" uid="uid://cml6o4r8qb6f3" path="res://assets/bricks.png" id="2_p0ytl"]
-[ext_resource type="PackedScene" uid="uid://dfldvytcge50v" path="res://scenes/obstacle.tscn" id="4_n3js3"]
-[ext_resource type="PackedScene" uid="uid://dn1xkadhtfg5e" path="res://scenes/finish.tscn" id="5_sc133"]
+[ext_resource type="Script" path="res://src/level.gd" id="1_3scqg"]
+[ext_resource type="Texture2D" uid="uid://cml6o4r8qb6f3" path="res://assets/bricks.png" id="2_1iqtn"]
+[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/options.tres" id="3_ndil0"]
+[ext_resource type="PackedScene" uid="uid://dfldvytcge50v" path="res://scenes/obstacle.tscn" id="4_o3k4o"]
+[ext_resource type="PackedScene" uid="uid://dn1xkadhtfg5e" path="res://scenes/finish.tscn" id="5_ffejj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_itcuw"]
-texture = ExtResource("2_p0ytl")
+texture = ExtResource("2_1iqtn")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -500,8 +500,8 @@ size = Vector2(64, 128)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mglqq"]
 size = Vector2(64, 128)
 
-[node name="Level" type="Node2D"]
-script = ExtResource("1_doqbh")
+[node name="Level0" type="Node2D"]
+script = ExtResource("1_3scqg")
 
 [node name="Terrain" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_q40q5")
@@ -534,7 +534,7 @@ offset_right = 222.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_4j634")
+theme = ExtResource("3_ndil0")
 theme_override_font_sizes/font_size = 48
 text = "Press A or D to walk"
 horizontal_alignment = 1
@@ -560,7 +560,7 @@ offset_right = 180.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_4j634")
+theme = ExtResource("3_ndil0")
 horizontal_alignment = 1
 
 [node name="Duck" type="Control" parent="Tutorial"]
@@ -584,7 +584,7 @@ offset_right = 180.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_4j634")
+theme = ExtResource("3_ndil0")
 horizontal_alignment = 1
 
 [node name="Attack" type="Control" parent="Tutorial"]
@@ -608,7 +608,7 @@ offset_right = 180.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_4j634")
+theme = ExtResource("3_ndil0")
 theme_override_font_sizes/font_size = 48
 horizontal_alignment = 1
 
@@ -633,7 +633,7 @@ offset_right = 180.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_4j634")
+theme = ExtResource("3_ndil0")
 theme_override_font_sizes/font_size = 48
 horizontal_alignment = 1
 
@@ -661,10 +661,10 @@ shape = SubResource("RectangleShape2D_v42eb")
 position = Vector2(736, 768)
 shape = SubResource("RectangleShape2D_mglqq")
 
-[node name="Obstacle" parent="Tutorial" instance=ExtResource("4_n3js3")]
+[node name="Obstacle" parent="Tutorial" instance=ExtResource("4_o3k4o")]
 position = Vector2(672, 812)
 
-[node name="Finish" parent="." instance=ExtResource("5_sc133")]
+[node name="Finish" parent="." instance=ExtResource("5_ffejj")]
 position = Vector2(1792, 992)
 
 [connection signal="area_exited" from="Tutorial/WalkExit" to="." method="show_jump"]

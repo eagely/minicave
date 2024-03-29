@@ -10,9 +10,7 @@ const CLIMB_SPEED = -100
 const STANDING_HEIGHT = 80
 const DUCKING_HEIGHT = 40
 var max_health = 10
-var max_climb_str = 1
 var hp = max_health
-var climb_str = max_climb_str
 var str = 5
 var can_take_damage = true
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -25,7 +23,6 @@ var tp_coords
 var last_animation = null
 var can_hit = true
 var facing_right = true
-var can_recharge = true
 var teleport_cursor = preload("res://assets/cursors/png/cursor-pointer-35.png")
 var normal_cursor = preload("res://assets/cursors/png/cursor-pointer-18.png")
 
@@ -57,38 +54,17 @@ func _physics_process(delta):
 			velocity.y = DOUBLE_JUMP_FORCE
 			can_double_jump = false
 	
-	if Input.is_action_pressed("climb") and is_on_wall() and climb_str > 0 and not is_ducking:
-		velocity.y = CLIMB_SPEED
-		can_double_jump = true
-		climb_str -= delta
-		if climb_str < 0:
-			climb_str = 0
-		can_recharge = false
-	
-	if climb_str == 0 and not can_recharge:
-		await_recharge()
-	
-	if can_recharge:
-		climb_str += delta / 2
-		if climb_str > max_climb_str:
-			climb_str = max_climb_str
-	
-	print(climb_str)
-	# Animations
-	if not Input.is_action_pressed("duck") and (not $Animation.is_playing() or not "duck unduck teleport unteleport attack".contains(last_animation)):
-		if velocity.y != 0:
-			play("jump")
-		elif velocity.x != 0:
-			if is_ducking:
-				play("duck_idle")
-			else:
-				play("walk")
+	if not $Animation.is_playing() or not "duck unduck teleport unteleport attack".contains(last_animation):
+		if is_ducking:
+			play("duck_idle")
 		else:
-			if is_ducking:
-				play("duck_idle")
+			if velocity.y != 0:
+				play("jump")
+			elif velocity.x != 0:
+				play("walk")
 			else:
 				play("idle")
-		
+			
 	# Duck
 	if Input.is_action_just_pressed("duck") and !is_ducking:
 		$Hitbox.position.y += 20
@@ -96,13 +72,14 @@ func _physics_process(delta):
 		play("duck")
 		is_ducking = true
 	elif Input.is_action_just_released("duck"):
-		if can_stand_up():
-			stand_up()
+		if can_unduck():
+			unduck()
 		else:
 			tried_standing_up_but_couldnt = true
 	
-	if tried_standing_up_but_couldnt and can_stand_up():
-		stand_up()
+	# If you unducked under a 1 block ceiling and then left it
+	if tried_standing_up_but_couldnt and can_unduck():
+		unduck()
 		tried_standing_up_but_couldnt = false
 	
 	if Input.is_action_just_pressed("interact"):
@@ -138,11 +115,11 @@ func start(pos):
 	position = pos
 	hp = 10
 
-func can_stand_up():
+func can_unduck():
 	$UnduckRayCast.target_position = Vector2(0, -(STANDING_HEIGHT - DUCKING_HEIGHT))
 	return not $UnduckRayCast.is_colliding()
 	
-func stand_up():
+func unduck():
 	$Hitbox.position.y -= 20
 	$Hitbox.scale.y = 1
 	is_ducking = false
@@ -191,8 +168,3 @@ func _on_melee_area_area_entered(area):
 
 func _on_hit_collision_delay_timeout():
 	$MeleeArea/Rectangle.disabled = true	
-	
-func await_recharge():
-	can_recharge = false
-	await get_tree().create_timer(2).timeout
-	can_recharge = true
