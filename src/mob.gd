@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-signal flipped
-
 @onready var health_bar = $HealthBar
 var speed = 150
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -13,8 +11,13 @@ var hp = max_hp
 var str = 30
 var hurt = false
 
+var rand_index = randi() % 3
+var damage_multiplier = [5, 1, 0.5][rand_index]
+var color = ["green_", "blue_", "purple_"][rand_index]
+
 func _ready():
 	health_bar.init_health(hp)
+	$Animation.flip_h = true	
 
 func _physics_process(delta):
 	if dying:
@@ -25,10 +28,9 @@ func _physics_process(delta):
 	
 	if (not $RayCastDown.is_colliding() or is_on_wall()) and is_on_floor():
 		flip()
-	if not $Animation.is_playing() or not "hit".contains(last_animation):
+	if not $Animation.is_playing() or not last_animation == "hit":
 		play("walk")
 		
-	$Animation.flip_h = true
 	velocity.x = speed if not hurt else 0
 	var areas = $HitboxArea.get_overlapping_areas()
 	if areas.size() > 0:
@@ -46,14 +48,14 @@ func flip():
 
 func play(name):
 	last_animation = name
-	$Animation.play(name)
+	$Animation.play(color + name)
 
 func die():
 	play("die")
 	dying = true
 
 func hit(damage):
-	hp -= damage
+	hp -= damage * damage_multiplier
 	if hp <= 0:
 		die()
 		health_bar.health = 0

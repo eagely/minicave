@@ -1,11 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://hh2806lqpc2u"]
+[gd_scene load_steps=17 format=3 uid="uid://hh2806lqpc2u"]
 
 [ext_resource type="Script" path="res://src/mob.gd" id="1_wx6sb"]
+[ext_resource type="Texture2D" uid="uid://c60ec3ssht2ng" path="res://assets/kenney/platformer/PNG/Enemies/slimeBlue_dead.png" id="2_i8drb"]
 [ext_resource type="Texture2D" uid="uid://sph8m3gnti0u" path="res://assets/kenney/platformer/PNG/Enemies/slimeGreen_hit.png" id="2_ied6w"]
 [ext_resource type="Texture2D" uid="uid://gcioqjgu4pyy" path="res://assets/kenney/platformer/PNG/Enemies/slimeGreen_dead.png" id="3_22m2j"]
 [ext_resource type="Texture2D" uid="uid://btg7f3ermx8gf" path="res://assets/kenney/platformer/PNG/Enemies/slimeGreen.png" id="3_kucto"]
+[ext_resource type="Texture2D" uid="uid://djwh04xr72dc6" path="res://assets/kenney/platformer/PNG/Enemies/slimeBlue_hit.png" id="3_npnht"]
+[ext_resource type="Texture2D" uid="uid://2b3t3gykvvht" path="res://assets/kenney/platformer/PNG/Enemies/slimeBlue.png" id="4_juv8j"]
 [ext_resource type="Texture2D" uid="uid://78xl6ndnly8h" path="res://assets/kenney/platformer/PNG/Enemies/slimeGreen_move.png" id="4_sanqe"]
+[ext_resource type="Texture2D" uid="uid://cj02mnjcgf843" path="res://assets/kenney/platformer/PNG/Enemies/slimeBlue_move.png" id="5_ixebl"]
 [ext_resource type="PackedScene" uid="uid://d1lnkbgnkc0hj" path="res://scenes/health_bar.tscn" id="6_dxy8y"]
+[ext_resource type="Texture2D" uid="uid://1f0dris1rg02" path="res://assets/kenney/platformer/PNG/Enemies/slimePurple_dead.png" id="10_m73qx"]
+[ext_resource type="Texture2D" uid="uid://bmg4lecncrqtc" path="res://assets/kenney/platformer/PNG/Enemies/slimePurple_hit.png" id="11_bgvv7"]
+[ext_resource type="Texture2D" uid="uid://cpv740pnrupx6" path="res://assets/kenney/platformer/PNG/Enemies/slimePurple.png" id="12_g6xef"]
+[ext_resource type="Texture2D" uid="uid://ddanubws47vrv" path="res://assets/kenney/platformer/PNG/Enemies/slimePurple_move.png" id="13_rv6sc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_22gk7"]
 radius = 16.0
@@ -15,10 +23,37 @@ height = 50.0
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("2_i8drb")
+}],
+"loop": false,
+"name": &"blue_die",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_npnht")
+}],
+"loop": false,
+"name": &"blue_hit",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_juv8j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ixebl")
+}],
+"loop": true,
+"name": &"blue_walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("3_22m2j")
 }],
 "loop": false,
-"name": &"die",
+"name": &"green_die",
 "speed": 1.0
 }, {
 "frames": [{
@@ -26,7 +61,7 @@ animations = [{
 "texture": ExtResource("2_ied6w")
 }],
 "loop": false,
-"name": &"hit",
+"name": &"green_hit",
 "speed": 1.0
 }, {
 "frames": [{
@@ -37,7 +72,34 @@ animations = [{
 "texture": ExtResource("4_sanqe")
 }],
 "loop": true,
-"name": &"walk",
+"name": &"green_walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_m73qx")
+}],
+"loop": false,
+"name": &"purple_die",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_bgvv7")
+}],
+"loop": false,
+"name": &"purple_hit",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_g6xef")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_rv6sc")
+}],
+"loop": true,
+"name": &"purple_walk",
 "speed": 5.0
 }]
 
@@ -54,7 +116,7 @@ shape = SubResource("CapsuleShape2D_22gk7")
 position = Vector2(0, -16)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_4l7d8")
-animation = &"walk"
+animation = &"purple_walk"
 
 [node name="RayCastDown" type="RayCast2D" parent="."]
 position = Vector2(20, 0)
