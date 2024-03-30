@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=3 uid="uid://nqylemsgum07"]
+
+[ext_resource type="Script" path="res://scenes/hotbar/hotbar.gd" id="1_h0run"]
+[ext_resource type="PackedScene" uid="uid://cbs8p65x0ppgy" path="res://scenes/hotbar/slot.tscn" id="1_s2mux"]
+[ext_resource type="Resource" uid="uid://xm1p51fuifjr" path="res://resources/items/teleportation.tres" id="2_rk5sm"]
+[ext_resource type="Resource" uid="uid://wtineinpqx4i" path="res://resources/skills/teleportation.tres" id="3_cdeoc"]
+[ext_resource type="Resource" uid="uid://2qwsdjx2ydb4" path="res://resources/items/strength.tres" id="5_hn8ev"]
+[ext_resource type="Resource" uid="uid://ckv17bcq3x0ue" path="res://resources/skills/strength.tres" id="6_ct0j8"]
+[ext_resource type="Resource" uid="uid://da8jksp14yigb" path="res://resources/items/leaping.tres" id="7_icqxi"]
+[ext_resource type="Resource" uid="uid://cq1non2oel7ke" path="res://resources/skills/leaping.tres" id="8_x1e1w"]
+
+[node name="Hotbar" type="HBoxContainer"]
+anchors_preset = -1
+anchor_left = 0.602
+anchor_top = 0.552
+anchor_right = 0.602
+anchor_bottom = 0.552
+offset_left = -223.84
+offset_top = -64.16
+offset_right = -167.84
+offset_bottom = -48.16
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(8, 8)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_h0run")
+
+[node name="Teleportation" parent="." instance=ExtResource("1_s2mux")]
+layout_mode = 2
+focus_mode = 0
+stats = ExtResource("2_rk5sm")
+skill = ExtResource("3_cdeoc")
+
+[node name="Leaping" parent="." instance=ExtResource("1_s2mux")]
+layout_mode = 2
+focus_mode = 0
+stats = ExtResource("7_icqxi")
+skill = ExtResource("8_x1e1w")
+
+[node name="Strength" parent="." instance=ExtResource("1_s2mux")]
+layout_mode = 2
+focus_mode = 0
+stats = ExtResource("5_hn8ev")
+skill = ExtResource("6_ct0j8")
+
+[connection signal="pressed" from="Teleportation" to="." method="_on_teleportation_pressed"]
+[connection signal="pressed" from="Leaping" to="." method="_on_leaping_pressed"]
+[connection signal="pressed" from="Strength" to="." method="_on_strength_pressed"]

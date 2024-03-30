@@ -130,6 +130,7 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_22gk7")
 
 [node name="HealthBar" parent="." instance=ExtResource("6_dxy8y")]
+visible = false
 offset_left = -32.0
 offset_top = -35.0
 offset_right = 32.0

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cnvr8g8udjkwf"]
 
-[ext_resource type="Script" path="res://scenes/menu/menu.gd" id="1_ce545"]
+[ext_resource type="Script" path="res://scenes/shop/shop.gd" id="1_alags"]
 [ext_resource type="PackedScene" uid="uid://drr2rc2ddittm" path="res://scenes/shop/shop_item.tscn" id="1_wjos2"]
 [ext_resource type="Theme" uid="uid://bjxk1xqmcp0ov" path="res://assets/panel_container.tres" id="1_wmj3d"]
 [ext_resource type="Texture2D" uid="uid://x200wtwi2ton" path="res://assets/LabIcons.png" id="2_ude51"]
@@ -28,7 +28,7 @@ offset_top = 19.0
 offset_bottom = 19.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ce545")
+script = ExtResource("1_alags")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -232,3 +232,5 @@ theme = ExtResource("5_3jm4g")
 text = "SHOP"
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/Teleportation/Button" to="." method="_on_buy_teleportation"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/Leaping/Button" to="." method="_on_buy_leaping"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/Strength/Button" to="." method="_on_buy_strength"]

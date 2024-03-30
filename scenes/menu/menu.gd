@@ -8,8 +8,3 @@ func _on_open():
 func _on_close():
 	hide()
 	get_tree().paused = false
-
-
-
-func _on_buy_teleportation():
-	GameManager.close(self)

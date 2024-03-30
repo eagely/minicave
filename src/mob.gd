@@ -26,7 +26,7 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	
-	if (not $RayCastDown.is_colliding() or is_on_wall()) and is_on_floor():
+	if (not ($RayCastDown.is_colliding() and $RayCastDown.get_collider().get_parent().name != "Player") or is_on_wall()) and is_on_floor():
 		flip()
 	if not $Animation.is_playing() or not last_animation == "hit":
 		play("walk")

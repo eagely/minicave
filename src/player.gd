@@ -3,60 +3,97 @@ extends CharacterBody2D
 signal level_completed
 signal died
 
-@onready var health_bar = $HealthBarLayer/HealthBar
+@onready var health_bar = $UI/HealthBar
 
 const SPEED = 300
-const JUMP_FORCE = -300
-const DOUBLE_JUMP_FORCE = -200
-const CLIMB_SPEED = -100
+const MAX_JUMP = -250
 const STANDING_HEIGHT = 80
 const DUCKING_HEIGHT = 40
+var jump = MAX_JUMP
+var max_jump_time = 0.5
+var jump_time = 0
+var is_jumping = false
 var max_hp = 100
 var hp = max_hp
-var str = 60
+var strength = 60
 var can_take_damage = true
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var screen_size
-var can_double_jump = true
+
+# Ducking
 var is_ducking = false
 var tried_standing_up_but_couldnt = false
+
+# Skills
 var awaiting_click_for_teleport = false
 var tp_coords
-var last_animation = null
-var can_hit = true
-var facing_right = true
 var teleport_cursor = preload("res://assets/cursors/png/cursor-pointer-35.png")
 var normal_cursor = preload("res://assets/cursors/png/cursor-pointer-18.png")
+var is_leaping = false
+
+
+# Animations
+var last_animation = null
+var facing_right = true
+
+
+# Combat
+var can_hit = true
+
+
+# Items
+var items = {
+	"teleportation": 0,
+	"leaping": 0,
+	"strength": 0
+}
 
 func _ready():
+	GameManager.player = self	
 	screen_size = get_viewport_rect().size
-	$HealthBarLayer.hide()
+	$UI.hide()
 
 func _physics_process(delta):
-	if Input.is_action_just_pressed("debug_level_completed"):
-		emit_signal("level_completed")
 	
+	# Movement
 	var direction = Input.get_axis("move_left", "move_right")
 	
-	# Left / Right
 	if direction:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = 0
-		
-	# Gravity
-	if not is_on_floor():
-		velocity.y += gravity * delta
-		
-	# Jump
-	if Input.is_action_just_pressed("jump") and not is_ducking:
-		if is_on_floor():
-			velocity.y += JUMP_FORCE
-			can_double_jump = true
-		elif can_double_jump:
-			velocity.y = DOUBLE_JUMP_FORCE
-			can_double_jump = false
 	
+	if not is_on_floor():
+		if velocity.y > 0:
+			velocity.y += gravity * 1.5 * delta
+		else:
+			velocity.y += gravity * delta
+	else:
+		velocity.y = 0
+		
+	var can_jump = is_on_floor()
+	var jump_pressed = Input.is_action_just_pressed("jump")
+	
+	if can_jump and jump_pressed:
+		velocity.y = jump / 2 * (3 if is_leaping else 1)
+		is_jumping = true
+		jump_time = 0
+		
+	if is_jumping and Input.is_action_pressed("jump"):
+		if jump_time < max_jump_time:
+			velocity.y += jump * 2 * delta * (3 if is_leaping else 1)
+			jump_time += delta
+		else:
+			is_jumping = false
+			
+	if is_jumping and not Input.is_action_pressed("jump"):
+		is_jumping = false
+		is_leaping = false
+		
+		
+		
+		
+	# Animations
 	if not $Animation.is_playing() or not "duck unduck teleport unteleport attack".contains(last_animation):
 		if is_ducking:
 			play("duck_idle")
@@ -67,8 +104,12 @@ func _physics_process(delta):
 				play("walk")
 			else:
 				play("idle")
-			
-	# Duck
+		
+		
+		
+		
+		
+	# Ducking
 	if Input.is_action_just_pressed("duck") and !is_ducking:
 		$Hitbox.position.y += 20
 		$Hitbox.scale.y = 0.5
@@ -85,10 +126,7 @@ func _physics_process(delta):
 		unduck()
 		tried_standing_up_but_couldnt = false
 	
-	if Input.is_action_just_pressed("interact"):
-		awaiting_click_for_teleport = true
-		Input.set_custom_mouse_cursor(teleport_cursor)
-	elif Input.is_action_just_pressed("left_click"):
+	elif Input.is_action_just_pressed("right_click"):
 		if awaiting_click_for_teleport:
 			Input.set_custom_mouse_cursor(normal_cursor)
 			tp_coords = get_global_mouse_position()		
@@ -106,9 +144,11 @@ func _physics_process(delta):
 			else:
 				awaiting_click_for_teleport = false
 				play("teleport")
+				GameManager.remove_item("teleportation")
 			
-		elif can_hit:
-			attack()
+			
+	if Input.is_action_just_pressed("left_click") and can_hit:
+		attack()
 	
 	if direction != 0 and facing_right != (direction == 1):
 		flip()
@@ -171,10 +211,44 @@ func iframes():
 
 func _on_melee_area_area_entered(area):
 	if area.get_parent().is_in_group("Attackable"):
-		area.get_parent().call("hit", str)
+		area.get_parent().call("hit", strength)
 
 func _on_hit_collision_delay_timeout():
 	$MeleeArea/Rectangle.disabled = true
-	
+
+
 func hide_health_bar():
-	$HealthBarLayer.hide()
+	$UI.hide()
+
+
+func perform_teleportation(skill):
+	if awaiting_click_for_teleport:
+		awaiting_click_for_teleport = false
+	elif items["teleportation"] <= 0:
+		$Camera.shake()
+	else:
+		awaiting_click_for_teleport = true
+		Input.set_custom_mouse_cursor(teleport_cursor)
+
+
+func perform_leaping(skill):
+	if is_leaping:
+		is_leaping = false
+	elif items["leaping"] <= 0:
+		$Camera.shake()
+	else:
+		is_leaping = true
+		GameManager.remove_item("leaping")
+
+
+func perform_strength(skill):
+	if items["strength"] <= 0:
+		$Camera.shake()
+	else:
+		$StrengthTimer.start()
+		strength *= 2
+		GameManager.remove_item("strength")
+
+
+func _on_strength_timer_timeout():
+	strength /= 2

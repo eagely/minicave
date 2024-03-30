@@ -45,7 +45,7 @@ func unpause():
 	if level.has_node("Tutorial"):
 		level.get_node("Tutorial").show()
 	player.show()
-	player.get_node("HealthBarLayer").show()
+	player.get_node("UI").show()
 	for mob in mobs:
 		if is_instance_valid(mob):
 			mob.show()
@@ -56,7 +56,7 @@ func show_title_screen():
 	if level.has_node("Tutorial"):
 		level.get_node("Tutorial").hide()
 	player.hide()
-	player.get_node("HealthBarLayer").hide()
+	player.get_node("UI").hide()
 	for mob in mobs:
 		if is_instance_valid(mob):
 			mob.hide()
@@ -102,7 +102,7 @@ func hide_all_non_menus():
 	if level.has_node("Tutorial"):
 		level.get_node("Tutorial").hide()
 	player.hide()
-	player.get_node("HealthBarLayer").hide()
+	player.get_node("UI").hide()
 	for mob in mobs:
 		if is_instance_valid(mob):
 			mob.hide()

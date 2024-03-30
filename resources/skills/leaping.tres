@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cq1non2oel7ke"]
+
+[ext_resource type="Script" path="res://scenes/hotbar/Skill.gd" id="1_l3l04"]
+
+[resource]
+script = ExtResource("1_l3l04")
+name = "Leaping"
+description = "Your next jump will be 3 times as high."

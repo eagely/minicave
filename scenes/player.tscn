@@ -1,9 +1,10 @@
-[gd_scene load_steps=64 format=3 uid="uid://dxuaxee66xh0s"]
+[gd_scene load_steps=65 format=3 uid="uid://dxuaxee66xh0s"]
 
 [ext_resource type="Script" path="res://src/player.gd" id="1_65cv8"]
 [ext_resource type="Texture2D" uid="uid://2a6063bew80f" path="res://assets/hooded.png" id="2_s65be"]
 [ext_resource type="Script" path="res://src/Camera.gd" id="3_7fpw5"]
 [ext_resource type="PackedScene" uid="uid://d1lnkbgnkc0hj" path="res://scenes/health_bar.tscn" id="4_jfqm8"]
+[ext_resource type="PackedScene" uid="uid://nqylemsgum07" path="res://scenes/hotbar/hotbar.tscn" id="5_83tp8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g3rof"]
 radius = 20.0
@@ -498,16 +499,42 @@ disabled = true
 wait_time = 0.2
 one_shot = true
 
-[node name="HealthBarLayer" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="."]
 
-[node name="HealthBar" parent="HealthBarLayer" instance=ExtResource("4_jfqm8")]
+[node name="HealthBar" parent="UI" instance=ExtResource("4_jfqm8")]
 offset_left = 32.0
 offset_top = 32.0
 offset_right = 288.0
 offset_bottom = 64.0
+
+[node name="Hotbar" parent="UI" instance=ExtResource("5_83tp8")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -28.0
+offset_top = -96.0
+offset_right = 28.0
+offset_bottom = -80.0
+grow_vertical = 0
+scale = Vector2(6, 6)
+pivot_offset = Vector2(28, 8)
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="StrengthTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="animation_finished" from="Animation" to="." method="_on_animation_finished"]
 [connection signal="timeout" from="HitCooldown" to="." method="_on_hit_cooldown_timeout"]
 [connection signal="area_entered" from="MeleeArea" to="." method="_on_melee_area_area_entered"]
 [connection signal="timeout" from="HitCollisionDelay" to="." method="_on_hit_collision_delay_timeout"]
+[connection signal="used_skill" from="UI/Hotbar/Teleportation" to="." method="perform_teleportation"]
+[connection signal="used_skill" from="UI/Hotbar/Leaping" to="." method="perform_leaping"]
+[connection signal="used_skill" from="UI/Hotbar/Strength" to="." method="perform_strength"]
+[connection signal="timeout" from="StrengthTimer" to="." method="_on_strength_timer_timeout"]
+
+[editable path="UI/Hotbar"]

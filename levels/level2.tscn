@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://c6vbsu06m5n2"]
+[gd_scene load_steps=7 format=3 uid="uid://c6vbsu06m5n2"]
 
 [ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/options.tres" id="2_c5yia"]
 [ext_resource type="Texture2D" uid="uid://cml6o4r8qb6f3" path="res://assets/bricks.png" id="2_p0ytl"]
 [ext_resource type="PackedScene" uid="uid://ft8knfn8hwuf" path="res://scenes/shop/shopkeeper.tscn" id="3_mcya2"]
+[ext_resource type="PackedScene" uid="uid://dn1xkadhtfg5e" path="res://scenes/finish.tscn" id="4_4yipx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_itcuw"]
 texture = ExtResource("2_p0ytl")
@@ -522,3 +523,6 @@ horizontal_alignment = 1
 
 [node name="Shopkeeper" parent="." instance=ExtResource("3_mcya2")]
 position = Vector2(1072, 256)
+
+[node name="Finish" parent="." instance=ExtResource("4_4yipx")]
+position = Vector2(1760, 992)

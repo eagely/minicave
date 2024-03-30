@@ -12,7 +12,12 @@ var input_actions = {
 	"move_left": "Move Left",
 	"jump": "Jump",
 	"interact": "Interact",
-	"duck": "Duck"
+	"duck": "Duck",
+	"hotbar_1": "Hotbar Slot 1",
+	"hotbar_2": "Hotbar Slot 2",
+	"hotbar_3": "Hotbar Slot 3",
+	"hotbar_4": "Hotbar Slot 4",
+	"hotbar_5": "Hotbar Slot 5"	
 }
 
 func _ready():
