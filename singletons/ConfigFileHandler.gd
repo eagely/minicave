@@ -14,7 +14,7 @@ func _ready():
 		config.set_value("video", "fullscreen", true)
 		config.set_value("video", "screen_shake", true)
 		config.set_value("audio", "master_volume", 1.0)
-		config.set_value("audio", "sfx_volume", 1.0)	
+		config.set_value("audio", "sfx_volume", 1.0)
 		config.save(CONFIG_FILE)
 	else:
 		config.load(CONFIG_FILE)
@@ -51,17 +51,27 @@ func save_video_setting(key, value):
 	config.save(CONFIG_FILE)
 	
 func load_video_settings():
-	var keybindings = {}
+	var video_settings = {}
 	for key in config.get_section_keys("video"):
-		keybindings[key] = config.get_value("video", key)
-	return keybindings
+		video_settings[key] = config.get_value("video", key)
+	return video_settings
 	
 func save_audio_setting(key, value):
 	config.set_value("audio", key, value)
 	config.save(CONFIG_FILE)
 	
 func load_audio_settings():
-	var keybindings = {}
+	var audio_settings = {}
 	for key in config.get_section_keys("audio"):
-		keybindings[key] = config.get_value("audio", key)
-	return keybindings
+		audio_settings[key] = config.get_value("audio", key)
+	return audio_settings
+	
+func save_general_setting(key, value):
+	config.set_value("general", key, value)
+	config.save(CONFIG_FILE)
+	
+func load_general_settings():
+	var general_settings = {}
+	for key in config.get_section_keys("general"):
+		general_settings[key] = config.get_value("general", key)
+	return general_settings

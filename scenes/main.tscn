@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://b3weat1gqoefh"]
 
-[ext_resource type="PackedScene" uid="uid://bukr5hyq68ulg" path="res://scenes/menu.tscn" id="1_0kc2i"]
+[ext_resource type="PackedScene" uid="uid://bukr5hyq68ulg" path="res://scenes/menu/title_screen.tscn" id="1_0kc2i"]
 [ext_resource type="Script" path="res://src/main.gd" id="1_rwanx"]
 [ext_resource type="PackedScene" uid="uid://dxuaxee66xh0s" path="res://scenes/player.tscn" id="1_sfphe"]
 [ext_resource type="PackedScene" uid="uid://cu2erer4c0gaq" path="res://levels/level0.tscn" id="6_b3vnx"]
-[ext_resource type="PackedScene" uid="uid://w2gyww87g5j3" path="res://scenes/keybind_menu.tscn" id="6_kmhoo"]
-[ext_resource type="PackedScene" uid="uid://csaidm4ve14hg" path="res://scenes/options_menu.tscn" id="7_rkhj1"]
+[ext_resource type="PackedScene" uid="uid://w2gyww87g5j3" path="res://scenes/menu/keybind_menu.tscn" id="6_kmhoo"]
+[ext_resource type="PackedScene" uid="uid://csaidm4ve14hg" path="res://scenes/menu/options_menu.tscn" id="7_rkhj1"]
 
 [node name="Main" type="Node"]
 process_mode = 3
@@ -17,11 +17,13 @@ position = Vector2(100, 128)
 [node name="Player" parent="." instance=ExtResource("1_sfphe")]
 process_mode = 1
 
+[node name="Level" parent="." instance=ExtResource("6_b3vnx")]
+
 [node name="UI" type="CanvasLayer" parent="."]
 process_mode = 2
 layer = 0
 
-[node name="Menu" parent="UI" instance=ExtResource("1_0kc2i")]
+[node name="TitleScreen" parent="UI" instance=ExtResource("1_0kc2i")]
 offset_left = -304.0
 offset_top = -308.5
 offset_right = 304.0
@@ -33,10 +35,8 @@ visible = false
 [node name="OptionsMenu" parent="UI" instance=ExtResource("7_rkhj1")]
 visible = false
 
-[node name="Level" parent="." instance=ExtResource("6_b3vnx")]
-
 [connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="level_completed" from="Player" to="." method="_on_player_level_completed"]
-[connection signal="open_options" from="UI/Menu" to="." method="options_menu"]
-[connection signal="start_game" from="UI/Menu" to="." method="start"]
-[connection signal="open_keybinds" from="UI/OptionsMenu" to="." method="keybinds_menu"]
+[connection signal="open_options" from="UI/TitleScreen" to="." method="_on_title_screen_open_options"]
+[connection signal="start_game" from="UI/TitleScreen" to="." method="start_or_continue"]
+[connection signal="open_keybinds" from="UI/OptionsMenu" to="." method="_on_options_menu_open_keybinds"]

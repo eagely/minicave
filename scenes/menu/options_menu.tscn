@@ -1,0 +1,151 @@
+[gd_scene load_steps=7 format=3 uid="uid://csaidm4ve14hg"]
+
+[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/options.tres" id="1_5ahym"]
+[ext_resource type="Script" path="res://src/options_menu.gd" id="2_545ej"]
+[ext_resource type="Theme" uid="uid://bjxk1xqmcp0ov" path="res://assets/panel_container.tres" id="3_m3cx7"]
+[ext_resource type="Theme" uid="uid://bwxsv6uwdv14g" path="res://assets/menu.tres" id="4_ibfpc"]
+[ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/title_label.tres" id="5_vnog8"]
+[ext_resource type="Theme" uid="uid://dch4c6hrobjhl" path="res://assets/back_button.tres" id="6_m1l4s"]
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_5ahym")
+script = ExtResource("2_545ej")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -536.0
+offset_top = -364.0
+offset_right = 536.0
+offset_bottom = 364.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_m3cx7")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_5ahym")
+theme_override_constants/separation = 32
+
+[node name="VideoLabel" type="Label" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "VIDEO"
+
+[node name="FullscreenCheck" type="CheckBox" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "FULLSCREEN"
+
+[node name="ScreenShakeCheck" type="CheckBox" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "SCREEN SHAKING"
+
+[node name="MASeparator" type="Control" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AudioLabel" type="Label" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "AUDIO"
+
+[node name="MasterVolumeLabel" type="Label" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "MASTER VOLUME"
+
+[node name="MasterVolumeContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MasterVolumeSlider" type="HSlider" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/MasterVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/MasterVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SfxVolumeLabel" type="Label" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "SFX VOLUME"
+
+[node name="SfxVolumeContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SfxVolumeSlider" type="HSlider" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/SfxVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/SfxVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AKSeparator" type="Control" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="KeybindingContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="KeybindingButton" type="Button" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/KeybindingContainer"]
+layout_mode = 2
+theme = ExtResource("4_ibfpc")
+theme_override_font_sizes/font_size = 36
+text = "CONFIGURE KEYBINDS"
+
+[node name="Control" type="Control" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/KeybindingContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -56.0
+offset_top = 133.0
+offset_right = 64.0
+offset_bottom = 181.0
+grow_horizontal = 2
+theme = ExtResource("5_vnog8")
+text = "SETTINGS"
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 72.0
+offset_right = 219.0
+offset_bottom = 120.0
+theme = ExtResource("6_m1l4s")
+text = "<- BACK"
+
+[connection signal="toggled" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/FullscreenCheck" to="." method="_on_fullscreen_check_toggled"]
+[connection signal="toggled" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/ScreenShakeCheck" to="." method="_on_screen_shake_check_toggled"]
+[connection signal="drag_ended" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/MasterVolumeContainer/MasterVolumeSlider" to="." method="_on_master_volume_slider_drag_ended"]
+[connection signal="drag_ended" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/SfxVolumeContainer/SfxVolumeSlider" to="." method="_on_sfx_volume_slider_drag_ended"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/KeybindingContainer/KeybindingButton" to="." method="_on_keybinding_button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

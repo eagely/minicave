@@ -1,101 +1,72 @@
 extends Node
 
 var in_game = false
-var menu
-var keybinds
-var options
+@onready var title_screen = $UI/TitleScreen
+@onready var keybinds = $UI/KeybindMenu
+@onready var options = $UI/OptionsMenu
 var level
 var player
 var mob_scene = preload("res://scenes/mob.tscn")
 var mobs = []
 
-var lvlnum = 1
-
 func _ready():
-	menu = $UI/Menu
-	keybinds = $UI/KeybindMenu
-	options = $UI/OptionsMenu
+	GameManager.main = self
 	level = $Level
 	player = $Player
-	main_menu()
-	set_process_input(true)
+	GameManager.load_next_level()
+	show_title_screen()
 	if level.has_node("Tutorial"):
 		level.get_node("Tutorial").hide()
-	if player.has_node("HealthBarLayer"):
-		player.get_node("HealthBarLayer").hide()
-	
-func _process(delta):
-	if Input.is_action_just_pressed("escape"):
-			if keybinds.visible:
-				options_menu()
-			elif menu.visible:
-				start()
-			else:
-				main_menu()
-	elif Input.is_action_just_pressed("enter"):
-			if menu.visible:
-				start()
+	player.hide_health_bar()
 
-func start():
-	if (in_game):
+func start_or_continue():
+	if in_game:
 		unpause()
 	else:
-		player.start($StartPosition.position)
-		clear_mobs()
-		for spawner in level.get_node("MobSpawners").get_children():
-			var mob_instance = mob_scene.instantiate()
-			mob_instance.position = spawner.position
-			add_child(mob_instance)
-			mobs.append(mob_instance)
-
-		unpause()
+		start_new()
 		in_game = true
+
+func start_new():
+	player.start($StartPosition.position)
+	clear_mobs()
+	for spawner in level.get_node("MobSpawners").get_children():
+		var mob_instance = mob_scene.instantiate()
+		mob_instance.position = spawner.position
+		add_child(mob_instance)
+		mobs.append(mob_instance)
+	unpause()
 
 func unpause():
 	get_tree().paused = false
-	keybinds.hide()
-	options.hide()
-	menu.hide()
+	GameManager.close(title_screen)
+	GameManager.close(options)
+	GameManager.close(keybinds)
 	level.show()
 	if level.has_node("Tutorial"):
 		level.get_node("Tutorial").show()
 	player.show()
-	if player.has_node("HealthBarLayer"):
-		player.get_node("HealthBarLayer").show()
+	player.get_node("HealthBarLayer").show()
 	for mob in mobs:
-		if is_instance_valid(mob):		
+		if is_instance_valid(mob):
 			mob.show()
 
-func main_menu():
+func show_title_screen():
 	get_tree().paused = true
-	level.hide()	
+	level.hide()
 	if level.has_node("Tutorial"):
 		level.get_node("Tutorial").hide()
 	player.hide()
-	if player.has_node("HealthBarLayer"):
-		player.get_node("HealthBarLayer").hide()
+	player.get_node("HealthBarLayer").hide()
 	for mob in mobs:
 		if is_instance_valid(mob):
 			mob.hide()
-	keybinds.hide()
-	options.hide()
-	menu.show()
+	GameManager.open(title_screen)
 
-func options_menu():
-	get_tree().paused = true	
-	menu.hide()
-	keybinds.hide()
-	options.show()
+func show_options():
+	GameManager.open(options)
 
-func keybinds_menu():
-	options.hide()
-	keybinds.show()
-	get_tree().paused = true
-	
-func load_next_level():
-	if level.has_node("Tutorial"):
-		level.get_node("Tutorial").hide()
-	var next = load("res://levels/level" + str(lvlnum) + ".tscn").instantiate()
+func load_level(id):
+	var next = load("res://levels/level" + str(id) + ".tscn").instantiate()
 	var cur = get_node("Level")
 	if cur:
 		remove_child(cur)
@@ -103,10 +74,8 @@ func load_next_level():
 	next.name = "Level"
 	add_child(next)
 	level = $Level
-	in_game = false
-	start()
-	lvlnum += 1
-
+	start_new()
+	
 func reload_level():
 	if level.has_node("Tutorial"):
 		var tutorial = level.get_node("Tutorial")
@@ -114,8 +83,7 @@ func reload_level():
 			label.get_child("Label").text = ""
 		tutorial.get_child("Walk").get_child("Label").text = "Press A or D to walk"
 		tutorial.show()
-	in_game = false
-	start()
+	start_new()
 
 func clear_mobs():
 	for mob in mobs:
@@ -124,8 +92,35 @@ func clear_mobs():
 	mobs.clear()
 
 func _on_player_level_completed():
-	load_next_level()
-
+	GameManager.load_next_level()
 
 func _on_player_died():
 	reload_level()
+	
+func hide_all_non_menus():
+	level.hide()
+	if level.has_node("Tutorial"):
+		level.get_node("Tutorial").hide()
+	player.hide()
+	player.get_node("HealthBarLayer").hide()
+	for mob in mobs:
+		if is_instance_valid(mob):
+			mob.hide()
+			
+func _input(event):
+	if event.is_action_pressed("ui_cancel") and not event.is_echo():
+		if keybinds.visible:
+			show_options()
+		elif title_screen.visible:
+			start_or_continue()
+		else:
+			show_title_screen()
+	elif event.is_action_pressed("ui_accept") and not event.is_echo():
+		if title_screen.visible:
+			start_or_continue()
+
+func _on_title_screen_open_options():
+	GameManager.open(options)
+
+func _on_options_menu_open_keybinds():
+	GameManager.open(keybinds)

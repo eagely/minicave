@@ -1,6 +1,6 @@
-extends Control
+extends Menu
 
-@onready var input_button_scene = preload("res://scenes/input_button.tscn")
+@onready var input_button_scene = preload("res://scenes/menu/input_button.tscn")
 @onready var action_list = $PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList
 
 var is_remapping = false
@@ -74,3 +74,7 @@ func _on_reset_button_pressed():
 		if events.size() > 0:
 			ConfigFileHandler.save_keybind(action, events[0])
 	create_action_list()
+
+
+func _on_back_button_pressed():
+	GameManager.back()

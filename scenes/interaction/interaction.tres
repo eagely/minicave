@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://c7w2jmhtu7j6y"]
+
+[ext_resource type="FontFile" uid="uid://cs6ulgaffsemh" path="res://assets/fonts/superstar_memesbruh03.ttf" id="1_ii1su"]
+
+[resource]
+Label/font_sizes/font_size = 24
+Label/fonts/font = ExtResource("1_ii1su")

@@ -449,7 +449,7 @@ height = 80.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_grihh"]
 size = Vector2(64, 72)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_65cv8")
 

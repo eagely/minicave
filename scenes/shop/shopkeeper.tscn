@@ -1,0 +1,57 @@
+[gd_scene load_steps=10 format=3 uid="uid://ft8knfn8hwuf"]
+
+[ext_resource type="Texture2D" uid="uid://bfl7tfk5k11nv" path="res://assets/shop/wizard.png" id="1_7ufsu"]
+[ext_resource type="Script" path="res://scenes/shop/shopkeeper.gd" id="1_bf7jy"]
+[ext_resource type="PackedScene" uid="uid://ceocn4n8rpyke" path="res://scenes/interaction/interaction_area.tscn" id="2_fwo6r"]
+[ext_resource type="PackedScene" uid="uid://cnvr8g8udjkwf" path="res://scenes/shop/shop.tscn" id="4_ptas8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ap1be"]
+atlas = ExtResource("1_7ufsu")
+region = Rect2(400, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qvr86"]
+atlas = ExtResource("1_7ufsu")
+region = Rect2(640, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mk5m1"]
+atlas = ExtResource("1_7ufsu")
+region = Rect2(720, 0, 80, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wp3u4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ap1be")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qvr86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk5m1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x8qu4"]
+radius = 128.0
+
+[node name="Shopkeeper" type="Node2D"]
+script = ExtResource("1_bf7jy")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_wp3u4")
+animation = &"idle"
+
+[node name="InteractionArea" parent="." instance=ExtResource("2_fwo6r")]
+
+[node name="Circle" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_x8qu4")
+
+[node name="ShopLayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="Shop" parent="ShopLayer" instance=ExtResource("4_ptas8")]
+visible = false

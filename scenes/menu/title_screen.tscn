@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/menu.gd" id="1_r5cuc"]
 [ext_resource type="Theme" uid="uid://bwxsv6uwdv14g" path="res://assets/menu.tres" id="1_wc5xd"]
 
-[node name="Menu" type="Control"]
+[node name="TitleScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,10 +35,15 @@ text = "play"
 layout_mode = 2
 text = "options"
 
+[node name="Tutorial" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "tutorial"
+
 [node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "quit"
 
 [connection signal="pressed" from="VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="VBoxContainer/Tutorial" to="." method="_on_tutorial_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

@@ -30,6 +30,7 @@ var normal_cursor = preload("res://assets/cursors/png/cursor-pointer-18.png")
 
 func _ready():
 	screen_size = get_viewport_rect().size
+	$HealthBarLayer.hide()
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("debug_level_completed"):
@@ -173,4 +174,7 @@ func _on_melee_area_area_entered(area):
 		area.get_parent().call("hit", str)
 
 func _on_hit_collision_delay_timeout():
-	$MeleeArea/Rectangle.disabled = true	
+	$MeleeArea/Rectangle.disabled = true
+	
+func hide_health_bar():
+	$HealthBarLayer.hide()

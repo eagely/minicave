@@ -535,7 +535,6 @@ offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_o4mke")
-theme_override_font_sizes/font_size = 48
 text = "Press A or D to walk"
 horizontal_alignment = 1
 
@@ -609,7 +608,6 @@ offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_o4mke")
-theme_override_font_sizes/font_size = 48
 horizontal_alignment = 1
 
 [node name="Teleport" type="Control" parent="Tutorial"]
@@ -634,7 +632,6 @@ offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_o4mke")
-theme_override_font_sizes/font_size = 48
 horizontal_alignment = 1
 
 [node name="WalkExit" type="Area2D" parent="Tutorial"]
@@ -671,3 +668,4 @@ position = Vector2(1792, 992)
 [connection signal="area_exited" from="Tutorial/JumpExit" to="." method="show_duck"]
 [connection signal="area_exited" from="Tutorial/DuckExit" to="." method="show_attack"]
 [connection signal="area_entered" from="Tutorial/AttackEnter" to="." method="show_teleport"]
+[connection signal="area_entered" from="Finish" to="." method="_on_finish_area_entered"]

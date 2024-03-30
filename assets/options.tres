@@ -1,5 +1,6 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://c50tb4imdqxkj"]
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://c50tb4imdqxkj"]
 
+[ext_resource type="FontFile" uid="uid://cs6ulgaffsemh" path="res://assets/fonts/superstar_memesbruh03.ttf" id="1_fr1w8"]
 [ext_resource type="FontFile" uid="uid://bcjhr4v2tc0iq" path="res://assets/fonts/Pixellari.ttf" id="1_mtx0g"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bh7ej"]
@@ -14,14 +15,15 @@
 
 [resource]
 default_font = ExtResource("1_mtx0g")
-Button/fonts/font = ExtResource("1_mtx0g")
+Button/font_sizes/font_size = 24
+Button/fonts/font = ExtResource("1_fr1w8")
 Button/styles/focus = SubResource("StyleBoxEmpty_bh7ej")
 Button/styles/hover = SubResource("StyleBoxEmpty_ow4w8")
 Button/styles/normal = SubResource("StyleBoxEmpty_ghcox")
 Button/styles/pressed = SubResource("StyleBoxEmpty_prgvo")
 CheckBox/constants/h_separation = 16
-CheckBox/font_sizes/font_size = 48
-CheckBox/fonts/font = ExtResource("1_mtx0g")
+CheckBox/font_sizes/font_size = 24
+CheckBox/fonts/font = ExtResource("1_fr1w8")
 Label/colors/font_color = Color(1, 1, 1, 1)
 Label/colors/font_outline_color = Color(1, 1, 1, 1)
 Label/colors/font_shadow_color = Color(0, 0, 0, 0)
@@ -30,6 +32,6 @@ Label/constants/outline_size = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
 Label/constants/shadow_outline_size = 1
-Label/font_sizes/font_size = 48
+Label/font_sizes/font_size = 36
 Label/fonts/font = ExtResource("1_mtx0g")
 Label/styles/normal = SubResource("StyleBoxEmpty_qoow1")

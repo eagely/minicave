@@ -1,8 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://w2gyww87g5j3"]
+[gd_scene load_steps=10 format=3 uid="uid://w2gyww87g5j3"]
 
-[ext_resource type="PackedScene" uid="uid://m8y8lml1kf11" path="res://scenes/input_button.tscn" id="1_2b0sf"]
+[ext_resource type="PackedScene" uid="uid://m8y8lml1kf11" path="res://scenes/menu/input_button.tscn" id="1_2b0sf"]
 [ext_resource type="Script" path="res://src/keybind_menu.gd" id="1_iigj6"]
 [ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/options.tres" id="1_po5pi"]
+[ext_resource type="Theme" uid="uid://bjxk1xqmcp0ov" path="res://assets/panel_container.tres" id="2_s4b7v"]
+[ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/title_label.tres" id="5_3jarr"]
+[ext_resource type="Theme" uid="uid://dch4c6hrobjhl" path="res://assets/back_button.tres" id="6_v3ani"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jkeme"]
 
@@ -34,6 +37,7 @@ offset_right = 536.0
 offset_bottom = 364.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_s4b7v")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
@@ -52,6 +56,7 @@ size_flags_vertical = 3
 [node name="ActionList" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 8
 
 [node name="InputButton" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList" instance=ExtResource("1_2b0sf")]
 layout_mode = 2
@@ -65,4 +70,27 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_34u0s")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ion8r")
 text = "Reset to Default"
 
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -56.0
+offset_top = 133.0
+offset_right = 64.0
+offset_bottom = 181.0
+grow_horizontal = 2
+theme = ExtResource("5_3jarr")
+text = "KEYBINDS"
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 1
+offset_left = 72.0
+offset_top = 72.0
+offset_right = 219.0
+offset_bottom = 120.0
+theme = ExtResource("6_v3ani")
+text = "<- BACK"
+
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
