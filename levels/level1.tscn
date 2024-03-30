@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dad343s6j6ni7"]
+[gd_scene load_steps=7 format=3 uid="uid://dad343s6j6ni7"]
 
 [ext_resource type="PackedScene" uid="uid://dn1xkadhtfg5e" path="res://scenes/finish.tscn" id="2_0nfgk"]
 [ext_resource type="Texture2D" uid="uid://cml6o4r8qb6f3" path="res://assets/bricks.png" id="2_p0ytl"]
-[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/options.tres" id="3_o4mke"]
+[ext_resource type="PackedScene" uid="uid://cc4d80oq4p5ro" path="res://scenes/interactable/spikes.tscn" id="4_o2pu3"]
+[ext_resource type="PackedScene" uid="uid://bm3msle7ctev" path="res://scenes/shop/coin.tscn" id="5_s5jf8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_itcuw"]
 texture = ExtResource("2_p0ytl")
@@ -508,37 +509,33 @@ position = Vector2(672, 408)
 position = Vector2(608, 800)
 
 [node name="Marker2D5" type="Marker2D" parent="MobSpawners"]
-position = Vector2(1152, 832)
+position = Vector2(1192, 808)
 
 [node name="Marker2D6" type="Marker2D" parent="MobSpawners"]
 position = Vector2(256, 744)
 
 [node name="Marker2D7" type="Marker2D" parent="MobSpawners"]
-position = Vector2(1408, 832)
+position = Vector2(1648, 1000)
 
 [node name="Finish" parent="." instance=ExtResource("2_0nfgk")]
 position = Vector2(1792, 992)
 
-[node name="MobsIntroduction" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 384.0
-offset_top = 64.0
-offset_right = 1536.0
-offset_bottom = 320.0
+[node name="Spikes" parent="." instance=ExtResource("4_o2pu3")]
+position = Vector2(896, 376)
 
-[node name="Label" type="Label" parent="MobsIntroduction"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -170.5
-offset_top = -8.0
-offset_right = 170.5
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("3_o4mke")
-text = "Watch out! These tiny slimes can really hurt."
+[node name="CoinHolder" type="Node2D" parent="."]
+
+[node name="Coin" parent="CoinHolder" instance=ExtResource("5_s5jf8")]
+position = Vector2(960, 368)
+
+[node name="Coin2" parent="CoinHolder" instance=ExtResource("5_s5jf8")]
+position = Vector2(992, 368)
+
+[node name="Coin3" parent="CoinHolder" instance=ExtResource("5_s5jf8")]
+position = Vector2(1024, 368)
+
+[node name="Coin4" parent="CoinHolder" instance=ExtResource("5_s5jf8")]
+position = Vector2(1056, 368)
+
+[node name="Coin5" parent="CoinHolder" instance=ExtResource("5_s5jf8")]
+position = Vector2(1088, 368)

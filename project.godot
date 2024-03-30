@@ -18,7 +18,7 @@ config/features=PackedStringArray("4.2", "GL Compatibility")
 
 ConfigFileHandler="*res://singletons/ConfigFileHandler.gd"
 GameManager="*res://singletons/GameManager.gd"
-InteractionManager="*res://scenes/interaction/interaction_manager.tscn"
+InteractionManager="*res://assets/interaction/interaction_manager.tscn"
 
 [display]
 

@@ -1,0 +1,78 @@
+[gd_scene load_steps=13 format=3 uid="uid://bm3msle7ctev"]
+
+[ext_resource type="Script" path="res://scenes/shop/coin.gd" id="1_1cs44"]
+[ext_resource type="Texture2D" uid="uid://cknmc5r2si4w3" path="res://assets/shop/Coin_Gems/MonedaD.png" id="2_3w733"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bv83x"]
+radius = 8.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_u4pia"]
+load_path = "res://.godot/imported/MonedaD.png-2be4ec59df0edd75d801a2546351a778.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0vtj"]
+atlas = SubResource("CompressedTexture2D_u4pia")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b15q0"]
+atlas = SubResource("CompressedTexture2D_u4pia")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uaabj"]
+atlas = ExtResource("2_3w733")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cd58m"]
+atlas = SubResource("CompressedTexture2D_u4pia")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmfvq"]
+atlas = SubResource("CompressedTexture2D_u4pia")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="Animation" id="Animation_a6erx"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0001, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [SubResource("AtlasTexture_b15q0"), SubResource("AtlasTexture_uaabj"), SubResource("AtlasTexture_b15q0"), SubResource("AtlasTexture_cd58m"), SubResource("AtlasTexture_n0vtj"), SubResource("AtlasTexture_lmfvq")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aubg4"]
+_data = {
+"idle": SubResource("Animation_a6erx")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mlwl5"]
+radius = 8.0
+
+[node name="Coin" type="RigidBody2D"]
+collision_layer = 4
+script = ExtResource("1_1cs44")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bv83x")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_n0vtj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_aubg4")
+}
+
+[node name="HitboxArea" type="Area2D" parent="."]
+monitorable = false
+
+[node name="Circle" type="CollisionShape2D" parent="HitboxArea"]
+shape = SubResource("CircleShape2D_mlwl5")
+
+[connection signal="area_entered" from="HitboxArea" to="." method="_on_hitbox_area_area_entered"]

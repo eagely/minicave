@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://b3weat1gqoefh"]
+[gd_scene load_steps=9 format=3 uid="uid://b3weat1gqoefh"]
 
 [ext_resource type="PackedScene" uid="uid://bukr5hyq68ulg" path="res://scenes/menu/title_screen.tscn" id="1_0kc2i"]
 [ext_resource type="Script" path="res://src/main.gd" id="1_rwanx"]
 [ext_resource type="PackedScene" uid="uid://dxuaxee66xh0s" path="res://scenes/player.tscn" id="1_sfphe"]
 [ext_resource type="PackedScene" uid="uid://cu2erer4c0gaq" path="res://levels/level0.tscn" id="6_b3vnx"]
 [ext_resource type="PackedScene" uid="uid://w2gyww87g5j3" path="res://scenes/menu/keybind_menu.tscn" id="6_kmhoo"]
-[ext_resource type="AudioStream" uid="uid://bwwrgjmxiiyph" path="res://assets/sfx/underground.mp3" id="7_7f278"]
 [ext_resource type="PackedScene" uid="uid://csaidm4ve14hg" path="res://scenes/menu/options_menu.tscn" id="7_rkhj1"]
+[ext_resource type="AudioStream" uid="uid://822ko6p0ber4" path="res://assets/sfx/coin.wav" id="8_b5ufc"]
+[ext_resource type="AudioStream" uid="uid://etscoubhtoub" path="res://assets/sfx/hit.wav" id="8_iwsv7"]
 
 [node name="Main" type="Node"]
 process_mode = 3
@@ -36,8 +37,17 @@ visible = false
 [node name="OptionsMenu" parent="UI" instance=ExtResource("7_rkhj1")]
 visible = false
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("7_7f278")
+[node name="Sfx" type="Node" parent="."]
+
+[node name="coin" type="AudioStreamPlayer2D" parent="Sfx"]
+stream = ExtResource("8_b5ufc")
+
+[node name="hit" type="AudioStreamPlayer2D" parent="Sfx"]
+stream = ExtResource("8_iwsv7")
+
+[node name="Music" type="Node" parent="."]
+
+[node name="underground" type="AudioStreamPlayer2D" parent="Music"]
 autoplay = true
 
 [connection signal="died" from="Player" to="." method="_on_player_died"]

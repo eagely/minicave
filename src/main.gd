@@ -7,6 +7,9 @@ var in_game = false
 var level
 var player
 var mob_scene = preload("res://scenes/mob.tscn")
+var coin_scene = preload("res://scenes/shop/coin.tscn")
+var red_coin_scene = preload("res://scenes/shop/red_coin.tscn")
+var gray_coin_scene = preload("res://scenes/shop/gray_coin.tscn")
 var mobs = []
 
 func _ready():
@@ -18,6 +21,10 @@ func _ready():
 	if level.has_node("Tutorial"):
 		level.get_node("Tutorial").hide()
 	player.hide_health_bar()
+	$Music/underground.stream = load("res://assets/sfx/underground.ogg")
+	$Music/underground.stream.loop = true
+	$Music/underground.play()	
+
 
 func start_or_continue():
 	if in_game:
@@ -34,6 +41,7 @@ func start_new():
 		mob_instance.position = spawner.position
 		add_child(mob_instance)
 		mobs.append(mob_instance)
+		var err = mob_instance.connect("died", _on_mob_died)
 	unpause()
 
 func unpause():
@@ -124,3 +132,34 @@ func _on_title_screen_open_options():
 
 func _on_options_menu_open_keybinds():
 	GameManager.open(keybinds)
+	
+func _on_mob_died(pos, type):
+	var coin_offset = 16
+	var positions = [
+		pos - Vector2(coin_offset * 2, 0), # 2 positions to the left
+		pos - Vector2(coin_offset, 0),     # 1 position to the left
+		pos,                               # Original position
+		pos + Vector2(coin_offset, 0),     # 1 position to the right
+		pos + Vector2(coin_offset * 2, 0)  # 2 positions to the right
+	]
+
+	match type:
+		0:
+			for i in range(positions.size()):
+				var coin = coin_scene.instantiate()
+				coin.position = positions[i]
+				add_child(coin)
+		1:
+			for i in range(positions.size()):
+				var coin = coin_scene.instantiate() if i != 2 else red_coin_scene.instantiate()
+				coin.position = positions[i]
+				add_child(coin)
+		2:
+			for i in range(positions.size()):
+				var coin
+				if i == 1 or i == 3:
+					coin = gray_coin_scene.instantiate()
+				else:
+					coin = coin_scene.instantiate()
+				coin.position = positions[i]
+				add_child(coin)

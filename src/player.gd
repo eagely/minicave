@@ -6,11 +6,12 @@ signal died
 @onready var health_bar = $UI/HealthBar
 
 const SPEED = 300
-const MAX_JUMP = -250
+const MAX_JUMP = -300
 const STANDING_HEIGHT = 80
 const DUCKING_HEIGHT = 40
 var jump = MAX_JUMP
 var max_jump_time = 0.5
+var is_jumping_descent = false
 var jump_time = 0
 var is_jumping = false
 var max_hp = 100
@@ -30,7 +31,7 @@ var tp_coords
 var teleport_cursor = preload("res://assets/cursors/png/cursor-pointer-35.png")
 var normal_cursor = preload("res://assets/cursors/png/cursor-pointer-18.png")
 var is_leaping = false
-
+var jump_buffer_timer = 0.5
 
 # Animations
 var last_animation = null
@@ -41,17 +42,14 @@ var facing_right = true
 var can_hit = true
 
 
-# Items
-var items = {
-	"teleportation": 0,
-	"leaping": 0,
-	"strength": 0
-}
+# GameManager.items
+
 
 func _ready():
 	GameManager.player = self	
 	screen_size = get_viewport_rect().size
 	$UI.hide()
+	GameManager.connect("gained_coins", _on_gained_coins)
 
 func _physics_process(delta):
 	
@@ -64,34 +62,51 @@ func _physics_process(delta):
 		velocity.x = 0
 	
 	if not is_on_floor():
-		if velocity.y > 0:
-			velocity.y += gravity * 1.5 * delta
-		else:
+		if velocity.y < 0:
 			velocity.y += gravity * delta
+		else:
+			velocity.y += gravity * delta * (2.25 if is_jumping_descent else 1.5)
 	else:
-		velocity.y = 0
+		is_jumping = false
+		if jump_buffer_timer > 0 and not is_jumping:
+			velocity.y = jump / 2 * (3 if is_leaping else 1)
+			is_jumping = true
+			jump_time = 0
+			jump_buffer_timer = 0
+
 		
 	var can_jump = is_on_floor()
 	var jump_pressed = Input.is_action_just_pressed("jump")
-	
-	if can_jump and jump_pressed:
+	var jump_held = Input.is_action_pressed("jump")
+
+	if not is_on_floor() and jump_pressed:
+		jump_buffer_timer = 0.5
+
+	if is_on_floor() and jump_buffer_timer > 0 and not is_jumping:
 		velocity.y = jump / 2 * (3 if is_leaping else 1)
 		is_jumping = true
 		jump_time = 0
-		
-	if is_jumping and Input.is_action_pressed("jump"):
-		if jump_time < max_jump_time:
-			velocity.y += jump * 2 * delta * (3 if is_leaping else 1)
-			jump_time += delta
-		else:
-			is_jumping = false
-			
-	if is_jumping and not Input.is_action_pressed("jump"):
+		jump_buffer_timer = 0
+
+	if jump_buffer_timer > 0:
+		jump_buffer_timer -= delta
+		if jump_buffer_timer <= 0 or is_jumping:
+			jump_buffer_timer = 0
+
+	if is_on_floor() and jump_pressed and can_jump and not is_jumping:
+		velocity.y = jump / 2 * (3 if is_leaping else 1)
+		is_jumping = true
+		jump_time = 0
+
+	if is_jumping and jump_held and jump_time < max_jump_time:
+		velocity.y += jump * 2 * delta * (3 if is_leaping else 1)
+		jump_time += delta
+	elif is_jumping:
 		is_jumping = false
 		is_leaping = false
-		
-		
-		
+		is_jumping_descent = true
+
+
 		
 	# Animations
 	if not $Animation.is_playing() or not "duck unduck teleport unteleport attack".contains(last_animation):
@@ -203,6 +218,7 @@ func hit(damage):
 			health_bar.health = hp
 		$Camera.shake()
 		$Camera.frame_freeze(0.05, 0.5)
+		GameManager.sound("hit")
 
 func iframes():
 	can_take_damage = false
@@ -224,7 +240,7 @@ func hide_health_bar():
 func perform_teleportation(skill):
 	if awaiting_click_for_teleport:
 		awaiting_click_for_teleport = false
-	elif items["teleportation"] <= 0:
+	elif GameManager.items["teleportation"] <= 0:
 		$Camera.shake()
 	else:
 		awaiting_click_for_teleport = true
@@ -234,7 +250,7 @@ func perform_teleportation(skill):
 func perform_leaping(skill):
 	if is_leaping:
 		is_leaping = false
-	elif items["leaping"] <= 0:
+	elif GameManager.items["leaping"] <= 0:
 		$Camera.shake()
 	else:
 		is_leaping = true
@@ -242,7 +258,7 @@ func perform_leaping(skill):
 
 
 func perform_strength(skill):
-	if items["strength"] <= 0:
+	if GameManager.items["strength"] <= 0:
 		$Camera.shake()
 	else:
 		$StrengthTimer.start()
@@ -252,3 +268,6 @@ func perform_strength(skill):
 
 func _on_strength_timer_timeout():
 	strength /= 2
+	
+func _on_gained_coins(amt):
+	$UI/CoinControl/Label.text = str(GameManager.coins)

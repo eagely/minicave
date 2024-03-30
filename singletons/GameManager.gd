@@ -1,10 +1,20 @@
 extends Node
 
+signal gained_coins(amt)
+
 const ITEM_TO_SLOT_INDEX = {
 	"teleportation": 0,
 	"leaping": 1,
 	"strength": 2
 }
+
+var items = {
+	"teleportation": 0,
+	"leaping": 0,
+	"strength": 0
+}
+
+var coins = 0
 
 var main
 var player
@@ -56,13 +66,23 @@ func back():
 
 
 func add_item(name):
-	player.items[name] += 1
-	if player.items[name] > 0:
+	items[name] += 1
+	if items[name] > 0:
 		player.get_node("UI").get_node("Hotbar").slots[ITEM_TO_SLOT_INDEX[name]].show_full()
 	
 func remove_item(name):
-	player.items[name] -= 1
-	if player.items[name] <= 0:	
+	items[name] -= 1
+	if items[name] <= 0:	
 		player.get_node("UI").get_node("Hotbar").slots[ITEM_TO_SLOT_INDEX[name]].show_empty()
-		player.items[name] = 0
+		items[name] = 0
+		
+func gain_coins(coins_gained):
+	coins += coins_gained
+	emit_signal("gained_coins", coins_gained)
+	
+func sound(name):
+	main.get_node("Sfx").get_node(name).play()
+	
+func music(name):
+	main.get_node("Music").get_node(name).play()
 	

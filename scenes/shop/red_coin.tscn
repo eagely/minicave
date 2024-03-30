@@ -1,0 +1,72 @@
+[gd_scene load_steps=11 format=3 uid="uid://clhca6d8jdv83"]
+
+[ext_resource type="Script" path="res://scenes/shop/red_coin.gd" id="1_4dcfv"]
+[ext_resource type="Texture2D" uid="uid://ceri72aemi16y" path="res://assets/shop/Coin_Gems/MonedaR.png" id="2_5xa3u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e5fes"]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aq34p"]
+atlas = ExtResource("2_5xa3u")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e207h"]
+atlas = ExtResource("2_5xa3u")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fnvsc"]
+atlas = ExtResource("2_5xa3u")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eq4lp"]
+atlas = ExtResource("2_5xa3u")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="Animation" id="Animation_uef1n"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [SubResource("AtlasTexture_e207h"), SubResource("AtlasTexture_aq34p"), SubResource("AtlasTexture_fnvsc"), SubResource("AtlasTexture_eq4lp"), SubResource("AtlasTexture_e207h")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_klboc"]
+_data = {
+"idle": SubResource("Animation_uef1n")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pviu0"]
+radius = 8.0
+
+[node name="RedCoin" type="RigidBody2D"]
+collision_layer = 4
+script = ExtResource("1_4dcfv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_e5fes")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_aq34p")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+libraries = {
+"": SubResource("AnimationLibrary_klboc")
+}
+
+[node name="HitboxArea" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea"]
+shape = SubResource("CircleShape2D_pviu0")
+
+[connection signal="area_entered" from="HitboxArea" to="." method="_on_hitbox_area_area_entered"]

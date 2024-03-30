@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal died(pos, type)
+
 @onready var health_bar = $HealthBar
 var speed = 150
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -26,7 +28,8 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	
-	if (not ($RayCastDown.is_colliding() and $RayCastDown.get_collider().get_parent().name != "Player") or is_on_wall()) and is_on_floor():
+	var collider = $RayCastDown.get_collider()
+	if ((not $RayCastDown.is_colliding() or (collider and collider.get_parent().name == "Player")) or is_on_wall()) and is_on_floor():
 		flip()
 	if not $Animation.is_playing() or not last_animation == "hit":
 		play("walk")
@@ -67,6 +70,7 @@ func hit(damage):
 
 func _on_animation_finished():
 	if last_animation == "die":
+		emit_signal("died", global_position, rand_index)
 		queue_free()
 	elif last_animation == "hit":
 		hurt = false
