@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dfgc5tfjvarjr"]
 
 [ext_resource type="Script" path="res://scenes/bossfight/boss.gd" id="1_11q8t"]
-[ext_resource type="Script" path="res://assets/interaction/interaction_area.gd" id="1_83y5d"]
+[ext_resource type="Script" path="res://scenes/interaction/interaction_area.gd" id="1_83y5d"]
 [ext_resource type="PackedScene" uid="uid://d1lnkbgnkc0hj" path="res://scenes/health_bar.tscn" id="3_ufpgn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d57no"]

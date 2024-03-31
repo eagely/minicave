@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-signal level_completed
 signal died
 
 @onready var health_bar = $UI/HealthBar
@@ -42,14 +41,15 @@ var facing_right = true
 var can_hit = true
 
 
-# GameManager.items
-
+var coins_on_cur_level = 0
+var last_checked_level = 1
 
 func _ready():
 	GameManager.player = self	
 	screen_size = get_viewport_rect().size
 	$UI.hide()
 	GameManager.connect("gained_coins", _on_gained_coins)
+	GameManager.connect("level_loaded", _on_level_loaded)
 
 func _physics_process(delta):
 	
@@ -213,7 +213,8 @@ func hit(damage):
 		hp -= damage
 		if hp <= 0:
 			emit_signal("died")
-			health_bar.health = 0
+			health_bar.health = max_hp
+			GameManager.lose_coins(coins_on_cur_level)
 		else:
 			health_bar.health = hp
 		$Camera.shake()
@@ -270,4 +271,20 @@ func _on_strength_timer_timeout():
 	strength /= 2
 	
 func _on_gained_coins(amt):
+	if amt > 0 and last_checked_level == GameManager.cur_level - 1:
+		coins_on_cur_level += amt
+	else:
+		coins_on_cur_level = 0
 	$UI/CoinControl/Label.text = str(GameManager.coins)
+	
+func _on_level_loaded(id):
+	if id != last_checked_level:
+		last_checked_level = id
+		coins_on_cur_level = 0
+		if 5 - (id % 5) != 5:
+			$UI/UntilBoss.text = "Boss spawns in " + str(5 - (id % 5))
+		else:
+			$UI/UntilBoss.text = "scary boss name"
+func _input(event):
+	if event.is_action_pressed("debug_complete_level") and not event.is_echo():
+		GameManager.load_next_level()

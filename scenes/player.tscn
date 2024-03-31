@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://dxuaxee66xh0s"]
+[gd_scene load_steps=69 format=3 uid="uid://dxuaxee66xh0s"]
 
 [ext_resource type="Script" path="res://src/player.gd" id="1_65cv8"]
 [ext_resource type="Texture2D" uid="uid://2a6063bew80f" path="res://assets/hooded.png" id="2_s65be"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://nqylemsgum07" path="res://scenes/hotbar/hotbar.tscn" id="5_83tp8"]
 [ext_resource type="Texture2D" uid="uid://cknmc5r2si4w3" path="res://assets/shop/Coin_Gems/MonedaD.png" id="6_edqyc"]
 [ext_resource type="FontFile" uid="uid://d2nanr55e7tpq" path="res://assets/fonts/m5x7.ttf" id="7_ge5ve"]
+[ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/until_boss_label.tres" id="8_ef6vy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g3rof"]
 radius = 20.0
@@ -509,10 +510,8 @@ one_shot = true
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="HealthBar" parent="UI" instance=ExtResource("4_jfqm8")]
-offset_left = 32.0
-offset_top = 32.0
-offset_right = 288.0
-offset_bottom = 64.0
+offset_right = 256.0
+offset_bottom = 32.0
 
 [node name="Hotbar" parent="UI" instance=ExtResource("5_83tp8")]
 anchors_preset = 7
@@ -559,6 +558,17 @@ theme_override_font_sizes/font_size = 36
 text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="UntilBoss" type="Label" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 16.0
+grow_horizontal = 2
+theme = ExtResource("8_ef6vy")
+text = "Boss spawns in 4"
 
 [node name="StrengthTimer" type="Timer" parent="."]
 wait_time = 10.0

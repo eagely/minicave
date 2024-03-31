@@ -1,15 +1,9 @@
-[gd_resource type="Theme" load_steps=8 format=3 uid="uid://c50tb4imdqxkj"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://c50tb4imdqxkj"]
 
 [ext_resource type="FontFile" uid="uid://cs6ulgaffsemh" path="res://assets/fonts/superstar_memesbruh03.ttf" id="1_fr1w8"]
 [ext_resource type="FontFile" uid="uid://bcjhr4v2tc0iq" path="res://assets/fonts/Pixellari.ttf" id="1_mtx0g"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bh7ej"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ow4w8"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ghcox"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_prgvo"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1oer"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qoow1"]
 
@@ -17,10 +11,10 @@
 default_font = ExtResource("1_mtx0g")
 Button/font_sizes/font_size = 24
 Button/fonts/font = ExtResource("1_fr1w8")
-Button/styles/focus = SubResource("StyleBoxEmpty_bh7ej")
-Button/styles/hover = SubResource("StyleBoxEmpty_ow4w8")
-Button/styles/normal = SubResource("StyleBoxEmpty_ghcox")
-Button/styles/pressed = SubResource("StyleBoxEmpty_prgvo")
+Button/styles/focus = SubResource("StyleBoxEmpty_v1oer")
+Button/styles/hover = SubResource("StyleBoxEmpty_v1oer")
+Button/styles/normal = SubResource("StyleBoxEmpty_v1oer")
+Button/styles/pressed = SubResource("StyleBoxEmpty_v1oer")
 CheckBox/constants/h_separation = 16
 CheckBox/font_sizes/font_size = 24
 CheckBox/fonts/font = ExtResource("1_fr1w8")

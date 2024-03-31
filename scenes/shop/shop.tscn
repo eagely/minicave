@@ -1,11 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cnvr8g8udjkwf"]
+[gd_scene load_steps=11 format=3 uid="uid://cnvr8g8udjkwf"]
 
 [ext_resource type="Script" path="res://scenes/shop/shop.gd" id="1_alags"]
-[ext_resource type="PackedScene" uid="uid://drr2rc2ddittm" path="res://scenes/shop/shop_item.tscn" id="1_wjos2"]
 [ext_resource type="Theme" uid="uid://bjxk1xqmcp0ov" path="res://assets/panel_container.tres" id="1_wmj3d"]
 [ext_resource type="Texture2D" uid="uid://x200wtwi2ton" path="res://assets/LabIcons.png" id="2_ude51"]
-[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/options.tres" id="3_lbpr1"]
+[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/shop_green.tres" id="3_lbpr1"]
 [ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/title_label.tres" id="5_3jm4g"]
+[ext_resource type="Theme" uid="uid://dlypel4u7trjt" path="res://assets/shop_red.tres" id="5_bonv0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gtu2b"]
 atlas = ExtResource("2_ude51")
@@ -18,6 +18,10 @@ region = Rect2(48, 32, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_h2470"]
 atlas = ExtResource("2_ude51")
 region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ee1v"]
+atlas = ExtResource("2_ude51")
+region = Rect2(0, 32, 16, 16)
 
 [node name="Shop" type="Control"]
 layout_mode = 3
@@ -93,7 +97,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("3_lbpr1")
 theme_override_font_sizes/font_size = 32
-text = "200₡"
+text = "200 C"
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Teleportation"]
 layout_mode = 1
@@ -102,7 +106,8 @@ anchor_right = 1.0
 offset_bottom = 16.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 24
-text = "Teleportation"
+text = "TELEPORTATION
+"
 horizontal_alignment = 1
 
 [node name="Leaping" type="Control" parent="PanelContainer/MarginContainer/GridContainer"]
@@ -140,7 +145,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("3_lbpr1")
 theme_override_font_sizes/font_size = 32
-text = "200₡"
+text = " 50 C"
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Leaping"]
 layout_mode = 1
@@ -149,7 +154,8 @@ anchor_right = 1.0
 offset_bottom = 16.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 24
-text = "Leaping"
+text = "LEAPING
+"
 horizontal_alignment = 1
 
 [node name="Strength" type="Control" parent="PanelContainer/MarginContainer/GridContainer"]
@@ -187,36 +193,323 @@ grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("3_lbpr1")
 theme_override_font_sizes/font_size = 32
-text = "200₡"
+text = "100 C"
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Strength"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 16.0
+offset_bottom = 24.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 24
-text = "Strength
+text = "STRENGTH"
+horizontal_alignment = 1
+
+[node name="Locked" type="Control" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer/Locked"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Locked"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "LOCKED
 "
 horizontal_alignment = 1
 
-[node name="ShopItem4" parent="PanelContainer/MarginContainer/GridContainer" instance=ExtResource("1_wjos2")]
-layout_mode = 2
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Locked"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("5_bonv0")
+theme_override_font_sizes/font_size = 32
+text = " ??? "
 
-[node name="ShopItem5" parent="PanelContainer/MarginContainer/GridContainer" instance=ExtResource("1_wjos2")]
+[node name="Locked2" type="Control" parent="PanelContainer/MarginContainer/GridContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="ShopItem6" parent="PanelContainer/MarginContainer/GridContainer" instance=ExtResource("1_wjos2")]
-layout_mode = 2
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer/Locked2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
 
-[node name="ShopItem7" parent="PanelContainer/MarginContainer/GridContainer" instance=ExtResource("1_wjos2")]
-layout_mode = 2
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Locked2"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "LOCKED
+"
+horizontal_alignment = 1
 
-[node name="ShopItem8" parent="PanelContainer/MarginContainer/GridContainer" instance=ExtResource("1_wjos2")]
-layout_mode = 2
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Locked2"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("5_bonv0")
+theme_override_font_sizes/font_size = 32
+text = " ??? "
 
-[node name="ShopItem9" parent="PanelContainer/MarginContainer/GridContainer" instance=ExtResource("1_wjos2")]
+[node name="Locked3" type="Control" parent="PanelContainer/MarginContainer/GridContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer/Locked3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Locked3"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "LOCKED
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Locked3"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("5_bonv0")
+theme_override_font_sizes/font_size = 32
+text = " ??? "
+
+[node name="Locked4" type="Control" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer/Locked4"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Locked4"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "LOCKED
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Locked4"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("5_bonv0")
+theme_override_font_sizes/font_size = 32
+text = " ??? "
+
+[node name="Locked5" type="Control" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer/Locked5"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Locked5"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "LOCKED
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Locked5"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("5_bonv0")
+theme_override_font_sizes/font_size = 32
+text = " ??? "
+
+[node name="Locked6" type="Control" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer/Locked6"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Locked6"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "LOCKED
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Locked6"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("5_bonv0")
+theme_override_font_sizes/font_size = 32
+text = " ??? "
 
 [node name="TitleLabel" type="Label" parent="."]
 layout_mode = 1

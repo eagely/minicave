@@ -1,6 +1,7 @@
 extends Node
 
 signal gained_coins(amt)
+signal level_loaded(id)
 
 const ITEM_TO_SLOT_INDEX = {
 	"teleportation": 0,
@@ -23,6 +24,7 @@ var cur_level = 1
 var cur_menu = null
 var last_menu = null
 
+
 func play_tutorial():
 	main.in_game = true
 	main.load_level(0)
@@ -37,6 +39,7 @@ func load_next_level():
 	if main.level.has_node("Tutorial"):
 		main.level.get_node("Tutorial").hide()
 	main.load_level(GameManager.cur_level)
+	emit_signal("level_loaded", cur_level)
 	cur_level += 1
 	
 func open(menu: Menu):
@@ -54,7 +57,6 @@ func close(menu: Menu):
 	# Progress stuff
 	if menu.name == "Shop" and player:
 		player.get_node("UI").get_node("Hotbar").show()
-
 
 func back():
 	if cur_menu.name == "KeybindMenu":
@@ -80,9 +82,15 @@ func gain_coins(coins_gained):
 	coins += coins_gained
 	emit_signal("gained_coins", coins_gained)
 	
+func lose_coins(coins_lost):
+	coins -= coins_lost
+	emit_signal("gained_coins", -coins_lost)
+	
 func sound(name):
 	main.get_node("Sfx").get_node(name).play()
 	
 func music(name):
 	main.get_node("Music").get_node(name).play()
 	
+func shake_screen():
+	player.get_node("Camera").shake()

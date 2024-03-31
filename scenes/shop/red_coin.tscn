@@ -6,13 +6,13 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_e5fes"]
 radius = 8.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_aq34p"]
-atlas = ExtResource("2_5xa3u")
-region = Rect2(16, 0, 16, 16)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_e207h"]
 atlas = ExtResource("2_5xa3u")
 region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aq34p"]
+atlas = ExtResource("2_5xa3u")
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fnvsc"]
 atlas = ExtResource("2_5xa3u")
@@ -55,7 +55,7 @@ script = ExtResource("1_4dcfv")
 shape = SubResource("CircleShape2D_e5fes")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_aq34p")
+texture = SubResource("AtlasTexture_e207h")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite2D")

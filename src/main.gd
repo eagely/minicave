@@ -11,6 +11,7 @@ var coin_scene = preload("res://scenes/shop/coin.tscn")
 var red_coin_scene = preload("res://scenes/shop/red_coin.tscn")
 var gray_coin_scene = preload("res://scenes/shop/gray_coin.tscn")
 var mobs = []
+var coins = []
 
 func _ready():
 	GameManager.main = self
@@ -34,14 +35,18 @@ func start_or_continue():
 		in_game = true
 
 func start_new():
-	player.start($StartPosition.position)
+	player.start(level.get_node("Start").position)
 	clear_mobs()
 	for spawner in level.get_node("MobSpawners").get_children():
 		var mob_instance = mob_scene.instantiate()
 		mob_instance.position = spawner.position
 		add_child(mob_instance)
 		mobs.append(mob_instance)
-		var err = mob_instance.connect("died", _on_mob_died)
+		mob_instance.connect("died", _on_mob_died)
+	coins.clear()
+	if level.has_node("CoinHolder"):
+		for coin in level.get_node("CoinHolder").get_children():
+			coins.append([coin.global_position, coin.name])
 	unpause()
 
 func unpause():
@@ -91,6 +96,26 @@ func reload_level():
 			label.get_child("Label").text = ""
 		tutorial.get_child("Walk").get_child("Label").text = "Press A or D to walk"
 		tutorial.show()
+	if level.has_node("CoinHolder"):
+		for coin in level.get_node("CoinHolder").get_children():
+			coin.queue_free()
+		for coin in coins:
+			match str(coin[1])[0]:
+				"C":
+					var new = coin_scene.instantiate()
+					new.global_position = coin[0]
+					new.name = coin[1]					
+					level.get_node("CoinHolder").add_child(new)
+				"G":
+					var new = gray_coin_scene.instantiate()
+					new.global_position = coin[0]
+					new.name = coin[1]
+					level.get_node("CoinHolder").add_child(new)
+				"R":
+					var new = red_coin_scene.instantiate()
+					new.global_position = coin[0]
+					new.name = coin[1]					
+					level.get_node("CoinHolder").add_child(new)
 	start_new()
 
 func clear_mobs():
@@ -117,7 +142,9 @@ func hide_all_non_menus():
 			
 func _input(event):
 	if event.is_action_pressed("ui_cancel") and not event.is_echo():
-		if keybinds.visible:
+		if GameManager.cur_menu and GameManager.cur_menu.name == "Shop":
+			GameManager.close(GameManager.cur_menu)
+		elif keybinds.visible:
 			show_options()
 		elif title_screen.visible:
 			start_or_continue()
