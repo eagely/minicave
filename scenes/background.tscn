@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://co2cmogtundd"]
+
+[ext_resource type="Texture2D" uid="uid://bv84btvr4wu4c" path="res://assets/backgrounds/awesomeCavePixelArt.png" id="1_korsf"]
+
+[node name="Background" type="CanvasLayer"]
+layer = -100
+
+[node name="AwesomeCavePixelArt" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_korsf")

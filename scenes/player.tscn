@@ -496,6 +496,8 @@ shape = SubResource("CapsuleShape2D_g3rof")
 one_shot = true
 
 [node name="MeleeArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
 monitorable = false
 
 [node name="Rectangle" type="CollisionShape2D" parent="MeleeArea"]
@@ -568,20 +570,26 @@ offset_right = 20.0
 offset_bottom = 16.0
 grow_horizontal = 2
 theme = ExtResource("8_ef6vy")
-text = "Boss spawns in 4"
+text = "Stages until boss: 4"
 
 [node name="StrengthTimer" type="Timer" parent="."]
 wait_time = 10.0
+one_shot = true
+
+[node name="ShootCooldown" type="Timer" parent="."]
+wait_time = 0.2
 one_shot = true
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="animation_finished" from="Animation" to="." method="_on_animation_finished"]
 [connection signal="timeout" from="HitCooldown" to="." method="_on_hit_cooldown_timeout"]
 [connection signal="area_entered" from="MeleeArea" to="." method="_on_melee_area_area_entered"]
+[connection signal="body_entered" from="MeleeArea" to="." method="_on_melee_area_body_entered"]
 [connection signal="timeout" from="HitCollisionDelay" to="." method="_on_hit_collision_delay_timeout"]
 [connection signal="used_skill" from="UI/Hotbar/Teleportation" to="." method="perform_teleportation"]
 [connection signal="used_skill" from="UI/Hotbar/Leaping" to="." method="perform_leaping"]
 [connection signal="used_skill" from="UI/Hotbar/Strength" to="." method="perform_strength"]
 [connection signal="timeout" from="StrengthTimer" to="." method="_on_strength_timer_timeout"]
+[connection signal="timeout" from="ShootCooldown" to="." method="_on_shoot_cooldown_timeout"]
 
 [editable path="UI/Hotbar"]

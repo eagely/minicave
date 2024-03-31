@@ -533,7 +533,7 @@ layer_0/tile_data = PackedInt32Array(1048576, 65536, 1, 1048577, 65536, 1, 10485
 [node name="MobSpawners" type="Node2D" parent="."]
 
 [node name="Shopkeeper" type="Node2D" parent="."]
-position = Vector2(272, 152)
+position = Vector2(1064, 304)
 script = ExtResource("2_yg384")
 
 [node name="Animation" type="AnimatedSprite2D" parent="Shopkeeper"]
@@ -553,7 +553,7 @@ layer = 0
 visible = false
 
 [node name="Finish" parent="." instance=ExtResource("4_4yipx")]
-position = Vector2(1792, 320)
+position = Vector2(1792, 352)
 
 [node name="Start" parent="." instance=ExtResource("4_mjeey")]
 position = Vector2(128, 120)

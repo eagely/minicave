@@ -39,6 +39,10 @@ var facing_right = true
 
 # Combat
 var can_hit = true
+var can_shoot = true
+var bullet_scene = preload("res://scenes/player_bullet.tscn")
+var is_shooting = true
+var is_meleeing = false
 
 
 var coins_on_cur_level = 0
@@ -155,16 +159,13 @@ func _physics_process(delta):
 					checker.force_shapecast_update()
 
 			if checker.is_colliding():
-				$Camera.shake()
+				GameManager.shake_screen()
 			else:
 				awaiting_click_for_teleport = false
 				play("teleport")
 				GameManager.remove_item("teleportation")
 			
 			
-	if Input.is_action_just_pressed("left_click") and can_hit:
-		attack()
-	
 	if direction != 0 and facing_right != (direction == 1):
 		flip()
 	move_and_slide()
@@ -206,7 +207,10 @@ func flip():
 
 func _on_hit_cooldown_timeout():
 	can_hit = true
-
+	
+func _on_shoot_cooldown_timeout():
+	can_shoot = true
+	
 func hit(damage):
 	if can_take_damage:
 		iframes()
@@ -217,18 +221,18 @@ func hit(damage):
 			GameManager.lose_coins(coins_on_cur_level)
 		else:
 			health_bar.health = hp
-		$Camera.shake()
-		$Camera.frame_freeze(0.05, 0.5)
+		GameManager.shake_screen()
+		GameManager.frame_freeze(0.05, 0.5)
 		GameManager.sound("hit")
 
 func iframes():
 	can_take_damage = false
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.5).timeout
 	can_take_damage = true
 
-func _on_melee_area_area_entered(area):
-	if area.get_parent().is_in_group("Attackable"):
-		area.get_parent().call("hit", strength)
+func _on_melee_area_body_entered(body):
+	if body.is_in_group("Attackable"):
+		body.hit(strength)
 
 func _on_hit_collision_delay_timeout():
 	$MeleeArea/Rectangle.disabled = true
@@ -242,7 +246,7 @@ func perform_teleportation(skill):
 	if awaiting_click_for_teleport:
 		awaiting_click_for_teleport = false
 	elif GameManager.items["teleportation"] <= 0:
-		$Camera.shake()
+		GameManager.shake_screen()
 	else:
 		awaiting_click_for_teleport = true
 		Input.set_custom_mouse_cursor(teleport_cursor)
@@ -252,7 +256,7 @@ func perform_leaping(skill):
 	if is_leaping:
 		is_leaping = false
 	elif GameManager.items["leaping"] <= 0:
-		$Camera.shake()
+		GameManager.shake_screen()
 	else:
 		is_leaping = true
 		GameManager.remove_item("leaping")
@@ -260,7 +264,7 @@ func perform_leaping(skill):
 
 func perform_strength(skill):
 	if GameManager.items["strength"] <= 0:
-		$Camera.shake()
+		GameManager.shake_screen()
 	else:
 		$StrengthTimer.start()
 		strength *= 2
@@ -276,15 +280,44 @@ func _on_gained_coins(amt):
 	else:
 		coins_on_cur_level = 0
 	$UI/CoinControl/Label.text = str(GameManager.coins)
-	
+
+
 func _on_level_loaded(id):
 	if id != last_checked_level:
 		last_checked_level = id
 		coins_on_cur_level = 0
 		if 5 - (id % 5) != 5:
-			$UI/UntilBoss.text = "Boss spawns in " + str(5 - (id % 5))
+			$UI/UntilBoss.show()
+			$UI/UntilBoss.text = "Stages until boss: " + str(5 - (id % 5))
 		else:
-			$UI/UntilBoss.text = "scary boss name"
+			$UI/UntilBoss.hide()
+
+
 func _input(event):
-	if event.is_action_pressed("debug_complete_level") and not event.is_echo():
-		GameManager.load_next_level()
+	if not event.is_echo():
+		if event.is_action_pressed("debug_complete_level"):
+			GameManager.load_next_level()
+		elif event.is_action_pressed("left_click"):
+			if is_shooting and can_shoot:
+				shoot()
+			elif is_meleeing and can_hit:
+				attack()
+		elif event.is_action_pressed("cycle_attack_mode"):
+			is_shooting = !is_shooting
+			is_meleeing = !is_meleeing
+			
+
+func shoot():
+	if is_ducking:
+		return
+	var bullet = bullet_scene.instantiate()
+	bullet.position = global_position
+	bullet.position.y -= 10
+	bullet.direction = (get_global_mouse_position() - global_position).normalized()
+	bullet.damage = strength / 5
+	get_tree().current_scene.call_deferred("add_child", bullet)
+	can_shoot = false
+	$ShootCooldown.start()
+
+
+

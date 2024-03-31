@@ -34,12 +34,11 @@ func _physics_process(delta):
 	if not $Animation.is_playing() or not last_animation == "hit":
 		play("walk")
 		
+	for body in $HitboxArea.get_overlapping_bodies():
+		if body == GameManager.player:
+			body.hit(str)
+	
 	velocity.x = speed if not hurt else 0
-	var areas = $HitboxArea.get_overlapping_areas()
-	if areas.size() > 0:
-		for area in areas:
-			if not dying and area.get_parent().name == "Player":
-				area.get_parent().hit(str)
 	move_and_slide()
 
 func flip():
@@ -58,6 +57,7 @@ func die():
 	dying = true
 
 func hit(damage):
+	print(damage)
 	hp -= damage * damage_multiplier
 	if hp <= 0:
 		die()
@@ -74,3 +74,8 @@ func _on_animation_finished():
 		queue_free()
 	elif last_animation == "hit":
 		hurt = false
+
+
+func _on_hitbox_area_body_entered(body):
+	if body == GameManager.player:
+		body.hit(str)

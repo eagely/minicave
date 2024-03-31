@@ -1,14 +1,57 @@
-[gd_scene load_steps=10 format=3 uid="uid://b3weat1gqoefh"]
+[gd_scene load_steps=16 format=3 uid="uid://b3weat1gqoefh"]
 
 [ext_resource type="PackedScene" uid="uid://bukr5hyq68ulg" path="res://scenes/menu/title_screen.tscn" id="1_0kc2i"]
 [ext_resource type="Script" path="res://src/main.gd" id="1_rwanx"]
 [ext_resource type="PackedScene" uid="uid://dxuaxee66xh0s" path="res://scenes/player.tscn" id="1_sfphe"]
-[ext_resource type="PackedScene" uid="uid://cu2erer4c0gaq" path="res://levels/level0.tscn" id="6_b3vnx"]
 [ext_resource type="PackedScene" uid="uid://w2gyww87g5j3" path="res://scenes/menu/keybind_menu.tscn" id="6_kmhoo"]
 [ext_resource type="PackedScene" uid="uid://csaidm4ve14hg" path="res://scenes/menu/options_menu.tscn" id="7_rkhj1"]
 [ext_resource type="AudioStream" uid="uid://822ko6p0ber4" path="res://assets/sfx/coin.wav" id="8_b5ufc"]
 [ext_resource type="AudioStream" uid="uid://etscoubhtoub" path="res://assets/sfx/hit.wav" id="8_iwsv7"]
+[ext_resource type="PackedScene" uid="uid://cc8lcilbckkev" path="res://levels/level1.tscn" id="9_0qrs6"]
 [ext_resource type="AudioStream" uid="uid://lc6o7maxifwx" path="res://assets/sfx/buy.wav" id="9_e56rd"]
+[ext_resource type="AudioStream" uid="uid://dcdg7cp6d32xi" path="res://assets/sfx/boss.mp3" id="9_tik61"]
+[ext_resource type="PackedScene" uid="uid://co2cmogtundd" path="res://scenes/background.tscn" id="10_0rbil"]
+[ext_resource type="Script" path="res://scenes/LevelFade.gd" id="12_vredb"]
+
+[sub_resource type="Animation" id="Animation_3ct7x"]
+resource_name = "fade"
+length = 10.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LevelFade/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7eugf"]
+resource_name = "fade_out"
+length = 10.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LevelFade/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kaqet"]
+_data = {
+"fade_in": SubResource("Animation_3ct7x"),
+"fade_out": SubResource("Animation_7eugf")
+}
 
 [node name="Main" type="Node"]
 process_mode = 3
@@ -16,8 +59,6 @@ script = ExtResource("1_rwanx")
 
 [node name="Player" parent="." instance=ExtResource("1_sfphe")]
 process_mode = 1
-
-[node name="Level" parent="." instance=ExtResource("6_b3vnx")]
 
 [node name="UI" type="CanvasLayer" parent="."]
 process_mode = 2
@@ -49,7 +90,30 @@ stream = ExtResource("9_e56rd")
 [node name="Music" type="Node" parent="."]
 
 [node name="underground" type="AudioStreamPlayer2D" parent="Music"]
-autoplay = true
+
+[node name="boss" type="AudioStreamPlayer2D" parent="Music"]
+stream = ExtResource("9_tik61")
+
+[node name="Level" parent="." instance=ExtResource("9_0qrs6")]
+
+[node name="Background" parent="." instance=ExtResource("10_0rbil")]
+
+[node name="LevelFade" type="CanvasLayer" parent="."]
+layer = 100
+visible = false
+script = ExtResource("12_vredb")
+
+[node name="ColorRect" type="ColorRect" parent="LevelFade"]
+modulate = Color(0.32146, 0.32146, 0.32146, 0.32146)
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LevelFade"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_kaqet")
+}
 
 [connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="open_options" from="UI/TitleScreen" to="." method="_on_title_screen_open_options"]

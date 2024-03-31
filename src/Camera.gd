@@ -20,7 +20,4 @@ func _process(delta):
 func rand_offset():
 	return Vector2(rng.randf_range(-str, str), rng.randf_range(-str, str))
 
-func frame_freeze(time_scale, duration):
-	Engine.time_scale = time_scale
-	await get_tree().create_timer(duration * time_scale).timeout
-	Engine.time_scale = 1
+

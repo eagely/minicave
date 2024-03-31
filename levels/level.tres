@@ -1,0 +1,9 @@
+[gd_resource type="TileSet" format=3 uid="uid://4t4n5rc0xmsn"]
+
+[resource]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 0
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "Autotile"
+terrain_set_0/terrain_0/color = Color(1, 0, 0, 1)

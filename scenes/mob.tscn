@@ -106,7 +106,7 @@ animations = [{
 [node name="Mob" type="CharacterBody2D" groups=["Attackable"]]
 process_mode = 1
 scale = Vector2(0.5, 0.5)
-collision_layer = 2
+collision_layer = 8
 script = ExtResource("1_wx6sb")
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
@@ -125,6 +125,9 @@ target_position = Vector2(0, 30)
 collide_with_areas = true
 
 [node name="HitboxArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
 
 [node name="Capsule" type="CollisionShape2D" parent="HitboxArea"]
 rotation = 1.5708
@@ -139,3 +142,4 @@ offset_bottom = -24.0
 
 [connection signal="animation_finished" from="Animation" to="." method="_on_animation_finished"]
 [connection signal="area_entered" from="HitboxArea" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="HitboxArea" to="." method="_on_hitbox_area_body_entered"]

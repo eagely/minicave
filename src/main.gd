@@ -1,5 +1,7 @@
 extends Node
 
+signal level_loaded(id)
+
 var in_game = false
 @onready var title_screen = $UI/TitleScreen
 @onready var keybinds = $UI/KeybindMenu
@@ -24,7 +26,7 @@ func _ready():
 	player.hide_health_bar()
 	$Music/underground.stream = load("res://assets/sfx/underground.ogg")
 	$Music/underground.stream.loop = true
-	$Music/underground.play()	
+	GameManager.music("underground")
 
 
 func start_or_continue():
@@ -97,7 +99,7 @@ func reload_level():
 		tutorial.get_child("Walk").get_child("Label").text = "Press A or D to walk"
 		tutorial.show()
 	if level.has_node("CoinHolder"):
-		for coin in level.get_node("CoinHolder").get_children():
+		for coin in level.find_child("CoinHolder").get_children():
 			coin.queue_free()
 		for coin in coins:
 			match str(coin[1])[0]:
@@ -153,7 +155,6 @@ func _input(event):
 	elif event.is_action_pressed("ui_accept") and not event.is_echo():
 		if title_screen.visible:
 			start_or_continue()
-
 func _on_title_screen_open_options():
 	GameManager.open(options)
 
@@ -161,6 +162,11 @@ func _on_options_menu_open_keybinds():
 	GameManager.open(keybinds)
 	
 func _on_mob_died(pos, type):
+	if not level.has_node("CoinHolder"):
+		var node = Node2D.new()
+		node.name = "CoinHolder"
+		level.add_child(node)
+	var holder = level.find_child("CoinHolder")
 	var coin_offset = 16
 	var positions = [
 		pos - Vector2(coin_offset * 2, 0), # 2 positions to the left
@@ -175,13 +181,13 @@ func _on_mob_died(pos, type):
 			for i in range(positions.size()):
 				var coin = coin_scene.instantiate()
 				coin.position = positions[i]
-				add_child(coin)
-		1:
+				holder.add_child(coin)
+		2:
 			for i in range(positions.size()):
 				var coin = coin_scene.instantiate() if i != 2 else red_coin_scene.instantiate()
 				coin.position = positions[i]
-				add_child(coin)
-		2:
+				holder.add_child(coin)
+		1:
 			for i in range(positions.size()):
 				var coin
 				if i == 1 or i == 3:
@@ -189,4 +195,4 @@ func _on_mob_died(pos, type):
 				else:
 					coin = coin_scene.instantiate()
 				coin.position = positions[i]
-				add_child(coin)
+				holder.add_child(coin)

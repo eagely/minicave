@@ -521,4 +521,6 @@ position = Vector2(864, 288)
 position = Vector2(840, 704)
 
 [node name="Start" parent="." instance=ExtResource("4_5tscl")]
-position = Vector2(1792, 320)
+position = Vector2(1792, 352)
+
+[node name="CoinHolder" type="Node2D" parent="."]
