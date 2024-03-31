@@ -8,10 +8,11 @@ var in_game = false
 @onready var options = $UI/OptionsMenu
 var level
 var player
-var mob_scene = preload("res://scenes/mob.tscn")
+var mob_scene = preload("res://scenes/enemy/mob.tscn")
 var coin_scene = preload("res://scenes/shop/coin.tscn")
 var red_coin_scene = preload("res://scenes/shop/red_coin.tscn")
 var gray_coin_scene = preload("res://scenes/shop/gray_coin.tscn")
+var boss_scene = preload("res://scenes/boss/boss.tscn")
 var mobs = []
 var coins = []
 
@@ -24,8 +25,6 @@ func _ready():
 	if level.has_node("Tutorial"):
 		level.get_node("Tutorial").hide()
 	player.hide_health_bar()
-	$Music/underground.stream = load("res://assets/sfx/underground.ogg")
-	$Music/underground.stream.loop = true
 	GameManager.music("underground")
 
 
@@ -118,7 +117,16 @@ func reload_level():
 					new.global_position = coin[0]
 					new.name = coin[1]					
 					level.get_node("CoinHolder").add_child(new)
+	if level.has_node("Boss"):
+		var boss = level.get_node("Boss")
+		boss.position = boss.spawnpoint
+		boss.hp = 100
+		boss.def = 1.0
+		for bullet in boss.get_children():
+			if bullet.name.contains("Bullet"):
+				bullet.queue_free()
 	start_new()
+
 
 func clear_mobs():
 	for mob in mobs:
@@ -126,12 +134,11 @@ func clear_mobs():
 			mob.queue_free()
 	mobs.clear()
 
-func _on_player_level_completed():
-	GameManager.load_next_level()
 
 func _on_player_died():
 	reload_level()
-	
+
+
 func hide_all_non_menus():
 	level.hide()
 	if level.has_node("Tutorial"):
@@ -155,12 +162,16 @@ func _input(event):
 	elif event.is_action_pressed("ui_accept") and not event.is_echo():
 		if title_screen.visible:
 			start_or_continue()
+
+
 func _on_title_screen_open_options():
 	GameManager.open(options)
 
+
 func _on_options_menu_open_keybinds():
 	GameManager.open(keybinds)
-	
+
+
 func _on_mob_died(pos, type):
 	if not level.has_node("CoinHolder"):
 		var node = Node2D.new()

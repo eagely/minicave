@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://drr2rc2ddittm"]
 
-[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/options.tres" id="2_kkxur"]
+[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/shop_green.tres" id="2_kkxur"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bg3mn"]
 load_path = "res://.godot/imported/LabIcons.png-8344f9fd6a76f23a29763b1c6433582b.ctex"

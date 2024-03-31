@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://ft8knfn8hwuf"]
 
 [ext_resource type="Texture2D" uid="uid://bfl7tfk5k11nv" path="res://assets/shop/wizard.png" id="1_7ufsu"]
-[ext_resource type="Script" path="res://scenes/shop/shopkeeper.gd" id="1_bf7jy"]
+[ext_resource type="Script" path="res://src/shop/shopkeeper.gd" id="1_bf7jy"]
 [ext_resource type="PackedScene" uid="uid://ceocn4n8rpyke" path="res://scenes/interaction/interaction_area.tscn" id="2_fwo6r"]
 [ext_resource type="PackedScene" uid="uid://cnvr8g8udjkwf" path="res://scenes/shop/shop.tscn" id="4_ptas8"]
 

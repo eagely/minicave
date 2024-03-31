@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bm3msle7ctev"]
 
-[ext_resource type="Script" path="res://scenes/shop/coin.gd" id="1_1cs44"]
+[ext_resource type="Script" path="res://src/shop/coin.gd" id="1_hdij5"]
 [ext_resource type="Texture2D" uid="uid://cknmc5r2si4w3" path="res://assets/shop/Coin_Gems/MonedaD.png" id="2_3w733"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bv83x"]
@@ -56,7 +56,7 @@ radius = 8.0
 
 [node name="Coin" type="RigidBody2D"]
 collision_layer = 4
-script = ExtResource("1_1cs44")
+script = ExtResource("1_hdij5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bv83x")
@@ -70,9 +70,11 @@ libraries = {
 }
 
 [node name="HitboxArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 monitorable = false
 
 [node name="Circle" type="CollisionShape2D" parent="HitboxArea"]
 shape = SubResource("CircleShape2D_mlwl5")
 
-[connection signal="area_entered" from="HitboxArea" to="." method="_on_hitbox_area_area_entered"]
+[connection signal="body_entered" from="HitboxArea" to="." method="_on_hitbox_area_body_entered"]

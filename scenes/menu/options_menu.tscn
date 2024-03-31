@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://csaidm4ve14hg"]
+[gd_scene load_steps=8 format=3 uid="uid://csaidm4ve14hg"]
 
-[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/options.tres" id="1_5ahym"]
-[ext_resource type="Script" path="res://scenes/menu/options_menu.gd" id="2_545ej"]
+[ext_resource type="Theme" uid="uid://sp5srnx7h5yh" path="res://assets/options_menu.tres" id="1_1x42w"]
+[ext_resource type="Script" path="res://src/menu/options_menu.gd" id="2_tec3g"]
 [ext_resource type="Theme" uid="uid://bjxk1xqmcp0ov" path="res://assets/panel_container.tres" id="3_m3cx7"]
 [ext_resource type="Theme" uid="uid://bwxsv6uwdv14g" path="res://assets/menu.tres" id="4_ibfpc"]
-[ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/title_label.tres" id="5_vnog8"]
+[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/shop_green.tres" id="4_slvc8"]
+[ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/until_boss_label.tres" id="5_vnog8"]
 [ext_resource type="Theme" uid="uid://dch4c6hrobjhl" path="res://assets/back_button.tres" id="6_m1l4s"]
 
 [node name="OptionsMenu" type="Control"]
@@ -14,8 +15,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_5ahym")
-script = ExtResource("2_545ej")
+theme = ExtResource("1_1x42w")
+script = ExtResource("2_tec3g")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -46,7 +47,6 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("1_5ahym")
 theme_override_constants/separation = 32
 
 [node name="VideoLabel" type="Label" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
@@ -71,7 +71,8 @@ text = "AUDIO"
 
 [node name="MasterVolumeLabel" type="Label" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme = ExtResource("4_slvc8")
+theme_override_font_sizes/font_size = 36
 text = "MASTER VOLUME"
 
 [node name="MasterVolumeContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
@@ -80,6 +81,7 @@ layout_mode = 2
 [node name="MasterVolumeSlider" type="HSlider" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/MasterVolumeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_ibfpc")
 
 [node name="Control" type="Control" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/MasterVolumeContainer"]
 layout_mode = 2
@@ -87,7 +89,8 @@ size_flags_horizontal = 3
 
 [node name="SfxVolumeLabel" type="Label" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme = ExtResource("4_slvc8")
+theme_override_font_sizes/font_size = 36
 text = "SFX VOLUME"
 
 [node name="SfxVolumeContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]

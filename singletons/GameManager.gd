@@ -2,8 +2,9 @@ extends Node
 
 signal gained_coins(amt)
 signal level_loaded(id)
+signal skill_unlocked(name)
 
-const ITEM_TO_SLOT_INDEX = {
+const SLOT_INDEX = {
 	"teleportation": 0,
 	"leaping": 1,
 	"strength": 2
@@ -20,11 +21,12 @@ var coins = 0
 var main
 var player
 var mobs = []
-var cur_level = 1
+var cur_level = 0
 var cur_menu = null
 var last_menu = null
 var last_song = null
 var last_sfx = null
+var went_back = false
 
 func _ready():
 	GameManager.connect("level_loaded", _on_level_loaded)
@@ -32,29 +34,41 @@ func _ready():
 func play_tutorial():
 	main.in_game = true
 	main.load_level(0)
-	
+
+
 func stop_tutorial():
 	cur_level -= 1
 	load_next_level()
 	main.hide_all_non_menus()
 	open(main.title_screen)
 
-func load_next_level():
-	if cur_level > 1:
-		fade_in()
-	if main.level.has_node("Tutorial"):
-		main.level.get_node("Tutorial").hide()
-	main.load_level(GameManager.cur_level)
-	emit_signal("level_loaded", cur_level)
-	cur_level += 1
-	if cur_level > 2:
-		fade_out()
+
 	
+func load_next_level():
+	went_back = false
+	cur_level += 1
+	main.load_level(cur_level)
+	emit_signal("level_loaded", cur_level)
+	main.player.position = main.level.find_child("Start").position
+
+
+func load_previous_level():
+	went_back = true	
+	cur_level -= 1
+	main.load_level(cur_level)
+	emit_signal("level_loaded", cur_level)
+	main.player.position = main.level.find_child("Finish").position
+
+
 func open(menu: Menu):
 	if cur_menu:
 		close(cur_menu)
 	cur_menu = menu
 	menu._on_open()
+	if menu.name != "Shop":
+		main.find_child("Background").show()
+	if main.level.has_node("Boss"):
+		main.level.get_node("Boss").pause()
 
 
 func close(menu: Menu):
@@ -65,6 +79,9 @@ func close(menu: Menu):
 	# Progress stuff
 	if menu.name == "Shop" and player:
 		player.get_node("UI").get_node("Hotbar").show()
+	main.find_child("Background").hide()
+	if main.level.has_node("Boss"):
+		main.level.get_node("Boss").unpause()
 
 func back():
 	if cur_menu.name == "KeybindMenu":
@@ -75,16 +92,16 @@ func back():
 		open(last_menu)
 
 
-func add_item(name):
-	items[name] += 1
-	if items[name] > 0:
-		player.get_node("UI").get_node("Hotbar").slots[ITEM_TO_SLOT_INDEX[name]].show_full()
+func add_item(item_name):
+	items[item_name] += 1
+	if items[item_name] > 0:
+		player.get_node("UI").get_node("Hotbar").slots[SLOT_INDEX[item_name]].show_full()
 	
-func remove_item(name):
-	items[name] -= 1
-	if items[name] <= 0:	
-		player.get_node("UI").get_node("Hotbar").slots[ITEM_TO_SLOT_INDEX[name]].show_empty()
-		items[name] = 0
+func remove_item(item_name):
+	items[item_name] -= 1
+	if items[item_name] <= 0:	
+		player.get_node("UI").get_node("Hotbar").slots[SLOT_INDEX[item_name]].show_empty()
+		items[item_name] = 0
 		
 func gain_coins(coins_gained):
 	coins += coins_gained
@@ -94,17 +111,19 @@ func lose_coins(coins_lost):
 	coins -= coins_lost
 	emit_signal("gained_coins", -coins_lost)
 	
-func sound(name):
-	if last_sfx:
+func sound(sfx_name):
+	if last_sfx and main.get_node("Sfx").has_node(last_sfx):
 		main.get_node("Sfx").get_node(last_sfx).stop()
-	main.get_node("Sfx").get_node(name).play()
-	last_sfx = name
+	if main.get_node("Sfx").has_node(sfx_name):
+		main.get_node("Sfx").get_node(sfx_name).play()
+	last_sfx = sfx_name
 	
-func music(name):
-	if last_song:
+func music(song_name):
+	if last_song and main.get_node("Music").has_node(last_song):
 		main.get_node("Music").get_node(last_song).stop()
-	main.get_node("Music").get_node(name).play()
-	last_song = name
+	if main.get_node("Music").has_node(song_name):
+		main.get_node("Music").get_node(song_name).play()
+	last_song = song_name
 	
 func shake_screen():
 	player.get_node("Camera").shake()
@@ -140,11 +159,12 @@ func boss_slain():
 		coin.position = p
 		add_child(coin)
 
-
 func _on_level_loaded(id):
 	if id % 5 == 0:
 		main.level.find_child("Finish").disable()
 		music("boss")
+	elif last_song == "boss":
+		music("underground")
 		
 func generate_points(start_x: float, end_x: float, y: float, n: int) -> Array:
 	var points: Array = []
@@ -155,17 +175,16 @@ func generate_points(start_x: float, end_x: float, y: float, n: int) -> Array:
 		points.append(Vector2(x, y))
 	
 	return points
-	
+
+
 func fade_in():
 	var fade = main.find_child("LevelFade")
 	fade.show()
-	fade.fading_in = true
-	await get_tree().create_timer(1).timeout
-	fade.fading_in = false
+	fade.find_child("AnimationPlayer").play("fade_in")
+	await fade.find_child("AnimationPlayer").animation_finished
 	
 func fade_out():
 	var fade = main.find_child("LevelFade")
-	fade.fading_out = true
-	await get_tree().create_timer(1).timeout
-	fade.fading_out = false
+	fade.find_child("AnimationPlayer").play("fade_out")
+	await fade.find_child("AnimationPlayer").animation_finished
 	fade.hide()

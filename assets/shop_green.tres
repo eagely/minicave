@@ -1,7 +1,6 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://c50tb4imdqxkj"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://c50tb4imdqxkj"]
 
-[ext_resource type="FontFile" uid="uid://cs6ulgaffsemh" path="res://assets/fonts/superstar_memesbruh03.ttf" id="1_fr1w8"]
-[ext_resource type="FontFile" uid="uid://bcjhr4v2tc0iq" path="res://assets/fonts/Pixellari.ttf" id="1_mtx0g"]
+[ext_resource type="FontFile" uid="uid://cs6ulgaffsemh" path="res://assets/fonts/superstar_memesbruh03.ttf" id="1_imx7y"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dscqi"]
 bg_color = Color(0.196078, 0.47451, 0.360784, 0.74902)
@@ -17,16 +16,15 @@ shadow_size = 1
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qoow1"]
 
 [resource]
-default_font = ExtResource("1_mtx0g")
-Button/font_sizes/font_size = 24
-Button/fonts/font = ExtResource("1_fr1w8")
+Button/font_sizes/font_size = 32
+Button/fonts/font = ExtResource("1_imx7y")
 Button/styles/focus = SubResource("StyleBoxFlat_dscqi")
 Button/styles/hover = SubResource("StyleBoxFlat_dscqi")
 Button/styles/normal = SubResource("StyleBoxFlat_dscqi")
 Button/styles/pressed = SubResource("StyleBoxFlat_dscqi")
 CheckBox/constants/h_separation = 16
 CheckBox/font_sizes/font_size = 24
-CheckBox/fonts/font = ExtResource("1_fr1w8")
+CheckBox/fonts/font = ExtResource("1_imx7y")
 Label/colors/font_color = Color(1, 1, 1, 1)
 Label/colors/font_outline_color = Color(1, 1, 1, 1)
 Label/colors/font_shadow_color = Color(0, 0, 0, 0)
@@ -36,5 +34,5 @@ Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
 Label/constants/shadow_outline_size = 1
 Label/font_sizes/font_size = 36
-Label/fonts/font = ExtResource("1_mtx0g")
+Label/fonts/font = null
 Label/styles/normal = SubResource("StyleBoxEmpty_qoow1")

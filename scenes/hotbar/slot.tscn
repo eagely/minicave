@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cbs8p65x0ppgy"]
 
 [ext_resource type="Theme" uid="uid://josa1heq25rg" path="res://scenes/hotbar/hotbar_slot.tres" id="1_akret"]
-[ext_resource type="Script" path="res://scenes/hotbar/slot.gd" id="1_t8lvv"]
+[ext_resource type="Script" path="res://src/hotbar/slot.gd" id="1_t8lvv"]
 
 [node name="Slot" type="Button"]
 custom_minimum_size = Vector2(16, 16)

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://da8jksp14yigb"]
 
-[ext_resource type="Texture2D" uid="uid://x200wtwi2ton" path="res://assets/LabIcons.png" id="1_5qkid"]
-[ext_resource type="Script" path="res://scenes/hotbar/item.gd" id="2_xfn26"]
+[ext_resource type="Texture2D" uid="uid://x200wtwi2ton" path="res://assets/potions.png" id="1_5qkid"]
+[ext_resource type="Script" path="res://src/hotbar/item.gd" id="2_xfn26"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jryew"]
 atlas = ExtResource("1_5qkid")

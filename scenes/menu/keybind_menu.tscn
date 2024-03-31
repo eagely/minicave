@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://w2gyww87g5j3"]
+[gd_scene load_steps=11 format=3 uid="uid://w2gyww87g5j3"]
 
 [ext_resource type="PackedScene" uid="uid://m8y8lml1kf11" path="res://scenes/menu/input_button.tscn" id="1_2b0sf"]
-[ext_resource type="Script" path="res://scenes/menu/keybind_menu.gd" id="1_iigj6"]
-[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/options.tres" id="1_po5pi"]
+[ext_resource type="Theme" uid="uid://sp5srnx7h5yh" path="res://assets/options_menu.tres" id="1_hmi34"]
+[ext_resource type="Script" path="res://src/menu/keybind_menu.gd" id="1_iigj6"]
+[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/shop_green.tres" id="1_po5pi"]
 [ext_resource type="Theme" uid="uid://bjxk1xqmcp0ov" path="res://assets/panel_container.tres" id="2_s4b7v"]
-[ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/title_label.tres" id="5_3jarr"]
+[ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/until_boss_label.tres" id="5_3jarr"]
 [ext_resource type="Theme" uid="uid://dch4c6hrobjhl" path="res://assets/back_button.tres" id="6_v3ani"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jkeme"]
@@ -22,6 +23,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_hmi34")
 script = ExtResource("1_iigj6")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]

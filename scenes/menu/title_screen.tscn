@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bukr5hyq68ulg"]
+[gd_scene load_steps=4 format=3 uid="uid://bukr5hyq68ulg"]
 
-[ext_resource type="Script" path="res://scenes/menu/title_screen.gd" id="1_r5cuc"]
+[ext_resource type="Script" path="res://src/menu/title_screen.gd" id="1_r5cuc"]
 [ext_resource type="Theme" uid="uid://bwxsv6uwdv14g" path="res://assets/menu.tres" id="1_wc5xd"]
+[ext_resource type="Texture2D" uid="uid://bjeo3b77th7pw" path="res://assets/minicave-removebg-preview.png" id="3_knceb"]
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
@@ -26,6 +27,10 @@ offset_right = 200.0
 offset_bottom = 196.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_knceb")
 
 [node name="Play" type="Button" parent="VBoxContainer"]
 layout_mode = 2

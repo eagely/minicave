@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://nqylemsgum07"]
 
-[ext_resource type="Script" path="res://scenes/hotbar/hotbar.gd" id="1_h0run"]
+[ext_resource type="Script" path="res://src/hotbar/hotbar.gd" id="1_h0run"]
 [ext_resource type="PackedScene" uid="uid://cbs8p65x0ppgy" path="res://scenes/hotbar/slot.tscn" id="1_s2mux"]
 [ext_resource type="Resource" uid="uid://xm1p51fuifjr" path="res://resources/items/teleportation.tres" id="2_rk5sm"]
 [ext_resource type="Resource" uid="uid://wtineinpqx4i" path="res://resources/skills/teleportation.tres" id="3_cdeoc"]

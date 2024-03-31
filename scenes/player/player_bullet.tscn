@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3 uid="uid://der0gfm7w4pij"]
+
+[ext_resource type="Texture2D" uid="uid://bqy8mcg7kxpj4" path="res://assets/bullets/Laser Sprites/01.png" id="2_bex3v"]
+
+[sub_resource type="GDScript" id="GDScript_8tuvd"]
+script/source = "extends CharacterBody2D
+
+
+var direction = Vector2.RIGHT
+var speed = 500
+var damage = 1
+
+func _physics_process(delta):
+	velocity = direction * speed
+	if is_on_floor() or is_on_wall() or is_on_ceiling():
+		queue_free()
+	move_and_slide()
+	
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	queue_free()
+
+
+func _on_collision_area_body_entered(body):
+	if body.is_in_group(\"Attackable\"):
+		body.hit(damage)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jujcq"]
+size = Vector2(20, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f51yj"]
+size = Vector2(20, 0)
+
+[node name="PlayerBullet" type="CharacterBody2D"]
+process_mode = 1
+collision_layer = 16
+collision_mask = 9
+script = SubResource("GDScript_8tuvd")
+
+[node name="CollisionArea" type="Area2D" parent="."]
+collision_layer = 15
+collision_mask = 15
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea"]
+shape = SubResource("RectangleShape2D_jujcq")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_f51yj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_bex3v")
+flip_h = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="body_entered" from="CollisionArea" to="." method="_on_collision_area_body_entered"]

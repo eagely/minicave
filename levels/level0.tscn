@@ -1,10 +1,10 @@
 [gd_scene load_steps=12 format=3 uid="uid://cu2erer4c0gaq"]
 
-[ext_resource type="Script" path="res://src/level.gd" id="1_qv3oi"]
-[ext_resource type="PackedScene" uid="uid://dn1xkadhtfg5e" path="res://scenes/finish.tscn" id="2_0nfgk"]
+[ext_resource type="Script" path="res://src/level/level.gd" id="1_qv3oi"]
+[ext_resource type="PackedScene" uid="uid://dn1xkadhtfg5e" path="res://scenes/level/finish.tscn" id="2_0nfgk"]
 [ext_resource type="Texture2D" uid="uid://cml6o4r8qb6f3" path="res://assets/bricks.png" id="2_p0ytl"]
-[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/options.tres" id="3_o4mke"]
-[ext_resource type="PackedScene" uid="uid://dfldvytcge50v" path="res://scenes/obstacle.tscn" id="4_mqtx6"]
+[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/abc.tres" id="3_o4mke"]
+[ext_resource type="PackedScene" uid="uid://dfldvytcge50v" path="res://scenes/level/obstacle.tscn" id="4_mqtx6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_itcuw"]
 texture = ExtResource("2_p0ytl")

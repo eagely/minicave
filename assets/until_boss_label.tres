@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=3 format=3 uid="uid://7v05cnvo5w3p"]
 
-[ext_resource type="FontFile" uid="uid://bcjhr4v2tc0iq" path="res://assets/fonts/Pixellari.ttf" id="1_7bwa1"]
+[ext_resource type="FontFile" uid="uid://cs6ulgaffsemh" path="res://assets/fonts/superstar_memesbruh03.ttf" id="1_c8ws0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qv6mp"]
 bg_color = Color(0.0666667, 0.0666667, 0.0666667, 0.501961)
@@ -16,5 +16,5 @@ shadow_size = 16
 
 [resource]
 Label/font_sizes/font_size = 48
-Label/fonts/font = ExtResource("1_7bwa1")
+Label/fonts/font = ExtResource("1_c8ws0")
 Label/styles/normal = SubResource("StyleBoxFlat_qv6mp")

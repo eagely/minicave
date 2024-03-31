@@ -1,0 +1,18 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://sp5srnx7h5yh"]
+
+[ext_resource type="FontFile" uid="uid://cs6ulgaffsemh" path="res://assets/fonts/superstar_memesbruh03.ttf" id="1_bdboj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wta6p"]
+
+[resource]
+Button/font_sizes/font_size = 36
+Button/fonts/font = ExtResource("1_bdboj")
+Button/styles/focus = SubResource("StyleBoxEmpty_wta6p")
+Button/styles/hover = SubResource("StyleBoxEmpty_wta6p")
+Button/styles/normal = SubResource("StyleBoxEmpty_wta6p")
+Button/styles/pressed = SubResource("StyleBoxEmpty_wta6p")
+CheckBox/constants/h_separation = 16
+CheckBox/font_sizes/font_size = 36
+CheckBox/fonts/font = ExtResource("1_bdboj")
+Label/font_sizes/font_size = 48
+Label/fonts/font = ExtResource("1_bdboj")
