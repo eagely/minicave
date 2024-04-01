@@ -9,7 +9,6 @@ const lines = [
 ]
 
 
-
-func _on_interaction_area_body_entered(body):
-	if body == GameManager.playrer:
-		DialogManager.start_dialog(global_position, lines)
+func _on_start_body_entered(body):
+	if body == GameManager.player:
+		DialogManager.start_dialog($Shopkeeper.global_position + Vector2(0, -64), lines)

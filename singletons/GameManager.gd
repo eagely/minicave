@@ -63,6 +63,7 @@ func load_next_level():
 		await fade_in()
 	went_back = false
 	cur_level += 1
+	DialogManager.cancel_dialog()
 	main.load_level(cur_level)
 	emit_signal("level_loaded", cur_level)
 	main.player.position = main.level.find_child("Start").position
@@ -77,8 +78,7 @@ func open(menu: Menu):
 	menu._on_open()
 	if menu.name != "Shop":
 		main.find_child("Background").show()
-	if main.level.has_node("Boss"):
-		main.level.get_node("Boss").pause()
+	main.hide_all_non_menus()
 
 
 func close(menu: Menu):
@@ -90,8 +90,7 @@ func close(menu: Menu):
 	if menu.name == "Shop" and player:
 		player.get_node("UI").get_node("Hotbar").show()
 	main.find_child("Background").hide()
-	if main.level.has_node("Boss"):
-		main.level.get_node("Boss").unpause()
+	main.show_all_non_menus()
 
 
 func back():

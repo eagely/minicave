@@ -13,10 +13,11 @@ var input_actions = {
 	"jump": "Jump",
 	"interact": "Interact",
 	"duck": "Duck",
+	"cycle_attack_mode": "Cycle Melee/Ranged Attack",
+	"advance_dialog": "Advance Dialog",
 	"hotbar_1": "Hotbar Slot 1",
 	"hotbar_2": "Hotbar Slot 2",
-	"hotbar_3": "Hotbar Slot 3",
-	"cycle_attack_mode": "Cycle Melee/Ranged Attack"
+	"hotbar_3": "Hotbar Slot 3"
 }
 
 func _ready():

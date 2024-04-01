@@ -5,6 +5,7 @@ var config = ConfigFile.new()
 const CONFIG_FILE = "user://settings.ini"
 
 func _ready():
+	config.set_value("keybind", "advance_dialog", "t")	
 	if not FileAccess.file_exists(CONFIG_FILE):
 		config.set_value("keybind", "move_left", "a")
 		config.set_value("keybind", "move_right", "d")
@@ -15,6 +16,7 @@ func _ready():
 		config.set_value("keybind", "hotbar_2", "2")
 		config.set_value("keybind", "hotbar_3", "3")
 		config.set_value("keybind", "cycle_attack_mode", "mouse_3")
+		config.set_value("keybind", "advance_dialog", "t")
 		config.set_value("video", "fullscreen", true)
 		config.set_value("video", "screen_shake", true)
 		config.set_value("audio", "master_volume", 1.0)

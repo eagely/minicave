@@ -26,17 +26,17 @@ func display_text(text_to_display):
 		custom_minimum_size.y = size.y
 		
 	global_position.x -= size.x / 2
-	global_position.x -= size.y + 24
+	global_position.y -= size.y + 24
 
 	label.text = ""
 	display_letter()
 	
 func display_letter():
-	label.text = text[index]
+	label.text += text[index]
 	
 	index += 1
 	if index >= text.length():
-		finished_displaying.emit()
+		emit_signal("finished_displaying")
 		return
 	
 	match text[index]:

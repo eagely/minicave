@@ -1,5 +1,5 @@
-extends AnimatedSprite2D
+extends Area2D
 
 
 func _ready():
-	play("idle")
+	$Animation.play("idle")

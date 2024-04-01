@@ -23,8 +23,9 @@ func start_dialog(position, lines):
 	
 func show_text_box():
 	text_box = text_box_scene.instantiate()
-	text_box.finished_displaying.connect(_on_text_box_finished_displaying)
-	get_tree().root.add_child(text_box)
+	text_box.connect("finished_displaying", _on_text_box_finished_displaying)
+	text_box.name = "TextBox"
+	GameManager.player.get_node("UI").add_child(text_box)
 	text_box.global_position = text_box_position
 	text_box.display_text(dialog_lines[cur_line_index])
 	can_advance_line = false
@@ -39,5 +40,21 @@ func _unhandled_input(event):
 		if cur_line_index >= dialog_lines.size():
 			is_dialog_active = false
 			cur_line_index = 0
+			dialog_lines = []
 			return
 		show_text_box()
+		
+func hide_all():
+	if GameManager.player.get_node("UI").has_node("TextBox"):
+		GameManager.player.get_node("UI").get_node("TextBox").hide()
+
+func show_all():
+	if GameManager.player.get_node("UI").has_node("TextBox"):
+		GameManager.player.get_node("UI").get_node("TextBox").show()
+
+func cancel_dialog():
+	if GameManager.player.get_node("UI").has_node("TextBox"):
+		is_dialog_active = false
+		cur_line_index = 0
+		dialog_lines = []
+		GameManager.player.get_node("UI").get_node("TextBox").queue_free()

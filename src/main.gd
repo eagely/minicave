@@ -67,14 +67,6 @@ func unpause():
 
 func show_title_screen():
 	get_tree().paused = true
-	level.hide()
-	if level.has_node("Tutorial"):
-		level.get_node("Tutorial").hide()
-	player.hide()
-	player.get_node("UI").hide()
-	for mob in mobs:
-		if is_instance_valid(mob):
-			mob.hide()
 	GameManager.open(title_screen)
 
 func show_options():
@@ -151,6 +143,8 @@ func hide_all_non_menus():
 			mob.hide()
 	if level.has_node("Boss"):
 		level.get_node("Boss").pause()
+	DialogManager.hide_all()
+	InteractionManager.hide_all()
 
 
 func show_all_non_menus():
@@ -164,6 +158,8 @@ func show_all_non_menus():
 			mob.show()
 	if level.has_node("Boss"):
 		level.get_node("Boss").pause()
+	DialogManager.show_all()
+	InteractionManager.show_all()
 	get_tree().paused = false
 			
 func _input(event):

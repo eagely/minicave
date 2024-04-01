@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://brc575q1lft3m"]
+[gd_scene load_steps=68 format=3 uid="uid://brc575q1lft3m"]
 
 [ext_resource type="Texture2D" uid="uid://dov75merouyip" path="res://assets/portals/Portal21/convert.png" id="1_nb5c8"]
 [ext_resource type="Script" path="res://src/level/start.gd" id="2_3xnlw"]
@@ -452,9 +452,17 @@ animations = [{
 "speed": 30.0
 }]
 
-[node name="Start" type="AnimatedSprite2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_xa8gh"]
+radius = 32.0
+
+[node name="Start" type="Area2D"]
+script = ExtResource("2_3xnlw")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_87qe2")
 animation = &"idle"
 frame_progress = 0.320924
-script = ExtResource("2_3xnlw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xa8gh")
