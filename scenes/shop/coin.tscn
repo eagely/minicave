@@ -55,6 +55,7 @@ _data = {
 radius = 8.0
 
 [node name="Coin" type="RigidBody2D"]
+z_as_relative = false
 collision_layer = 4
 script = ExtResource("1_hdij5")
 

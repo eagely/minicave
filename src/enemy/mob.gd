@@ -18,6 +18,10 @@ var damage_multiplier = [5, 1, 0.5][rand_index]
 var color = ["green_", "blue_", "purple_"][rand_index]
 
 func _ready():
+	var sprite = $Animation
+	if not sprite.material is ShaderMaterial or not sprite.material.resource_local_to_scene:
+		sprite.material = sprite.material.duplicate(true)
+		sprite.material.resource_local_to_scene = true
 	health_bar.init_health(hp)
 	$Animation.flip_h = true	
 
@@ -57,6 +61,7 @@ func die():
 	dying = true
 
 func hit(damage):
+	$AnimationPlayer.play("hit")
 	hp -= damage * damage_multiplier
 	if hp <= 0:
 		die()

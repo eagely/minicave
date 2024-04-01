@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://ca41fdnkl7t1y"]
+
+[ext_resource type="Theme" uid="uid://d3k0b72tuicqs" path="res://assets/ability_select.tres" id="1_e7qj6"]
+[ext_resource type="Script" path="res://src/menu/ability_select.gd" id="2_8ilno"]
+
+[node name="AbilitySelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_e7qj6")
+script = ExtResource("2_8ilno")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -704.0
+offset_top = -100.0
+offset_right = 704.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Left" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "left ability"
+
+[node name="Right" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "right ability"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -264.0
+offset_top = 188.0
+offset_right = 264.0
+offset_bottom = 252.0
+grow_horizontal = 2
+text = "Select an ability"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="HBoxContainer/Left" to="." method="_on_left_pressed"]
+[connection signal="pressed" from="HBoxContainer/Right" to="." method="_on_right_pressed"]

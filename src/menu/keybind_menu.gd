@@ -16,8 +16,7 @@ var input_actions = {
 	"hotbar_1": "Hotbar Slot 1",
 	"hotbar_2": "Hotbar Slot 2",
 	"hotbar_3": "Hotbar Slot 3",
-	"hotbar_4": "Hotbar Slot 4",
-	"hotbar_5": "Hotbar Slot 5"	
+	"cycle_attack_mode": "Cycle Melee/Ranged Attack"
 }
 
 func _ready():

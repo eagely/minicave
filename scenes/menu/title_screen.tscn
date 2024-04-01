@@ -48,7 +48,12 @@ text = "tutorial"
 layout_mode = 2
 text = "quit"
 
+[connection signal="mouse_entered" from="VBoxContainer/TextureRect" to="." method="_on_texture_rect_mouse_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/Play" to="." method="hover_sound"]
 [connection signal="pressed" from="VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/Options" to="." method="hover_sound"]
 [connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/Tutorial" to="." method="hover_sound"]
 [connection signal="pressed" from="VBoxContainer/Tutorial" to="." method="_on_tutorial_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/Quit" to="." method="hover_sound"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

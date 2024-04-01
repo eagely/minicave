@@ -17,3 +17,6 @@ func _on_quit_pressed():
 
 func _on_tutorial_pressed():
 	GameManager.play_tutorial()
+
+func hover_sound():
+	GameManager.sound("hover")

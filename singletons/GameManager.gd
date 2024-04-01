@@ -1,8 +1,10 @@
 extends Node
 
+
 signal gained_coins(amt)
 signal level_loaded(id)
 signal skill_unlocked(name)
+signal ability_selected(ability)
 
 const SLOT_INDEX = {
 	"teleportation": 0,
@@ -14,6 +16,19 @@ var items = {
 	"teleportation": 0,
 	"leaping": 0,
 	"strength": 0
+}
+
+enum Abilities {
+	EXTRA_BULLET,
+	ATTACK_SPEED,
+	HEALING,
+	STRENGTH
+}
+
+var abilities_unlocked = {
+	"ATTACK_SPEED": false,
+	"HEALING": false,
+	"STRENGTH": false
 }
 
 var coins = 0
@@ -43,21 +58,16 @@ func stop_tutorial():
 	open(main.title_screen)
 
 
-	
 func load_next_level():
+	if cur_level > 0:
+		await fade_in()
 	went_back = false
 	cur_level += 1
 	main.load_level(cur_level)
 	emit_signal("level_loaded", cur_level)
 	main.player.position = main.level.find_child("Start").position
-
-
-func load_previous_level():
-	went_back = true	
-	cur_level -= 1
-	main.load_level(cur_level)
-	emit_signal("level_loaded", cur_level)
-	main.player.position = main.level.find_child("Finish").position
+	if cur_level > 1:
+		await fade_out()
 
 
 func open(menu: Menu):
@@ -83,6 +93,7 @@ func close(menu: Menu):
 	if main.level.has_node("Boss"):
 		main.level.get_node("Boss").unpause()
 
+
 func back():
 	if cur_menu.name == "KeybindMenu":
 		open(main.options)
@@ -96,17 +107,20 @@ func add_item(item_name):
 	items[item_name] += 1
 	if items[item_name] > 0:
 		player.get_node("UI").get_node("Hotbar").slots[SLOT_INDEX[item_name]].show_full()
-	
+
+
 func remove_item(item_name):
 	items[item_name] -= 1
 	if items[item_name] <= 0:	
 		player.get_node("UI").get_node("Hotbar").slots[SLOT_INDEX[item_name]].show_empty()
 		items[item_name] = 0
-		
+
+
 func gain_coins(coins_gained):
 	coins += coins_gained
 	emit_signal("gained_coins", coins_gained)
-	
+
+
 func lose_coins(coins_lost):
 	coins -= coins_lost
 	emit_signal("gained_coins", -coins_lost)
@@ -144,6 +158,9 @@ func frame_freeze(time_scale, duration):
 
 
 func boss_slain():
+	main.hide_all_non_menus()
+	main.ability_select._update_abilities()
+	open(main.ability_select)
 	music("underground")
 	main.level.find_child("Finish").enable()
 	var pos = main.level.find_child("Boss").global_position
@@ -153,11 +170,14 @@ func boss_slain():
 	for p in gray_positions:
 		var coin = main.gray_coin_scene.instantiate()
 		coin.position = p
-		add_child(coin)
+		main.level.get_node("CoinHolder").add_child(coin)
 	for p in red_positions:
 		var coin = main.red_coin_scene.instantiate()
 		coin.position = p
-		add_child(coin)
+		main.level.get_node("CoinHolder").add_child(coin)
+	main.hide_all_non_menus()
+	
+
 
 func _on_level_loaded(id):
 	if id % 5 == 0:
@@ -188,3 +208,9 @@ func fade_out():
 	fade.find_child("AnimationPlayer").play("fade_out")
 	await fade.find_child("AnimationPlayer").animation_finished
 	fade.hide()
+
+
+func select_ability(key):
+	emit_signal("ability_selected", key)
+	close(main.get_node("UI").get_node("AbilitySelect"))
+	main.show_all_non_menus()

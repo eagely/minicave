@@ -10,7 +10,7 @@ const DUCKING_HEIGHT = 40
 
 var max_hp = 100
 var hp = max_hp
-var strength = 60
+var strength = 600
 var can_take_damage = true
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var screen_size
@@ -53,10 +53,11 @@ var can_shoot = true
 var bullet_scene = preload("res://scenes/player/player_bullet.tscn")
 var is_shooting = true
 var is_meleeing = false
-
-
+var attack_speed = 1.0
+var shoot_speed = 0.4
 var coins_on_cur_level = 0
 var last_checked_level = 1
+var bullet_count = 1
 
 func _ready():
 	GameManager.player = self	
@@ -64,7 +65,7 @@ func _ready():
 	$UI.hide()
 	GameManager.connect("gained_coins", _on_gained_coins)
 	GameManager.connect("level_loaded", _on_level_loaded)
-	GameManager.connect("skill_unlocked", _on_skill_unlocked)
+	GameManager.connect("ability_selected", _on_ability_selected)
 
 func _physics_process(delta):
 	velocity.y += get_gravity() * delta
@@ -139,8 +140,11 @@ func _physics_process(delta):
 				awaiting_click_for_teleport = false
 				play("teleport")
 				GameManager.remove_item("teleportation")
-			
-			
+	(GameManager.abilities_unlocked)
+	if GameManager.abilities_unlocked.HEALING:
+		hp += delta
+		health_bar.health = hp
+	
 	if direction != 0 and facing_right != (direction == 1):
 		flip()
 	move_and_slide()
@@ -173,9 +177,10 @@ func _on_animation_finished():
 		play("unteleport")
 
 func attack():
-	$HitCooldown.start()
+	$HitCooldown.start(attack_speed)
 	$HitCollisionDelay.start()
 	play("attack")
+	GameManager.frame_freeze(0.05, 0.1)
 	can_hit = false
 	$MeleeArea/Rectangle.disabled = false
 
@@ -271,12 +276,6 @@ func _on_level_loaded(id):
 			$UI/UntilBoss.hide()
 
 
-func _on_skill_unlocked(name):
-	match name:
-		"dash":
-			can_dash = true
-
-
 func _input(event):
 	if not event.is_echo():
 		if event.is_action_pressed("debug_complete_level"):
@@ -294,15 +293,44 @@ func _input(event):
 func shoot():
 	if is_ducking:
 		return
-	var bullet = bullet_scene.instantiate()
-	bullet.position = global_position
-	bullet.position.y -= 10
-	bullet.direction = (get_global_mouse_position() - global_position).normalized()
-	bullet.damage = strength / 5
-	get_tree().current_scene.call_deferred("add_child", bullet)
+	var distance_per_bullet = 32
+	var offsets = []
+	if bullet_count % 2 == 0:
+		# Even bullet count
+		var half = bullet_count / 2
+		for i in range(half):
+			offsets.append(-distance_per_bullet * (half - i))
+			offsets.append(distance_per_bullet * (i + 1))
+	else:
+		# Odd bullet count
+		var middle = 0 # Middle offset for odd count
+		offsets.append(middle)
+		var half = (bullet_count - 1) / 2
+		for i in range(half):
+			offsets.append(-distance_per_bullet * (i + 1))
+			offsets.append(distance_per_bullet * (i + 1))
+	
+	offsets.sort() # Ensure the offsets are in order
+	for offset in offsets:
+		var bullet = bullet_scene.instantiate()		
+		bullet.position = global_position
+		bullet.position.y -= 10
+		bullet.direction = (get_global_mouse_position() - Vector2(0, offset) - global_position).normalized()
+		bullet.damage = strength / 5 * (1.5 if GameManager.abilities_unlocked.STRENGTH else 1)
+		get_tree().current_scene.call_deferred("add_child", bullet)
 	can_shoot = false
-	$ShootCooldown.start()
+	$ShootCooldown.start(shoot_speed)
 
 
 func _on_coyote_timer_timeout():
 	is_grounded = false
+	
+func _on_ability_selected(ability):
+	GameManager.abilities_unlocked[ability] = true
+	if ability == "ATTACK_SPEED":
+		attack_speed /= 1.5
+		shoot_speed /= 1.5
+	if ability == "STRENGTH":
+		strength *= 1.5
+	if ability == "EXTRA_BULLET":
+		bullet_count += 1

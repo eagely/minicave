@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://brc575q1lft3m" path="res://scenes/level/start.tscn" id="2_i1c8n"]
 [ext_resource type="Texture2D" uid="uid://cml6o4r8qb6f3" path="res://assets/bricks.png" id="2_p0ytl"]
-[ext_resource type="PackedScene" uid="uid://dfgc5tfjvarjr" path="res://scenes/boss/boss.tscn" id="3_hud66"]
+[ext_resource type="PackedScene" uid="uid://dfgc5tfjvarjr" path="res://scenes/boss/golem/speedy_golem.tscn" id="3_hud66"]
 [ext_resource type="PackedScene" uid="uid://dn1xkadhtfg5e" path="res://scenes/level/finish.tscn" id="4_hxxse"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_itcuw"]
@@ -506,3 +506,5 @@ position = Vector2(1568, 600)
 
 [node name="Finish" parent="." instance=ExtResource("4_hxxse")]
 position = Vector2(1792, 672)
+
+[node name="CoinHolder" type="Node2D" parent="."]

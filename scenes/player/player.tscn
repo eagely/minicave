@@ -574,7 +574,7 @@ wait_time = 10.0
 one_shot = true
 
 [node name="ShootCooldown" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.5
 one_shot = true
 
 [node name="CoyoteTimer" type="Timer" parent="."]

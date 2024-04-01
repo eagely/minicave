@@ -6,13 +6,13 @@ var in_game = false
 @onready var title_screen = $UI/TitleScreen
 @onready var keybinds = $UI/KeybindMenu
 @onready var options = $UI/OptionsMenu
+@onready var ability_select = $UI/AbilitySelect
 var level
 var player
 var mob_scene = preload("res://scenes/enemy/mob.tscn")
 var coin_scene = preload("res://scenes/shop/coin.tscn")
 var red_coin_scene = preload("res://scenes/shop/red_coin.tscn")
 var gray_coin_scene = preload("res://scenes/shop/gray_coin.tscn")
-var boss_scene = preload("res://scenes/boss/boss.tscn")
 var mobs = []
 var coins = []
 
@@ -63,6 +63,7 @@ func unpause():
 	for mob in mobs:
 		if is_instance_valid(mob):
 			mob.show()
+	
 
 func show_title_screen():
 	get_tree().paused = true
@@ -120,7 +121,6 @@ func reload_level():
 	if level.has_node("Boss"):
 		var boss = level.get_node("Boss")
 		boss.position = boss.spawnpoint
-		boss.hp = 100
 		boss.def = 1.0
 		for bullet in boss.get_children():
 			if bullet.name.contains("Bullet"):
@@ -140,6 +140,7 @@ func _on_player_died():
 
 
 func hide_all_non_menus():
+	get_tree().paused = true
 	level.hide()
 	if level.has_node("Tutorial"):
 		level.get_node("Tutorial").hide()
@@ -148,11 +149,29 @@ func hide_all_non_menus():
 	for mob in mobs:
 		if is_instance_valid(mob):
 			mob.hide()
+	if level.has_node("Boss"):
+		level.get_node("Boss").pause()
+
+
+func show_all_non_menus():
+	level.show()
+	if level.has_node("Tutorial"):
+		level.get_node("Tutorial").show()
+	player.show()
+	player.get_node("UI").show()
+	for mob in mobs:
+		if is_instance_valid(mob):
+			mob.show()
+	if level.has_node("Boss"):
+		level.get_node("Boss").pause()
+	get_tree().paused = false
 			
 func _input(event):
 	if event.is_action_pressed("ui_cancel") and not event.is_echo():
 		if GameManager.cur_menu and GameManager.cur_menu.name == "Shop":
 			GameManager.close(GameManager.cur_menu)
+		elif GameManager.cur_menu and GameManager.cur_menu.name == "AbilitySelect":
+			pass
 		elif keybinds.visible:
 			show_options()
 		elif title_screen.visible:
