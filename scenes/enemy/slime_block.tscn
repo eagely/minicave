@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://36tqetnwihug"]
+
+[ext_resource type="Script" path="res://scenes/enemy/slime_block.gd" id="1_j2uwc"]
+[ext_resource type="Texture2D" uid="uid://bqxfe5sdsweua" path="res://assets/kenney/platformer/PNG/Enemies/slimeBlock.png" id="3_ooqyg"]
+[ext_resource type="Texture2D" uid="uid://bu4unwgv1fn06" path="res://assets/kenney/platformer/PNG/Enemies/slimeBlock_move.png" id="4_24ija"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aefe5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ooqyg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_24ija")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ypjlg"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_auqv3"]
+size = Vector2(80, 1)
+
+[node name="SlimeBlock" type="CharacterBody2D"]
+collision_mask = 0
+script = ExtResource("1_j2uwc")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 5)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_aefe5")
+animation = &"idle"
+frame_progress = 0.699163
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 18.5)
+shape = SubResource("RectangleShape2D_ypjlg")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_auqv3")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

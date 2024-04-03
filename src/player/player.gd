@@ -10,7 +10,8 @@ const DUCKING_HEIGHT = 40
 
 var max_hp = 100
 var hp = max_hp
-var strength = 600
+var strength = 60
+var def = 1.0
 var can_take_damage = true
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var screen_size
@@ -81,8 +82,7 @@ func _physics_process(delta):
 	elif $CoyoteTimer.is_stopped() and is_grounded:
 		$CoyoteTimer.start()
 		
-	if is_grounded:
-		if not $JumpBuffer.is_stopped():
+	if is_grounded and not $JumpBuffer.is_stopped():
 			velocity.y = jump_velocity * (3 if is_leaping else 1)
 			is_grounded = false
 			is_leaping = false
@@ -140,13 +140,13 @@ func _physics_process(delta):
 				awaiting_click_for_teleport = false
 				play("teleport")
 				GameManager.remove_item("teleportation")
-	(GameManager.abilities_unlocked)
 	if GameManager.abilities_unlocked.HEALING:
 		hp += delta
 		health_bar.health = hp
 	
 	if direction != 0 and facing_right != (direction == 1):
 		flip()
+	
 	move_and_slide()
 
 func get_gravity():
@@ -178,11 +178,14 @@ func _on_animation_finished():
 
 func attack():
 	$HitCooldown.start(attack_speed)
-	$HitCollisionDelay.start()
+	$AnimationPlayer.play("hit")
 	play("attack")
-	GameManager.frame_freeze(0.05, 0.1)
 	can_hit = false
-	$MeleeArea/Rectangle.disabled = false
+
+
+func check_attack_hit():
+	$MeleeArea/Rectangle.disabled = false	
+	$HitCollisionDelay.start()	
 
 func flip():
 	scale.x = -abs(scale.x)
@@ -197,7 +200,7 @@ func _on_shoot_cooldown_timeout():
 func hit(damage):
 	if can_take_damage:
 		iframes()
-		hp -= damage
+		hp -= damage * def
 		if hp <= 0:
 			emit_signal("died")
 			health_bar.health = max_hp
@@ -215,6 +218,8 @@ func iframes():
 func _on_melee_area_body_entered(body):
 	if body.is_in_group("Attackable"):
 		body.hit(strength)
+		await GameManager.frame_freeze(0.5, 0.5)
+		
 
 func _on_hit_collision_delay_timeout():
 	$MeleeArea/Rectangle.disabled = true
@@ -244,15 +249,28 @@ func perform_leaping(skill):
 		GameManager.remove_item("leaping")
 
 
-func perform_strength(skill):
-	if GameManager.items["strength"] <= 0:
-		GameManager.shake_screen()
-	else:
-		$StrengthTimer.start()
+func perform_shrinking(skill):
+	if scale > Vector2(0.2, 0.2) and GameManager.items["shrinking"] > 0:
 		strength *= 2
-		GameManager.remove_item("strength")
+		scale /= Vector2(2, 2)
+		def *= 2
+		$Camera.zoom *= 1.5
+		GameManager.remove_item("shrinking")
+		$ShrinkParticles.emitting = true		
+	else:
+		GameManager.shake_screen(20 * scale.x)
 
-
+func perform_unshrink():
+	if scale.x < 1.0 and not is_on_wall() and $UnshrinkArea.get_overlapping_bodies().size() == 0:
+		position.y -= (scale.y * $Hitbox.shape.size.y) + 25
+		strength /= 2
+		scale *= Vector2(2, 2)
+		def /= 2
+		$Camera.zoom /= 1.5
+		$ShrinkParticles.emitting = true
+	else:
+		GameManager.shake_screen(20 * scale.x)
+		
 func _on_strength_timer_timeout():
 	strength /= 2
 
@@ -288,6 +306,8 @@ func _input(event):
 		elif event.is_action_pressed("cycle_attack_mode"):
 			is_shooting = !is_shooting
 			is_meleeing = !is_meleeing
+		elif event.is_action_pressed("unshrink"):
+			perform_unshrink()
 
 
 func shoot():
@@ -296,30 +316,30 @@ func shoot():
 	var distance_per_bullet = 32
 	var offsets = []
 	if bullet_count % 2 == 0:
-		# Even bullet count
 		var half = bullet_count / 2
 		for i in range(half):
 			offsets.append(-distance_per_bullet * (half - i))
 			offsets.append(distance_per_bullet * (i + 1))
 	else:
-		# Odd bullet count
-		var middle = 0 # Middle offset for odd count
+		var middle = 0
 		offsets.append(middle)
 		var half = (bullet_count - 1) / 2
 		for i in range(half):
 			offsets.append(-distance_per_bullet * (i + 1))
 			offsets.append(distance_per_bullet * (i + 1))
 	
-	offsets.sort() # Ensure the offsets are in order
+	offsets.sort()
 	for offset in offsets:
 		var bullet = bullet_scene.instantiate()		
 		bullet.position = global_position
 		bullet.position.y -= 10
 		bullet.direction = (get_global_mouse_position() - Vector2(0, offset) - global_position).normalized()
-		bullet.damage = strength / 5 * (1.5 if GameManager.abilities_unlocked.STRENGTH else 1)
+		bullet.damage = strength / 5 * (1.75 if GameManager.abilities_unlocked.STRENGTH else 1)
+		bullet.scale = scale
 		get_tree().current_scene.call_deferred("add_child", bullet)
 	can_shoot = false
 	$ShootCooldown.start(shoot_speed)
+	GameManager.sound("shoot")
 
 
 func _on_coyote_timer_timeout():
@@ -334,3 +354,4 @@ func _on_ability_selected(ability):
 		strength *= 1.5
 	if ability == "EXTRA_BULLET":
 		bullet_count += 1
+

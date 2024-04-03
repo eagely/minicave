@@ -11,8 +11,9 @@ func enter():
 
 func spawn():
 	var minion = minion_node.instantiate()
-	minion.position = owner.position + Vector2(40,-40)
-	get_tree().current_scene.add_child(minion)
+	minion.position = owner.position + Vector2(40, -40)
+	minion.connect("died", owner._on_minion_killed)
+	GameManager.main.get_node("TemporaryElements").add_child(minion)
 
 
 func transition():

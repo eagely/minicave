@@ -1,8 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ckv17bcq3x0ue"]
-
-[ext_resource type="Script" path="res://src/hotbar/Skill.gd" id="1_k3s2n"]
-
-[resource]
-script = ExtResource("1_k3s2n")
-name = "Strength"
-description = "Double your strength for 10 seconds."

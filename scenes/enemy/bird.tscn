@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://ddbhhg6xr0c8r"]
+
+[ext_resource type="Script" path="res://src/enemy/bird.gd" id="1_y6wkr"]
+[ext_resource type="Texture2D" uid="uid://dl42ix8ncybyi" path="res://assets/Enemy_Galore_I/Bat/Bat_Fly.png" id="2_nl54o"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ain5f"]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2lvy4"]
+atlas = ExtResource("2_nl54o")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5rcs1"]
+atlas = ExtResource("2_nl54o")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nyn82"]
+atlas = ExtResource("2_nl54o")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kgd3t"]
+atlas = ExtResource("2_nl54o")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4uld5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2lvy4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5rcs1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nyn82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kgd3t")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 14.0
+}]
+
+[node name="Bird" type="CharacterBody2D"]
+scale = Vector2(4, 4)
+collision_layer = 8
+script = ExtResource("1_y6wkr")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ain5f")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4uld5")
+animation = &"fly"
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
+collide_with_areas = true

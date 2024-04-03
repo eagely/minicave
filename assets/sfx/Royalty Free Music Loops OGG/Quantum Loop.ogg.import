@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c70c3li56uakq"
+path="res://.godot/imported/Quantum Loop.ogg-4cd3de094bcd8f73158ca632d6086b3b.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Royalty Free Music Loops OGG/Quantum Loop.ogg"
+dest_files=["res://.godot/imported/Quantum Loop.ogg-4cd3de094bcd8f73158ca632d6086b3b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

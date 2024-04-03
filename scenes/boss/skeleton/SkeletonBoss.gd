@@ -8,9 +8,9 @@ extends CharacterBody2D
 var direction : Vector2
 var def = 1.0
 
-var health: = 100:
+var hp: = 100:
 	set(value):
-		health = value
+		hp = value
 		health_bar.health = value
 		if value <= 0:
 			health_bar.health = 0
@@ -25,14 +25,14 @@ func _process(_delta):
 	direction = player.position - position
 	
 	animated_sprite.flip_h = direction.x < 0
-	$MeleeArea/CollisionPolygon2D.scale.x = abs($MeleeArea/CollisionPolygon2D.scale.x) * (-1 if direction.x < 0 else 1)
+	$MeleeArea/CollisionShape2D.scale.x = abs($MeleeArea/CollisionShape2D.scale.x) * (-1 if direction.x < 0 else 1)
 
 func _physics_process(delta):
 	velocity = direction.normalized() * 40
 	move_and_collide(velocity * delta)
 
 func hit(dmg):
-	health -= dmg * 0.1
+	hp -= dmg * 0.3
 
 func pause():
 	for child in get_children():
@@ -47,3 +47,7 @@ func unpause():
 			child.show()
 	$UI.show()
 	show()
+	
+func _on_minion_killed():
+	hp += 5
+	

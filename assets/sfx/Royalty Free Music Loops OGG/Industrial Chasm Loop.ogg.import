@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b0bs0s28dp6bj"
+path="res://.godot/imported/Industrial Chasm Loop.ogg-266ed0f127273a4ab5cd8012f27c75de.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Royalty Free Music Loops OGG/Industrial Chasm Loop.ogg"
+dest_files=["res://.godot/imported/Industrial Chasm Loop.ogg-266ed0f127273a4ab5cd8012f27c75de.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

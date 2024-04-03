@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dsiq0fmbohqxg"
+path="res://.godot/imported/8Bit Tragic Mistake Loop.ogg-cde62ca8cf1986d50ee53dd1cffd8c8d.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Royalty Free Music Loops OGG/8Bit Tragic Mistake Loop.ogg"
+dest_files=["res://.godot/imported/8Bit Tragic Mistake Loop.ogg-cde62ca8cf1986d50ee53dd1cffd8c8d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

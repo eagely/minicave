@@ -61,6 +61,10 @@ text = "FULLSCREEN"
 layout_mode = 2
 text = "SCREEN SHAKING"
 
+[node name="DisableDialogCheck" type="CheckBox" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Disable Dialog"
+
 [node name="MASeparator" type="Control" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -69,21 +73,24 @@ size_flags_vertical = 3
 layout_mode = 2
 text = "AUDIO"
 
-[node name="MasterVolumeLabel" type="Label" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="MusicVolumeLabel" type="Label" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_slvc8")
 theme_override_font_sizes/font_size = 36
-text = "MASTER VOLUME"
+text = "MUSIC VOLUME"
 
-[node name="MasterVolumeContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="MusicVolumeContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="MasterVolumeSlider" type="HSlider" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/MasterVolumeContainer"]
+[node name="MusicVolumeSlider" type="HSlider" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/MusicVolumeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_ibfpc")
+min_value = -30.0
+max_value = 0.0
+step = 0.001
 
-[node name="Control" type="Control" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/MasterVolumeContainer"]
+[node name="Control" type="Control" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/MusicVolumeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -99,6 +106,9 @@ layout_mode = 2
 [node name="SfxVolumeSlider" type="HSlider" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/SfxVolumeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+min_value = -30.0
+max_value = -5.0
+value = -5.0
 
 [node name="Control" type="Control" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/SfxVolumeContainer"]
 layout_mode = 2
@@ -148,7 +158,8 @@ text = "<- BACK"
 
 [connection signal="toggled" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/FullscreenCheck" to="." method="_on_fullscreen_check_toggled"]
 [connection signal="toggled" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/ScreenShakeCheck" to="." method="_on_screen_shake_check_toggled"]
-[connection signal="drag_ended" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/MasterVolumeContainer/MasterVolumeSlider" to="." method="_on_master_volume_slider_drag_ended"]
-[connection signal="drag_ended" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/SfxVolumeContainer/SfxVolumeSlider" to="." method="_on_sfx_volume_slider_drag_ended"]
+[connection signal="toggled" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DisableDialogCheck" to="." method="_on_disable_dialog_check_toggled"]
+[connection signal="value_changed" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/MusicVolumeContainer/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/SfxVolumeContainer/SfxVolumeSlider" to="." method="_on_sfx_volume_slider_value_changed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/KeybindingContainer/KeybindingButton" to="." method="_on_keybinding_button_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

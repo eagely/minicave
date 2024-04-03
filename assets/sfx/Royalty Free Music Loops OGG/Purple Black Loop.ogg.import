@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://su4kj1w01auc"
+path="res://.godot/imported/Purple Black Loop.ogg-5ed40cb55b438c1ceb907d8ba8269478.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Royalty Free Music Loops OGG/Purple Black Loop.ogg"
+dest_files=["res://.godot/imported/Purple Black Loop.ogg-5ed40cb55b438c1ceb907d8ba8269478.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

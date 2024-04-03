@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://3oqbx0v0ih8i"]
+[gd_scene load_steps=9 format=3 uid="uid://3oqbx0v0ih8i"]
 
 [ext_resource type="PackedScene" uid="uid://dn1xkadhtfg5e" path="res://scenes/level/finish.tscn" id="2_0nfgk"]
 [ext_resource type="Texture2D" uid="uid://cml6o4r8qb6f3" path="res://assets/bricks.png" id="2_p0ytl"]
 [ext_resource type="PackedScene" uid="uid://bar8nftbr8pj" path="res://scenes/boss/skeleton/SkeletonBoss.tscn" id="4_6qfv4"]
 [ext_resource type="PackedScene" uid="uid://brc575q1lft3m" path="res://scenes/level/start.tscn" id="5_40fie"]
+[ext_resource type="PackedScene" uid="uid://co2cmogtundd" path="res://scenes/gameui/background.tscn" id="5_wbmwr"]
+[ext_resource type="Texture2D" uid="uid://bt48gxedg7e2s" path="res://assets/backgrounds/SBS - Seamless Space Backgrounds - Large 1024x1024/Large 1024x1024/Purple Nebula/Purple_Nebula_05-1024x1024.png" id="6_3lhhy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_itcuw"]
 texture = ExtResource("2_p0ytl")
@@ -497,7 +499,7 @@ layer_0/tile_data = PackedInt32Array(1048576, 65536, 1, 1048577, 65536, 1, 10485
 [node name="MobSpawners" type="Node2D" parent="."]
 
 [node name="Start" parent="." instance=ExtResource("5_40fie")]
-position = Vector2(608, 512)
+position = Vector2(128, 544)
 
 [node name="Finish" parent="." instance=ExtResource("2_0nfgk")]
 position = Vector2(1760, 584)
@@ -507,4 +509,17 @@ position = Vector2(1760, 584)
 [node name="CoinHolder" type="Node2D" parent="."]
 
 [node name="Boss" parent="." instance=ExtResource("4_6qfv4")]
-position = Vector2(728, 496)
+position = Vector2(1240, 512)
+
+[node name="CollisionShape2D" parent="Boss/PlayerDetection" index="0"]
+visible = true
+
+[node name="Background" parent="." instance=ExtResource("5_wbmwr")]
+
+[node name="TextureRect" type="TextureRect" parent="Background"]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("6_3lhhy")
+stretch_mode = 1
+
+[editable path="Boss"]

@@ -1,32 +1,42 @@
 extends Menu
 
 func _on_buy_teleportation():
-	if GameManager.coins >= 200:
+	var price = int($PanelContainer/MarginContainer/GridContainer/Teleportation/Button.text)
+	if price == 2:
+		GameManager.bought_for_cheap = true
+	if GameManager.coins >= price:
 		GameManager.add_item("teleportation")
-		GameManager.lose_coins(200)
+		GameManager.lose_coins(price)
 		GameManager.sound("buy")		
 	else:
 		GameManager.shake_screen()
-		GameManager.close(self)		
+		GameManager.close(self)
 
 
 func _on_buy_leaping():
-	if GameManager.coins >= 50:
+	var price = int($PanelContainer/MarginContainer/GridContainer/Leaping/Button.text)
+	if price == 0.5:
+		GameManager.bought_for_cheap = true
+	if GameManager.coins >= price:
 		GameManager.add_item("leaping")
-		GameManager.lose_coins(50)
+		GameManager.lose_coins(price)
 		GameManager.sound("buy")
 	else:
 		GameManager.shake_screen()
-		GameManager.close(self)		
-		
+		GameManager.close(self)
 
 
-func _on_buy_strength():
-	if GameManager.coins >= 100:
-		GameManager.add_item("strength")
-		GameManager.lose_coins(100)
-		GameManager.sound("buy")		
+func _on_buy_shrinking():
+	var price = int($PanelContainer/MarginContainer/GridContainer/Shrinking/Button.text)
+	print(price)
+	if price == 0.5:
+		GameManager.bought_for_cheap = true
+	if GameManager.coins >= price:
+		print("bought")
+		GameManager.add_item("shrinking")
+		GameManager.lose_coins(price)
+		GameManager.sound("buy")
 	else:
 		GameManager.shake_screen()
-		GameManager.close(self)		
+		GameManager.close(self)
 

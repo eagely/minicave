@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b0w2pppaqb25q"]
+[gd_scene load_steps=5 format=3 uid="uid://b0w2pppaqb25q"]
 
 [ext_resource type="Script" path="res://src/gameui/text_box.gd" id="1_2u2st"]
 [ext_resource type="Texture2D" uid="uid://bv7735jy7lwcj" path="res://assets/textbox.png" id="1_8064e"]
 [ext_resource type="FontFile" uid="uid://cs6ulgaffsemh" path="res://assets/fonts/superstar_memesbruh03.ttf" id="2_sgj8v"]
+[ext_resource type="AudioStream" uid="uid://dlngs2woxytcu" path="res://assets/sfx/speech.wav" id="4_u8wgf"]
 
 [node name="TextBox" type="MarginContainer"]
 offset_right = 32.0
@@ -18,6 +19,19 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
+[node name="Control" type="Control" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 theme_override_constants/margin_left = 8
@@ -29,9 +43,13 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_sgj8v")
+theme_override_font_sizes/font_size = 24
 vertical_alignment = 1
 
 [node name="LetterDisplayTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_u8wgf")
 
 [connection signal="timeout" from="LetterDisplayTimer" to="." method="_on_letter_display_timer_timeout"]

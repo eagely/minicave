@@ -41,8 +41,10 @@ func _update_abilities():
 
 func _on_left_pressed():
 	GameManager.select_ability(left_ability)
+	GameManager.sound("ability")
 	emit_signal("selected")
 	
 func _on_right_pressed():
 	GameManager.select_ability(right_ability)
+	GameManager.sound("ability")	
 	emit_signal("selected")

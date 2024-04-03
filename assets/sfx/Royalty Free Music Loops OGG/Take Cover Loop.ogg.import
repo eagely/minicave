@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cgax8pnpoal2m"
+path="res://.godot/imported/Take Cover Loop.ogg-5be01c7ceee7ea4d403971722a66653e.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Royalty Free Music Loops OGG/Take Cover Loop.ogg"
+dest_files=["res://.godot/imported/Take Cover Loop.ogg-5be01c7ceee7ea4d403971722a66653e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

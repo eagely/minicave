@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=3 uid="uid://bar8nftbr8pj"]
+[gd_scene load_steps=85 format=3 uid="uid://bar8nftbr8pj"]
 
 [ext_resource type="Script" path="res://scenes/boss/skeleton/SkeletonBoss.gd" id="1_86qb3"]
 [ext_resource type="Texture2D" uid="uid://3n1rda4j4rjt" path="res://assets/bosses/Undead executioner puppet/attacking.png" id="1_xwvh6"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b1yl6df7wr4dw" path="res://assets/bosses/Undead executioner puppet/summon.png" id="4_1d3ki"]
 [ext_resource type="Texture2D" uid="uid://b5toos6qlrxh4" path="res://assets/bosses/Undead executioner puppet/skill1.png" id="5_ohvxj"]
 [ext_resource type="Script" path="res://src/gameui/health_bar.gd" id="6_hc3kc"]
+[ext_resource type="FontFile" uid="uid://cs6ulgaffsemh" path="res://assets/fonts/superstar_memesbruh03.ttf" id="7_7kepm"]
 [ext_resource type="Theme" uid="uid://tascrttksu2c" path="res://assets/boss_name.tres" id="7_ntcrk"]
 [ext_resource type="Script" path="res://src/boss/skeletonFiniteStateMachine.gd" id="8_xi7v8"]
 [ext_resource type="Script" path="res://src/boss/skeleton/Idle.gd" id="10_wbx3p"]
@@ -686,8 +687,11 @@ _data = {
 "teleport": SubResource("Animation_irjbw")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_me3pk"]
+radius = 32.0624
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_1oxus"]
-radius = 512.0
+radius = 256.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u6dew"]
 
@@ -707,6 +711,7 @@ shadow_offset = Vector2(0, 3)
 bg_color = Color(1, 1, 1, 1)
 
 [node name="SkeletonBoss" type="CharacterBody2D" groups=["Attackable"]]
+process_mode = 1
 scale = Vector2(4, 4)
 collision_layer = 8
 collision_mask = 0
@@ -726,8 +731,9 @@ autoplay = "idle"
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MeleeArea"]
-polygon = PackedVector2Array(10, -30, 24, -28, 32, -20, 36, -10, 34, 2, 28, 12, 22, 18, 14, 24, 28, 22, 38, 18, 44, 6, 46, -6, 44, -18, 36, -28, 26, -34, 16, -38)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeArea"]
+position = Vector2(14, 0)
+shape = SubResource("CircleShape2D_me3pk")
 
 [node name="PlayerDetection" type="Area2D" parent="."]
 collision_layer = 0
@@ -746,10 +752,11 @@ offset_left = 768.0
 offset_top = 864.0
 offset_right = 1152.0
 offset_bottom = 896.0
+theme_override_fonts/font = ExtResource("7_7kepm")
+theme_override_font_sizes/font_size = 24
 theme_override_styles/background = SubResource("StyleBoxEmpty_u6dew")
 theme_override_styles/fill = SubResource("StyleBoxFlat_grq77")
 value = 75.0
-show_percentage = false
 script = ExtResource("6_hc3kc")
 
 [node name="DamageBar" type="ProgressBar" parent="UI/HealthBar"]
@@ -777,13 +784,6 @@ offset_bottom = 856.0
 theme = ExtResource("7_ntcrk")
 text = "The Summoner"
 
-[node name="debug" type="Label" parent="."]
-visible = false
-offset_left = -24.0
-offset_top = -64.0
-offset_right = 16.0
-offset_bottom = -41.0
-
 [node name="FiniteStateMachine" type="Node2D" parent="."]
 script = ExtResource("8_xi7v8")
 
@@ -808,6 +808,15 @@ script = ExtResource("15_kc15x")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-8, 32, -10, 26, -12, 20, -14, 10, -16, 2, -16, -6, -8, -12, -8, -16, -2, -20, 0, -18, 2, -12, 6, -8, 8, -2, 12, -8, 14, -6, 8, 2, 4, -4, -6, 2, -6, 14, -4, 18)
 
+[node name="PassiveDamage" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PassiveDamage"]
+polygon = PackedVector2Array(10, -30, 24, -28, 32, -20, 36, -10, 34, 2, 28, 12, 22, 18, 14, 24, 28, 22, 38, 18, 44, 6, 46, -6, 44, -18, 36, -28, 26, -34, 16, -38)
+
 [connection signal="body_entered" from="MeleeArea" to="FiniteStateMachine/Attack" method="_on_melee_area_body_entered"]
 [connection signal="body_entered" from="PlayerDetection" to="FiniteStateMachine/Idle" method="_on_player_detection_body_entered"]
 [connection signal="timeout" from="UI/HealthBar/Timer" to="UI/HealthBar" method="_on_timer_timeout"]
+[connection signal="body_entered" from="PassiveDamage" to="." method="_on_passive_damage_body_entered"]
+[connection signal="body_exited" from="PassiveDamage" to="." method="_on_passive_damage_body_exited"]

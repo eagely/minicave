@@ -21,6 +21,7 @@ func _ready():
 	level = $Level
 	player = $Player
 	GameManager.load_next_level()
+	hide_all_non_menus()
 	show_title_screen()
 	if level.has_node("Tutorial"):
 		level.get_node("Tutorial").hide()
@@ -39,6 +40,8 @@ func start_new():
 	player.start(level.get_node("Start").position)
 	clear_mobs()
 	for spawner in level.get_node("MobSpawners").get_children():
+		if spawner.position == Vector2.ZERO:
+			pass
 		var mob_instance = mob_scene.instantiate()
 		mob_instance.position = spawner.position
 		add_child(mob_instance)
@@ -67,9 +70,11 @@ func unpause():
 
 func show_title_screen():
 	get_tree().paused = true
+	hide_all_non_menus()
 	GameManager.open(title_screen)
 
 func show_options():
+	hide_all_non_menus()
 	GameManager.open(options)
 
 func load_level(id):
@@ -114,6 +119,7 @@ func reload_level():
 		var boss = level.get_node("Boss")
 		boss.position = boss.spawnpoint
 		boss.def = 1.0
+		boss.hp = 100
 		for bullet in boss.get_children():
 			if bullet.name.contains("Bullet"):
 				bullet.queue_free()
@@ -143,7 +149,8 @@ func hide_all_non_menus():
 			mob.hide()
 	if level.has_node("Boss"):
 		level.get_node("Boss").pause()
-	DialogManager.hide_all()
+	for child in find_child("TemporaryElements").get_children():
+		child.hide()
 	InteractionManager.hide_all()
 
 
@@ -157,8 +164,9 @@ func show_all_non_menus():
 		if is_instance_valid(mob):
 			mob.show()
 	if level.has_node("Boss"):
-		level.get_node("Boss").pause()
-	DialogManager.show_all()
+		level.get_node("Boss").unpause()
+	for child in find_child("TemporaryElements").get_children():
+		child.show()
 	InteractionManager.show_all()
 	get_tree().paused = false
 			
@@ -180,10 +188,12 @@ func _input(event):
 
 
 func _on_title_screen_open_options():
+	hide_all_non_menus()	
 	GameManager.open(options)
 
 
 func _on_options_menu_open_keybinds():
+	hide_all_non_menus()
 	GameManager.open(keybinds)
 
 

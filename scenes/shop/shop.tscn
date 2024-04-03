@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cnvr8g8udjkwf"]
+[gd_scene load_steps=12 format=3 uid="uid://cnvr8g8udjkwf"]
 
 [ext_resource type="Script" path="res://src/shop/shop.gd" id="1_alags"]
 [ext_resource type="Theme" uid="uid://bjxk1xqmcp0ov" path="res://assets/panel_container.tres" id="1_wmj3d"]
 [ext_resource type="Texture2D" uid="uid://x200wtwi2ton" path="res://assets/potions.png" id="2_ude51"]
 [ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/shop_green.tres" id="4_64mvl"]
+[ext_resource type="Theme" path="res://assets/options.tres" id="4_sws0p"]
 [ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/until_boss_label.tres" id="5_3jm4g"]
 [ext_resource type="Theme" uid="uid://dlypel4u7trjt" path="res://assets/shop_red.tres" id="5_bonv0"]
 
@@ -32,6 +33,7 @@ offset_top = 19.0
 offset_bottom = 19.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("4_64mvl")
 script = ExtResource("1_alags")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -81,7 +83,7 @@ offset_right = 32.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("4_64mvl")
+theme = ExtResource("4_sws0p")
 texture = SubResource("AtlasTexture_gtu2b")
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Teleportation"]
@@ -105,7 +107,6 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 16.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
 text = "TELEPORTATION
 "
 horizontal_alignment = 1
@@ -152,18 +153,17 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 16.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
 text = "LEAPING
 "
 horizontal_alignment = 1
 
-[node name="Strength" type="Control" parent="PanelContainer/MarginContainer/GridContainer"]
+[node name="Shrinking" type="Control" parent="PanelContainer/MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("4_64mvl")
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer/Strength"]
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer/Shrinking"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -178,7 +178,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_h2470")
 
-[node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Strength"]
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Shrinking"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -191,16 +191,15 @@ offset_right = 40.0
 offset_bottom = 21.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "100 C"
+text = "50 C"
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Strength"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Shrinking"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 24.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
-text = "STRENGTH"
+text = "SHRINKING"
 horizontal_alignment = 1
 
 [node name="Locked" type="Control" parent="PanelContainer/MarginContainer/GridContainer"]
@@ -210,6 +209,7 @@ size_flags_vertical = 3
 theme = ExtResource("5_bonv0")
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer/Locked"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -225,6 +225,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_0ee1v")
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Locked"]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -233,12 +234,12 @@ offset_left = -70.5
 offset_right = 70.5
 offset_bottom = 24.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
 text = "LOCKED
 "
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Locked"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -260,6 +261,7 @@ size_flags_vertical = 3
 theme = ExtResource("5_bonv0")
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer/Locked2"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -275,6 +277,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_0ee1v")
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Locked2"]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -283,12 +286,12 @@ offset_left = -70.5
 offset_right = 70.5
 offset_bottom = 24.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
 text = "LOCKED
 "
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Locked2"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -310,6 +313,7 @@ size_flags_vertical = 3
 theme = ExtResource("5_bonv0")
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer/Locked3"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -325,6 +329,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_0ee1v")
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Locked3"]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -333,12 +338,12 @@ offset_left = -70.5
 offset_right = 70.5
 offset_bottom = 24.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
 text = "LOCKED
 "
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Locked3"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -360,6 +365,7 @@ size_flags_vertical = 3
 theme = ExtResource("5_bonv0")
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer/Locked4"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -375,6 +381,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_0ee1v")
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Locked4"]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -383,12 +390,12 @@ offset_left = -70.5
 offset_right = 70.5
 offset_bottom = 24.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
 text = "LOCKED
 "
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Locked4"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -410,6 +417,7 @@ size_flags_vertical = 3
 theme = ExtResource("5_bonv0")
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer/Locked5"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -425,6 +433,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_0ee1v")
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Locked5"]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -433,12 +442,12 @@ offset_left = -70.5
 offset_right = 70.5
 offset_bottom = 24.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
 text = "LOCKED
 "
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Locked5"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -460,6 +469,7 @@ size_flags_vertical = 3
 theme = ExtResource("5_bonv0")
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer/Locked6"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -475,6 +485,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_0ee1v")
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/Locked6"]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -483,12 +494,12 @@ offset_left = -70.5
 offset_right = 70.5
 offset_bottom = 24.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
 text = "LOCKED
 "
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/GridContainer/Locked6"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -518,4 +529,4 @@ text = "SHOP"
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/Teleportation/Button" to="." method="_on_buy_teleportation"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/Leaping/Button" to="." method="_on_buy_leaping"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/Strength/Button" to="." method="_on_buy_strength"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/Shrinking/Button" to="." method="_on_buy_shrinking"]

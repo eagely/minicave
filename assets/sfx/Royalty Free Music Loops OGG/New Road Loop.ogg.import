@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://swyxmdnhbskw"
+path="res://.godot/imported/New Road Loop.ogg-af030e5c6f571eec76c7c0f9100e250d.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Royalty Free Music Loops OGG/New Road Loop.ogg"
+dest_files=["res://.godot/imported/New Road Loop.ogg-af030e5c6f571eec76c7c0f9100e250d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

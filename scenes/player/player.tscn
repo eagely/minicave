@@ -1,28 +1,17 @@
-[gd_scene load_steps=69 format=3 uid="uid://dxuaxee66xh0s"]
+[gd_scene load_steps=76 format=3 uid="uid://dxuaxee66xh0s"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_h3lxn"]
 [ext_resource type="Texture2D" uid="uid://2a6063bew80f" path="res://assets/hooded.png" id="2_s65be"]
 [ext_resource type="Script" path="res://src/player/Camera.gd" id="3_rxrl8"]
-[ext_resource type="PackedScene" uid="uid://d1lnkbgnkc0hj" path="res://scenes/gameui/health_bar.tscn" id="4_up8aq"]
+[ext_resource type="Script" path="res://src/gameui/health_bar.gd" id="4_2expj"]
 [ext_resource type="PackedScene" uid="uid://nqylemsgum07" path="res://scenes/hotbar/hotbar.tscn" id="5_83tp8"]
 [ext_resource type="Texture2D" uid="uid://cknmc5r2si4w3" path="res://assets/shop/Coin_Gems/MonedaD.png" id="6_edqyc"]
 [ext_resource type="FontFile" uid="uid://d2nanr55e7tpq" path="res://assets/fonts/m5x7.ttf" id="7_ge5ve"]
 [ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/until_boss_label.tres" id="8_ef6vy"]
+[ext_resource type="Texture2D" uid="uid://dj5m7w6r0ahst" path="res://assets/Hearts/PNG/health_bar/health_bar_decoration.png" id="9_t5cxx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8epfv"]
 size = Vector2(32, 78)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_w26c3"]
-atlas = ExtResource("2_s65be")
-region = Rect2(0, 1536, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_phs08"]
-atlas = ExtResource("2_s65be")
-region = Rect2(192, 1536, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vqp3k"]
-atlas = ExtResource("2_s65be")
-region = Rect2(384, 1536, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8hu5e"]
 atlas = ExtResource("2_s65be")
@@ -236,15 +225,6 @@ region = Rect2(1344, 576, 192, 192)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_w26c3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_phs08")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vqp3k")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_8hu5e")
 }, {
 "duration": 1.0,
@@ -452,9 +432,108 @@ height = 80.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_grihh"]
 size = Vector2(64, 72)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u6dew"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_52287"]
+bg_color = Color(0.662745, 0.117647, 0.133333, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l04q3"]
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_color = Color(0, 0, 0, 0.27451)
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tal8c"]
+bg_color = Color(1, 1, 1, 1)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_r1n4w"]
 atlas = ExtResource("6_edqyc")
 region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="Animation" id="Animation_2uu1o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animation:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Animation:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_6a4x5"]
+resource_name = "hit"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animation:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Animation:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"check_attack_hit"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eedaa"]
+_data = {
+"RESET": SubResource("Animation_2uu1o"),
+"hit": SubResource("Animation_6a4x5")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b4u3a"]
+size = Vector2(64, 78)
+
+[sub_resource type="Curve" id="Curve_55des"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.975962, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
@@ -467,9 +546,7 @@ shape = SubResource("RectangleShape2D_8epfv")
 [node name="Animation" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_an3xs")
-animation = &"idle"
-frame = 1
-frame_progress = 0.235288
+animation = &"attack"
 
 [node name="Camera" type="Camera2D" parent="."]
 limit_left = 0
@@ -480,10 +557,18 @@ position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 script = ExtResource("3_rxrl8")
 
+[node name="RainParticles" type="CPUParticles2D" parent="Camera"]
+position = Vector2(0, -540)
+lifetime = 0.6
+emission_shape = 3
+emission_rect_extents = Vector2(960, 1)
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+color = Color(0, 0.54902, 0.54902, 1)
+
 [node name="UnduckRayCast" type="RayCast2D" parent="."]
 
 [node name="TeleportShapeCast" type="ShapeCast2D" parent="."]
-visible = false
 shape = SubResource("CapsuleShape2D_ur73w")
 target_position = Vector2(0, 8)
 
@@ -496,7 +581,6 @@ collision_mask = 8
 monitorable = false
 
 [node name="Rectangle" type="CollisionShape2D" parent="MeleeArea"]
-visible = false
 position = Vector2(48, 12)
 shape = SubResource("RectangleShape2D_grihh")
 disabled = true
@@ -507,9 +591,34 @@ one_shot = true
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="HealthBar" parent="UI" instance=ExtResource("4_up8aq")]
-offset_right = 256.0
-offset_bottom = 32.0
+[node name="HealthBar" type="ProgressBar" parent="UI"]
+z_index = 1
+offset_left = 76.0
+offset_top = 28.0
+offset_right = 260.0
+offset_bottom = 56.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_u6dew")
+theme_override_styles/fill = SubResource("StyleBoxFlat_52287")
+value = 75.0
+show_percentage = false
+script = ExtResource("4_2expj")
+
+[node name="DamageBar" type="ProgressBar" parent="UI/HealthBar"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_l04q3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tal8c")
+value = 85.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="UI/HealthBar"]
+wait_time = 0.4
+one_shot = true
 
 [node name="Hotbar" parent="UI" instance=ExtResource("5_83tp8")]
 visible = false
@@ -559,6 +668,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="UntilBoss" type="Label" parent="UI"]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -569,9 +679,10 @@ grow_horizontal = 2
 theme = ExtResource("8_ef6vy")
 text = "Stages until boss: 4"
 
-[node name="StrengthTimer" type="Timer" parent="."]
-wait_time = 10.0
-one_shot = true
+[node name="DecoHealthBar" type="Sprite2D" parent="UI"]
+position = Vector2(136, 42)
+scale = Vector2(4, 4)
+texture = ExtResource("9_t5cxx")
 
 [node name="ShootCooldown" type="Timer" parent="."]
 wait_time = 0.5
@@ -582,8 +693,34 @@ wait_time = 0.4
 one_shot = true
 
 [node name="JumpBuffer" type="Timer" parent="."]
-wait_time = 0.15
+wait_time = 0.2
 one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_eedaa")
+}
+
+[node name="UnshrinkArea" type="Area2D" parent="."]
+process_mode = 1
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UnshrinkArea"]
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_b4u3a")
+
+[node name="ShrinkParticles" type="CPUParticles2D" parent="."]
+scale = Vector2(8, 8)
+emitting = false
+amount = 256
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+scale_amount_curve = SubResource("Curve_55des")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="animation_finished" from="Animation" to="." method="_on_animation_finished"]
@@ -591,10 +728,10 @@ one_shot = true
 [connection signal="area_entered" from="MeleeArea" to="." method="_on_melee_area_area_entered"]
 [connection signal="body_entered" from="MeleeArea" to="." method="_on_melee_area_body_entered"]
 [connection signal="timeout" from="HitCollisionDelay" to="." method="_on_hit_collision_delay_timeout"]
+[connection signal="timeout" from="UI/HealthBar/Timer" to="UI/HealthBar" method="_on_timer_timeout"]
 [connection signal="used_skill" from="UI/Hotbar/Teleportation" to="." method="perform_teleportation"]
 [connection signal="used_skill" from="UI/Hotbar/Leaping" to="." method="perform_leaping"]
-[connection signal="used_skill" from="UI/Hotbar/Strength" to="." method="perform_strength"]
-[connection signal="timeout" from="StrengthTimer" to="." method="_on_strength_timer_timeout"]
+[connection signal="used_skill" from="UI/Hotbar/Shrinking" to="." method="perform_shrinking"]
 [connection signal="timeout" from="ShootCooldown" to="." method="_on_shoot_cooldown_timeout"]
 [connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]
 

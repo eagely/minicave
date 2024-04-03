@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dvmsf07buqe6"
+path="res://.godot/imported/Monday Morning Loop.ogg-bb37dbd6ca95dc2fbc9f35be6581d368.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Royalty Free Music Loops OGG/Monday Morning Loop.ogg"
+dest_files=["res://.godot/imported/Monday Morning Loop.ogg-bb37dbd6ca95dc2fbc9f35be6581d368.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

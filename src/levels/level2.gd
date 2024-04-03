@@ -2,13 +2,14 @@ extends Node2D
 
 
 const lines = [
-	"Hello Adventurer.",
-	"Want to get up that ledge?",
-	"Try one of my leaping potions!",
-	"It's only going to cost you 50 coins!"
+	"Some slimes are friendly.",
+	"Try stepping on this one!"
 ]
+
+var is_playing = false
 
 
 func _on_start_body_entered(body):
-	if body == GameManager.player:
+	if not is_playing and body == GameManager.player:
 		DialogManager.start_dialog($Shopkeeper.global_position + Vector2(0, -64), lines)
+		is_playing = true

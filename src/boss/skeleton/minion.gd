@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal died
+
 @onready var player = GameManager.player
 @onready var animation = $AnimatedSprite2D
 
@@ -15,6 +17,7 @@ func _physics_process(_delta):
 	move_and_slide()
 
 func hit(a):
+	emit_signal("died")
 	queue_free()
 
 

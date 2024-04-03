@@ -13,6 +13,7 @@ var input_actions = {
 	"jump": "Jump",
 	"interact": "Interact",
 	"duck": "Duck",
+	"unshrink": "Unshrink",
 	"cycle_attack_mode": "Cycle Melee/Ranged Attack",
 	"advance_dialog": "Advance Dialog",
 	"hotbar_1": "Hotbar Slot 1",

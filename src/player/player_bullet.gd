@@ -10,10 +10,6 @@ func _physics_process(delta):
 	if is_on_floor() or is_on_wall() or is_on_ceiling():
 		queue_free()
 	move_and_slide()
-	
-
-func _on_visible_on_screen_notifier_2d_screen_exited():
-	queue_free()
 
 
 func _on_collision_area_body_entered(body):
@@ -21,3 +17,6 @@ func _on_collision_area_body_entered(body):
 		body.hit(damage)
 		queue_free()
 
+
+func _on_alive_timer_timeout():
+	queue_free()

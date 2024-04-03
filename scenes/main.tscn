@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b3weat1gqoefh"]
+[gd_scene load_steps=23 format=3 uid="uid://b3weat1gqoefh"]
 
 [ext_resource type="PackedScene" uid="uid://bukr5hyq68ulg" path="res://scenes/menu/title_screen.tscn" id="1_0kc2i"]
 [ext_resource type="Script" path="res://src/main.gd" id="1_rwanx"]
@@ -12,6 +12,13 @@
 [ext_resource type="AudioStream" uid="uid://lc6o7maxifwx" path="res://assets/sfx/buy.wav" id="9_e56rd"]
 [ext_resource type="PackedScene" uid="uid://co2cmogtundd" path="res://scenes/gameui/background.tscn" id="10_0rbil"]
 [ext_resource type="AudioStream" uid="uid://kcealq1oahwe" path="res://assets/sfx/hover.wav" id="10_vldfm"]
+[ext_resource type="AudioStream" uid="uid://cujmpepbkyg53" path="res://assets/sfx/ability.wav" id="11_n07w0"]
+[ext_resource type="AudioStream" uid="uid://bu2o4owao5cja" path="res://assets/sfx/slime_hit.wav" id="12_drbh6"]
+[ext_resource type="AudioStream" uid="uid://bo5g4f7u4qcf1" path="res://assets/sfx/shoot.wav" id="13_d0cf4"]
+[ext_resource type="AudioStream" uid="uid://dn6rnxx8peah5" path="res://assets/sfx/Royalty Free Music Loops OGG/Try and Solve This Loop.ogg" id="14_hc21i"]
+[ext_resource type="AudioStream" uid="uid://c70c3li56uakq" path="res://assets/sfx/Royalty Free Music Loops OGG/Quantum Loop.ogg" id="15_h0mjh"]
+[ext_resource type="AudioStream" uid="uid://de572bgushpfg" path="res://assets/sfx/Royalty Free Music Loops OGG/Laser Quest Loop.ogg" id="16_qy8cd"]
+[ext_resource type="Texture2D" uid="uid://ciyc3qw43ci3o" path="res://assets/backgrounds/OBw7vi.png" id="18_7uw7l"]
 
 [sub_resource type="Animation" id="Animation_3ct7x"]
 resource_name = "fade"
@@ -91,12 +98,36 @@ stream = ExtResource("9_e56rd")
 [node name="hover" type="AudioStreamPlayer" parent="Sfx"]
 stream = ExtResource("10_vldfm")
 
+[node name="ability" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("11_n07w0")
+
+[node name="slime_hit" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("12_drbh6")
+
+[node name="shoot" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("13_d0cf4")
+pitch_scale = 4.0
+
 [node name="Music" type="Node" parent="."]
+
+[node name="underground" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("14_hc21i")
+
+[node name="boss" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("15_h0mjh")
+
+[node name="laserquest" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("16_qy8cd")
 
 [node name="Level" parent="." instance=ExtResource("9_0qrs6")]
 
 [node name="Background" parent="." instance=ExtResource("10_0rbil")]
-visible = false
+
+[node name="TextureRect" type="TextureRect" parent="Background"]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("18_7uw7l")
+stretch_mode = 1
 
 [node name="LevelFade" type="CanvasLayer" parent="."]
 layer = 100
@@ -112,6 +143,8 @@ root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_kaqet")
 }
+
+[node name="TemporaryElements" type="Node2D" parent="."]
 
 [connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="open_options" from="UI/TitleScreen" to="." method="_on_title_screen_open_options"]

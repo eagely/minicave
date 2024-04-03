@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d2dviutjgmcjq"
+path="res://.godot/imported/Chiptune Dream Loop.ogg-e95de144789ac0179a881171221c5634.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Royalty Free Music Loops OGG/Chiptune Dream Loop.ogg"
+dest_files=["res://.godot/imported/Chiptune Dream Loop.ogg-e95de144789ac0179a881171221c5634.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=2 format=3 uid="uid://ckv17bcq3x0ue"]
+
+[ext_resource type="Script" path="res://src/hotbar/Skill.gd" id="1_be4bn"]
+
+[resource]
+script = ExtResource("1_be4bn")
+name = "Shrinking"
+description = "Double your strength and halve your size and health."

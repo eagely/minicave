@@ -4,9 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://cbs8p65x0ppgy" path="res://scenes/hotbar/slot.tscn" id="1_s2mux"]
 [ext_resource type="Resource" uid="uid://xm1p51fuifjr" path="res://resources/items/teleportation.tres" id="2_rk5sm"]
 [ext_resource type="Resource" uid="uid://wtineinpqx4i" path="res://resources/skills/teleportation.tres" id="3_cdeoc"]
-[ext_resource type="Resource" uid="uid://2qwsdjx2ydb4" path="res://resources/items/strength.tres" id="5_hn8ev"]
-[ext_resource type="Resource" uid="uid://ckv17bcq3x0ue" path="res://resources/skills/strength.tres" id="6_ct0j8"]
+[ext_resource type="Resource" uid="uid://2qwsdjx2ydb4" path="res://resources/items/shrinking.tres" id="7_cptsj"]
 [ext_resource type="Resource" uid="uid://da8jksp14yigb" path="res://resources/items/leaping.tres" id="7_icqxi"]
+[ext_resource type="Resource" uid="uid://ckv17bcq3x0ue" path="res://resources/skills/shrinking.tres" id="8_ladnw"]
 [ext_resource type="Resource" uid="uid://cq1non2oel7ke" path="res://resources/skills/leaping.tres" id="8_x1e1w"]
 
 [node name="Hotbar" type="HBoxContainer"]
@@ -38,12 +38,8 @@ focus_mode = 0
 stats = ExtResource("7_icqxi")
 skill = ExtResource("8_x1e1w")
 
-[node name="Strength" parent="." instance=ExtResource("1_s2mux")]
+[node name="Shrinking" parent="." instance=ExtResource("1_s2mux")]
 layout_mode = 2
 focus_mode = 0
-stats = ExtResource("5_hn8ev")
-skill = ExtResource("6_ct0j8")
-
-[connection signal="pressed" from="Teleportation" to="." method="_on_teleportation_pressed"]
-[connection signal="pressed" from="Leaping" to="." method="_on_leaping_pressed"]
-[connection signal="pressed" from="Strength" to="." method="_on_strength_pressed"]
+stats = ExtResource("7_cptsj")
+skill = ExtResource("8_ladnw")

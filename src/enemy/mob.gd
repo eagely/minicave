@@ -13,9 +13,10 @@ var hp = max_hp
 var strength = 30
 var hurt = false
 
-var rand_index = randi() % 3
-var damage_multiplier = [5, 1, 0.5][rand_index]
+var rand_index = randi_range(0, 2)
+var damage_multiplier = [2.5, 1.75, 1][rand_index]
 var color = ["green_", "blue_", "purple_"][rand_index]
+
 
 func _ready():
 	var sprite = $Animation
@@ -23,7 +24,7 @@ func _ready():
 		sprite.material = sprite.material.duplicate(true)
 		sprite.material.resource_local_to_scene = true
 	health_bar.init_health(hp)
-	$Animation.flip_h = true	
+	$Animation.flip_h = true
 
 func _physics_process(delta):
 	if dying:
@@ -62,7 +63,9 @@ func die():
 
 func hit(damage):
 	$AnimationPlayer.play("hit")
+	GameManager.sound("slime_hit")
 	hp -= damage * damage_multiplier
+	hp = 0
 	if hp <= 0:
 		die()
 		health_bar.health = 0
@@ -70,7 +73,6 @@ func hit(damage):
 		play("hit")
 		hurt = true
 		health_bar.health = hp	
-		
 
 func _on_animation_finished():
 	if last_animation == "die":
@@ -82,4 +84,4 @@ func _on_animation_finished():
 
 func _on_hitbox_area_body_entered(body):
 	if body == GameManager.player:
-		body.hit(strength)
+		body.hit(strength * (3 - damage_multiplier))

@@ -9,13 +9,13 @@ signal ability_selected(ability)
 const SLOT_INDEX = {
 	"teleportation": 0,
 	"leaping": 1,
-	"strength": 2
+	"shrinking": 2
 }
 
 var items = {
 	"teleportation": 0,
 	"leaping": 0,
-	"strength": 0
+	"shrinking": 0
 }
 
 enum Abilities {
@@ -42,6 +42,8 @@ var last_menu = null
 var last_song = null
 var last_sfx = null
 var went_back = false
+var screen_shake_enabled = true
+var bought_for_cheap = false
 
 func _ready():
 	GameManager.connect("level_loaded", _on_level_loaded)
@@ -59,8 +61,13 @@ func stop_tutorial():
 
 
 func load_next_level():
+	if cur_level == 0:
+		stop_tutorial()
 	if cur_level > 0:
+		player.process_mode = Node.PROCESS_MODE_ALWAYS
+		get_tree().paused = true
 		await fade_in()
+		player.process_mode = Node.PROCESS_MODE_PAUSABLE		
 	went_back = false
 	cur_level += 1
 	DialogManager.cancel_dialog()
@@ -68,25 +75,24 @@ func load_next_level():
 	emit_signal("level_loaded", cur_level)
 	main.player.position = main.level.find_child("Start").position
 	if cur_level > 1:
+		get_tree().paused = false
 		await fade_out()
 
 
 func open(menu: Menu):
 	if cur_menu:
 		close(cur_menu)
+	main.hide_all_non_menus()
 	cur_menu = menu
 	menu._on_open()
 	if menu.name != "Shop":
 		main.find_child("Background").show()
-	main.hide_all_non_menus()
 
 
 func close(menu: Menu):
 	last_menu = cur_menu		
 	cur_menu = null
 	menu._on_close()
-	
-	# Progress stuff
 	if menu.name == "Shop" and player:
 		player.get_node("UI").get_node("Hotbar").show()
 	main.find_child("Background").hide()
@@ -125,9 +131,11 @@ func lose_coins(coins_lost):
 	emit_signal("gained_coins", -coins_lost)
 	
 func sound(sfx_name):
-	if last_sfx and main.get_node("Sfx").has_node(last_sfx):
-		main.get_node("Sfx").get_node(last_sfx).stop()
+	#if last_sfx and main.get_node("Sfx").has_node(last_sfx):
+	#	main.get_node("Sfx").get_node(last_sfx).stop()
 	if main.get_node("Sfx").has_node(sfx_name):
+		for child in GameManager.main.get_node("Sfx").get_children():
+			child.volume_db = main.find_child("SfxVolumeSlider").value if main.find_child("SfxVolumeSlider").value > -30 else -80		
 		main.get_node("Sfx").get_node(sfx_name).play()
 	last_sfx = sfx_name
 	
@@ -135,10 +143,13 @@ func music(song_name):
 	if last_song and main.get_node("Music").has_node(last_song):
 		main.get_node("Music").get_node(last_song).stop()
 	if main.get_node("Music").has_node(song_name):
+		for child in GameManager.main.get_node("Music").get_children():
+			child.volume_db = main.find_child("MusicVolumeSlider").value if main.find_child("MusicVolumeSlider").value > -30 else -80
 		main.get_node("Music").get_node(song_name).play()
 	last_song = song_name
 	
-func shake_screen():
+func shake_screen(strength = 20):
+	player.get_node("Camera").rand_str = strength
 	player.get_node("Camera").shake()
 	
 func play_small_hit(pos):
@@ -160,7 +171,8 @@ func boss_slain():
 	main.hide_all_non_menus()
 	main.ability_select._update_abilities()
 	open(main.ability_select)
-	music("underground")
+	if cur_level != 15:
+		music("underground")
 	main.level.find_child("Finish").enable()
 	var pos = main.level.find_child("Boss").global_position
 	var coin_offset = 16
@@ -175,14 +187,18 @@ func boss_slain():
 		coin.position = p
 		main.level.get_node("CoinHolder").add_child(coin)
 	main.hide_all_non_menus()
-	
+	if cur_level == 15:
+		main.level.start_phase_two(bought_for_cheap)
 
 
 func _on_level_loaded(id):
 	if id % 5 == 0:
 		main.level.find_child("Finish").disable()
+	if id == 5:
 		music("boss")
-	elif last_song == "boss":
+	elif id == 10:
+		music("laserquest")
+	elif last_song and "boss laserquest".contains(last_song):
 		music("underground")
 		
 func generate_points(start_x: float, end_x: float, y: float, n: int) -> Array:

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://drvh20ai5jvbo"
+path="res://.godot/imported/8Bit Mini Gamer Loop.ogg-621a7ba0415093d4a107845fdbd62925.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Royalty Free Music Loops OGG/8Bit Mini Gamer Loop.ogg"
+dest_files=["res://.godot/imported/8Bit Mini Gamer Loop.ogg-621a7ba0415093d4a107845fdbd62925.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -29,17 +29,17 @@ func _ready():
 
 func _process(delta):
 	direction = player.position - position
-	
+	GameManager.shake_screen(5)
 	sprite.flip_h = direction.x < 0
 	$MeleeArea/CollisionShape2D.position.x = abs($MeleeArea/CollisionShape2D.position.x) * (-1 if direction.x < 0 else 1)
 	
 func _physics_process(delta):
-	velocity = direction.normalized() * 80
+	velocity = direction.normalized() * 40
 	move_and_collide(velocity * delta)
 	
 func hit(damage):
 	$Effect.play("hit")
-	hp -= damage * def * 0.1
+	hp -= damage * def * 0.05
 
 func pause():
 	for child in get_children():

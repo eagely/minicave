@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bhtggqixa5yo3"
+path="res://.godot/imported/Mr Snarky Destructoid Loop.ogg-399eb1248a738c5a78d9600d439828ee.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Royalty Free Music Loops OGG/Mr Snarky Destructoid Loop.ogg"
+dest_files=["res://.godot/imported/Mr Snarky Destructoid Loop.ogg-399eb1248a738c5a78d9600d439828ee.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
