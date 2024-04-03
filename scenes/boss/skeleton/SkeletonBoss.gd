@@ -7,14 +7,17 @@ extends CharacterBody2D
 
 var direction : Vector2
 var def = 1.0
+var dead = false
 
 var hp: = 100:
 	set(value):
-		hp = value
-		health_bar.health = value
-		if value <= 0:
-			health_bar.health = 0
-			find_child("FiniteStateMachine").change_state("Death")
+		if not dead:
+			hp = value
+			health_bar.health = value
+			if value <= 0:
+				health_bar.health = 0
+				find_child("FiniteStateMachine").change_state("Death")
+				dead = true
 
 func _ready():
 	health_bar.health = 100

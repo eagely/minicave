@@ -1,13 +1,21 @@
-[gd_scene load_steps=12 format=3 uid="uid://c6vbsu06m5n2"]
+[gd_scene load_steps=27 format=3 uid="uid://c6vbsu06m5n2"]
 
 [ext_resource type="Script" path="res://levels/level3.gd" id="1_7jxvg"]
 [ext_resource type="PackedScene" uid="uid://dn1xkadhtfg5e" path="res://scenes/level/finish.tscn" id="2_8rmjw"]
 [ext_resource type="Texture2D" uid="uid://cml6o4r8qb6f3" path="res://assets/bricks.png" id="2_p0ytl"]
 [ext_resource type="PackedScene" uid="uid://brc575q1lft3m" path="res://scenes/level/start.tscn" id="4_5tscl"]
-[ext_resource type="PackedScene" uid="uid://ft8knfn8hwuf" path="res://scenes/shop/shopkeeper.tscn" id="9_nym65"]
+[ext_resource type="Script" path="res://src/shop/shopkeeper.gd" id="9_m7fm5"]
+[ext_resource type="Texture2D" uid="uid://bfl7tfk5k11nv" path="res://assets/shop/wizard.png" id="10_r722g"]
+[ext_resource type="PackedScene" uid="uid://ceocn4n8rpyke" path="res://scenes/interaction/interaction_area.tscn" id="11_0ests"]
+[ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/shop_green.tres" id="12_0wv3y"]
+[ext_resource type="Script" path="res://src/shop/shop.gd" id="13_g6imc"]
+[ext_resource type="Theme" uid="uid://bjxk1xqmcp0ov" path="res://assets/panel_container.tres" id="14_07tfw"]
 [ext_resource type="PackedScene" uid="uid://clhca6d8jdv83" path="res://scenes/shop/red_coin.tscn" id="14_1842u"]
 [ext_resource type="PackedScene" uid="uid://co2cmogtundd" path="res://scenes/gameui/background.tscn" id="14_ch3sf"]
+[ext_resource type="Texture2D" uid="uid://x200wtwi2ton" path="res://assets/potions.png" id="15_4prxe"]
 [ext_resource type="Texture2D" uid="uid://ddpcacmt56i7t" path="res://assets/backgrounds/SBS - Seamless Space Backgrounds - Large 1024x1024/Large 1024x1024/Blue Nebula/Blue_Nebula_03-1024x1024.png" id="15_s3ruc"]
+[ext_resource type="Theme" uid="uid://dlypel4u7trjt" path="res://assets/shop_red.tres" id="16_ercvr"]
+[ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/until_boss_label.tres" id="17_u5o0s"]
 [ext_resource type="PackedScene" uid="uid://36tqetnwihug" path="res://scenes/enemy/slime_block.tscn" id="17_wbwl0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_itcuw"]
@@ -492,6 +500,46 @@ terrain_set_0/terrain_0/name = "Autotile"
 terrain_set_0/terrain_0/color = Color(1, 0, 0, 1)
 sources/0 = SubResource("TileSetAtlasSource_itcuw")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ap1be"]
+atlas = ExtResource("10_r722g")
+region = Rect2(400, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qvr86"]
+atlas = ExtResource("10_r722g")
+region = Rect2(640, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mk5m1"]
+atlas = ExtResource("10_r722g")
+region = Rect2(720, 0, 80, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wp3u4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ap1be")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qvr86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk5m1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x8qu4"]
+radius = 128.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnoy1"]
+atlas = ExtResource("15_4prxe")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ee1v"]
+atlas = ExtResource("15_4prxe")
+region = Rect2(0, 32, 16, 16)
+
 [node name="Level3" type="Node2D"]
 script = ExtResource("1_7jxvg")
 
@@ -545,7 +593,538 @@ stretch_mode = 1
 [node name="SlimeBlock" parent="." instance=ExtResource("17_wbwl0")]
 position = Vector2(416, 653)
 
-[node name="Shopkeeper" parent="." instance=ExtResource("9_nym65")]
+[node name="Shopkeeper" type="Node2D" parent="."]
 position = Vector2(832, 704)
+script = ExtResource("9_m7fm5")
+
+[node name="Animation" type="AnimatedSprite2D" parent="Shopkeeper"]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_wp3u4")
+animation = &"idle"
+
+[node name="InteractionArea" parent="Shopkeeper" instance=ExtResource("11_0ests")]
+
+[node name="Circle" type="CollisionShape2D" parent="Shopkeeper/InteractionArea"]
+shape = SubResource("CircleShape2D_x8qu4")
+
+[node name="ShopLayer" type="CanvasLayer" parent="Shopkeeper"]
+layer = 0
+
+[node name="Shop" type="Control" parent="Shopkeeper/ShopLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 19.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("12_0wv3y")
+script = ExtResource("13_g6imc")
+
+[node name="PanelContainer" type="PanelContainer" parent="Shopkeeper/ShopLayer/Shop"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -536.0
+offset_top = -364.0
+offset_right = 536.0
+offset_bottom = 364.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("14_07tfw")
+
+[node name="MarginContainer" type="MarginContainer" parent="Shopkeeper/ShopLayer/Shop/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="GridContainer" type="GridContainer" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 128
+theme_override_constants/v_separation = 128
+columns = 3
+
+[node name="Leaping" type="Control" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("12_0wv3y")
+
+[node name="TextureRect" type="TextureRect" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Leaping"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_hnoy1")
+
+[node name="Button" type="Button" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Leaping"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+text = " 50 C"
+
+[node name="Label" type="Label" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Leaping"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 16.0
+grow_horizontal = 2
+text = "LEAPING
+"
+horizontal_alignment = 1
+
+[node name="Locked" type="Control" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("16_ercvr")
+
+[node name="TextureRect" type="TextureRect" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
+
+[node name="Label" type="Label" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "LOCKED
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+text = " ??? "
+
+[node name="Locked7" type="Control" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("16_ercvr")
+
+[node name="TextureRect" type="TextureRect" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked7"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
+
+[node name="Label" type="Label" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked7"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "LOCKED
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked7"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+text = " ??? "
+
+[node name="Locked8" type="Control" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("16_ercvr")
+
+[node name="TextureRect" type="TextureRect" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked8"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
+
+[node name="Label" type="Label" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked8"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "LOCKED
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked8"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+text = " ??? "
+
+[node name="Locked2" type="Control" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("16_ercvr")
+
+[node name="TextureRect" type="TextureRect" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked2"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
+
+[node name="Label" type="Label" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked2"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "LOCKED
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked2"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+text = " ??? "
+
+[node name="Locked3" type="Control" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("16_ercvr")
+
+[node name="TextureRect" type="TextureRect" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked3"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
+
+[node name="Label" type="Label" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked3"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "LOCKED
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked3"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+text = " ??? "
+
+[node name="Locked4" type="Control" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("16_ercvr")
+
+[node name="TextureRect" type="TextureRect" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked4"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
+
+[node name="Label" type="Label" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked4"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "LOCKED
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked4"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+text = " ??? "
+
+[node name="Locked5" type="Control" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("16_ercvr")
+
+[node name="TextureRect" type="TextureRect" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked5"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
+
+[node name="Label" type="Label" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked5"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "LOCKED
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked5"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+text = " ??? "
+
+[node name="Locked6" type="Control" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("16_ercvr")
+
+[node name="TextureRect" type="TextureRect" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked6"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
+
+[node name="Label" type="Label" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked6"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "LOCKED
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked6"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+text = " ??? "
+
+[node name="TitleLabel" type="Label" parent="Shopkeeper/ShopLayer/Shop"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -56.0
+offset_top = 133.0
+offset_right = 64.0
+offset_bottom = 181.0
+grow_horizontal = 2
+theme = ExtResource("17_u5o0s")
+text = "SHOP"
 
 [connection signal="body_entered" from="Start" to="." method="_on_start_body_entered"]
+[connection signal="pressed" from="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Leaping/Button" to="Shopkeeper/ShopLayer/Shop" method="_on_buy_leaping"]

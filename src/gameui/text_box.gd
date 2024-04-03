@@ -7,13 +7,13 @@ extends MarginContainer
 const MAX_WIDTH = 384
 var text = ""
 var index = 0
-var letter_time = 0.03
-var space_time = 0.06
-var punctuation_time = 0.2
+var letter_time = 0.04
+var space_time = 0.08
+var punctuation_time = 0.3
 
 signal finished_displaying
 
-func display_text(text_to_display):
+func display_text(text_to_display, sound, vol):
 	text = text_to_display
 	label.text = text_to_display
 	
@@ -29,6 +29,9 @@ func display_text(text_to_display):
 	global_position.x -= size.x / 2
 	global_position.y -= size.y + 24
 
+	$Narrator.stream = load_mp3(sound)
+	$Narrator.volume_db = vol
+	$Narrator.play()
 	label.text = ""
 	display_letter()
 	
@@ -48,16 +51,22 @@ func display_letter():
 		_:
 			timer.start(letter_time)
 			
-			var new_audio_player = audio_stream_player.duplicate()
-			new_audio_player.pitch_scale += randf_range(-0.1, 0.1)
-			if text[index] in ["a", "e", "i", "o", "u"]:
-				new_audio_player.pitch_scale += 0.2
-			get_tree().root.add_child(new_audio_player)
-			new_audio_player.volume_db = GameManager.main.find_child("SfxVolumeSlider").value if GameManager.main.find_child("SfxVolumeSlider").value > -30 else -80		
-			new_audio_player.play()
-			await new_audio_player.finished
-			new_audio_player.queue_free()
+			#var new_audio_player = audio_stream_player.duplicate()
+			#new_audio_player.pitch_scale += randf_range(-0.1, 0.1)
+			#if text[index] in ["a", "e", "i", "o", "u"]:
+			#	new_audio_player.pitch_scale += 0.2
+			#get_tree().root.add_child(new_audio_player)
+			#new_audio_player.volume_db = GameManager.main.find_child("SfxVolumeSlider").value if GameManager.main.find_child("SfxVolumeSlider").value > -30 else -80		
+			#new_audio_player.play()
+			#await new_audio_player.finished
+			#new_audio_player.queue_free()
 
 
 func _on_letter_display_timer_timeout():
 	display_letter()
+
+func load_mp3(path):
+	var file = FileAccess.open(path, FileAccess.READ)
+	var sound = AudioStreamMP3.new()
+	sound.data = file.get_buffer(file.get_length())
+	return sound

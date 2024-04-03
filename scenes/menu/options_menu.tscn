@@ -63,7 +63,7 @@ text = "SCREEN SHAKING"
 
 [node name="DisableDialogCheck" type="CheckBox" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-text = "Disable Dialog"
+text = "Disable Dialog Text"
 
 [node name="MASeparator" type="Control" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -114,6 +114,25 @@ value = -5.0
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="NarratorVolumeLabel" type="Label" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_slvc8")
+theme_override_font_sizes/font_size = 36
+text = "Narrator Volume"
+
+[node name="NarratorVolumeContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="NarratorVolumeSlider" type="HSlider" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/NarratorVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -30.0
+max_value = 0.0
+
+[node name="Control" type="Control" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/NarratorVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="AKSeparator" type="Control" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -161,5 +180,6 @@ text = "<- BACK"
 [connection signal="toggled" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DisableDialogCheck" to="." method="_on_disable_dialog_check_toggled"]
 [connection signal="value_changed" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/MusicVolumeContainer/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
 [connection signal="value_changed" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/SfxVolumeContainer/SfxVolumeSlider" to="." method="_on_sfx_volume_slider_value_changed"]
+[connection signal="value_changed" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/NarratorVolumeContainer/NarratorVolumeSlider" to="." method="_on_narrator_volume_slider_value_changed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/KeybindingContainer/KeybindingButton" to="." method="_on_keybinding_button_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

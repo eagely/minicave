@@ -28,11 +28,9 @@ func _on_buy_leaping():
 
 func _on_buy_shrinking():
 	var price = int($PanelContainer/MarginContainer/GridContainer/Shrinking/Button.text)
-	print(price)
 	if price == 0.5:
 		GameManager.bought_for_cheap = true
 	if GameManager.coins >= price:
-		print("bought")
 		GameManager.add_item("shrinking")
 		GameManager.lose_coins(price)
 		GameManager.sound("buy")

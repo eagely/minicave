@@ -556,7 +556,6 @@ shape = SubResource("CircleShape2D_x8qu4")
 layer = 0
 
 [node name="Shop" parent="Shopkeeper/ShopLayer" instance=ExtResource("6_sekir")]
-visible = false
 
 [node name="Finish" parent="." instance=ExtResource("4_4yipx")]
 position = Vector2(128, 416)

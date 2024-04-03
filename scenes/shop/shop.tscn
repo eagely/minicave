@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://bjxk1xqmcp0ov" path="res://assets/panel_container.tres" id="1_wmj3d"]
 [ext_resource type="Texture2D" uid="uid://x200wtwi2ton" path="res://assets/potions.png" id="2_ude51"]
 [ext_resource type="Theme" uid="uid://c50tb4imdqxkj" path="res://assets/shop_green.tres" id="4_64mvl"]
-[ext_resource type="Theme" path="res://assets/options.tres" id="4_sws0p"]
+[ext_resource type="Theme" uid="uid://de3x2c2niscap" path="res://assets/options.tres" id="4_sws0p"]
 [ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/until_boss_label.tres" id="5_3jm4g"]
 [ext_resource type="Theme" uid="uid://dlypel4u7trjt" path="res://assets/shop_red.tres" id="5_bonv0"]
 
@@ -25,6 +25,7 @@ atlas = ExtResource("2_ude51")
 region = Rect2(0, 32, 16, 16)
 
 [node name="Shop" type="Control"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

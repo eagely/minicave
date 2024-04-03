@@ -6,10 +6,15 @@ const lines = [
 	"They just transport reality to the shadow realm and transform the level."
 ]
 
+const sounds = [
+	"res://assets/sfx/narrator/l7_1.mp3",
+	"res://assets/sfx/narrator/l7_2.mp3"
+]
+
 var is_playing = false
 
 
 func _on_start_body_entered(body):
 	if not is_playing and body == GameManager.player:
-		DialogManager.start_dialog($Shopkeeper.global_position + Vector2(0, -64), lines)
+		DialogManager.start_dialog($Shopkeeper.global_position + Vector2(0, -64), lines, sounds)
 		is_playing = true

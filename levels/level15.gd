@@ -5,6 +5,7 @@ extends Node2D
 
 func start_phase_two(bought_for_cheap):
 	var lines
+	var sounds
 	if bought_for_cheap:
 		lines = [
 			"Oh you really thought you could scam me like that and get away?",
@@ -13,12 +14,22 @@ func start_phase_two(bought_for_cheap):
 			"I made a mistake with the pricing and I made a mistake trusting you.",
 			"Good thing I have a remote disabler for all potions and abilities."
 		]
+		sounds = [
+			"res://assets/sfx/narrator/l15_1_Y.mp3",
+			"res://assets/sfx/narrator/l15_2_Y.mp3",
+			"res://assets/sfx/narrator/l15_3_Y.mp3"	
+		]
 	else:
 		lines = [
 			"Did you really think that was the final boss?",
 			"Now it's time for your final test. And you're not going to be using any of these potions.",
 			"Or any of those abilities.",
 			"Good luck on your exam."
+		]
+		sounds = [
+			"res://assets/sfx/narrator/l15_1_N.mp3",
+			"res://assets/sfx/narrator/l15_2_N.mp3",
+			"res://assets/sfx/narrator/l15_3_N.mp3"	
 		]
 	GameManager.abilities_unlocked.ATTACK_SPEED = false
 	GameManager.abilities_unlocked.HEALING = false
@@ -32,4 +43,4 @@ func start_phase_two(bought_for_cheap):
 	shopkeeper.name = "ShopkeeperBoss"
 	add_child(shopkeeper)
 
-	DialogManager.start_dialog(shopkeeper.global_position + Vector2(0, -64), lines)
+	DialogManager.start_dialog(shopkeeper.global_position + Vector2(0, -64), lines, sounds)

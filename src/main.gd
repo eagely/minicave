@@ -232,3 +232,16 @@ func _on_mob_died(pos, type):
 					coin = coin_scene.instantiate()
 				coin.position = positions[i]
 				holder.add_child(coin)
+
+
+func _on_underground_finished():
+	GameManager.music("underground")
+
+func _on_boss_finished():
+	GameManager.music("boss")
+
+func _on_laserquest_finished():
+	GameManager.music("laserquest")
+
+func _on_final_finished():
+	GameManager.music("final")

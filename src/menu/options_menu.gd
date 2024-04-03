@@ -8,6 +8,7 @@ signal toggle_camera_shake(state: bool)
 @onready var disable_dialog = $PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DisableDialogCheck
 @onready var music_volume = $PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/MusicVolumeContainer/MusicVolumeSlider
 @onready var sfx_volume = $PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/SfxVolumeContainer/SfxVolumeSlider
+@onready var narrator_volume = $PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/NarratorVolumeContainer/NarratorVolumeSlider
 
 func _ready():
 	var video = ConfigFileHandler.load_video_settings()
@@ -18,7 +19,8 @@ func _ready():
 	var audio = ConfigFileHandler.load_audio_settings()
 	music_volume.value = audio.master_volume * 100
 	sfx_volume.value = audio.sfx_volume * 100
-	
+	narrator_volume.value = audio.narrator_volume * 100
+	DialogManager.volume = audio.narrator_volume * 100
 	var keybinds = ConfigFileHandler.load_keybindings()
 	
 
@@ -58,7 +60,6 @@ func _on_sfx_volume_slider_value_changed(value):
 			child.volume_db = value if value > -30 else -80
 			ConfigFileHandler.save_audio_setting("sfx_volume", value / 100)
 
-
-
-
-
+func _on_narrator_volume_slider_value_changed(value):
+	DialogManager.volume = value
+	ConfigFileHandler.save_audio_setting("narrator_volume", value / 100)

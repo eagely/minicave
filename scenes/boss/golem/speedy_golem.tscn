@@ -366,8 +366,8 @@ _data = {
 "ranged_attack": SubResource("Animation_p0omr")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sve48"]
-size = Vector2(88, 88)
+[sub_resource type="CircleShape2D" id="CircleShape2D_yq3yw"]
+radius = 52.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ea5cg"]
 radius = 512.0
@@ -514,7 +514,7 @@ autoplay = "idle"
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
-shape = SubResource("RectangleShape2D_sve48")
+shape = SubResource("CircleShape2D_yq3yw")
 
 [node name="PlayerDetection" type="Area2D" parent="."]
 collision_layer = 0

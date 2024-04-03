@@ -643,7 +643,6 @@ shape = SubResource("CircleShape2D_x8qu4")
 layer = 0
 
 [node name="Shop" parent="Shopkeeper/ShopLayer" instance=ExtResource("12_s0g4c")]
-visible = false
 
 [node name="Background" parent="." instance=ExtResource("12_y5suy")]
 

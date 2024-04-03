@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b3weat1gqoefh"]
+[gd_scene load_steps=24 format=3 uid="uid://b3weat1gqoefh"]
 
 [ext_resource type="PackedScene" uid="uid://bukr5hyq68ulg" path="res://scenes/menu/title_screen.tscn" id="1_0kc2i"]
 [ext_resource type="Script" path="res://src/main.gd" id="1_rwanx"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://dn6rnxx8peah5" path="res://assets/sfx/Royalty Free Music Loops OGG/Try and Solve This Loop.ogg" id="14_hc21i"]
 [ext_resource type="AudioStream" uid="uid://c70c3li56uakq" path="res://assets/sfx/Royalty Free Music Loops OGG/Quantum Loop.ogg" id="15_h0mjh"]
 [ext_resource type="AudioStream" uid="uid://de572bgushpfg" path="res://assets/sfx/Royalty Free Music Loops OGG/Laser Quest Loop.ogg" id="16_qy8cd"]
+[ext_resource type="AudioStream" uid="uid://cgax8pnpoal2m" path="res://assets/sfx/Royalty Free Music Loops OGG/Take Cover Loop.ogg" id="17_0d5vw"]
 [ext_resource type="Texture2D" uid="uid://ciyc3qw43ci3o" path="res://assets/backgrounds/OBw7vi.png" id="18_7uw7l"]
 
 [sub_resource type="Animation" id="Animation_3ct7x"]
@@ -119,6 +120,9 @@ stream = ExtResource("15_h0mjh")
 [node name="laserquest" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("16_qy8cd")
 
+[node name="final" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("17_0d5vw")
+
 [node name="Level" parent="." instance=ExtResource("9_0qrs6")]
 
 [node name="Background" parent="." instance=ExtResource("10_0rbil")]
@@ -150,3 +154,7 @@ libraries = {
 [connection signal="open_options" from="UI/TitleScreen" to="." method="_on_title_screen_open_options"]
 [connection signal="start_game" from="UI/TitleScreen" to="." method="start_or_continue"]
 [connection signal="open_keybinds" from="UI/OptionsMenu" to="." method="_on_options_menu_open_keybinds"]
+[connection signal="finished" from="Music/underground" to="." method="_on_underground_finished"]
+[connection signal="finished" from="Music/boss" to="." method="_on_boss_finished"]
+[connection signal="finished" from="Music/laserquest" to="." method="_on_laserquest_finished"]
+[connection signal="finished" from="Music/final" to="." method="_on_final_finished"]

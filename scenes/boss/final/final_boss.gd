@@ -18,6 +18,7 @@ var hp = 100.0:
 			health_bar.health = value
 			
 			if value <= 0:
+				health_bar.health = 0
 				find_child("FiniteStateMachine").change_state("Death")
 				dead = true
 			

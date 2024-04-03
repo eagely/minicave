@@ -5,7 +5,6 @@ var config = ConfigFile.new()
 const CONFIG_FILE = "user://settings.ini"
 
 func _ready():
-	config.set_value("keybind", "unshrink", "u")
 	if not FileAccess.file_exists(CONFIG_FILE):
 		config.set_value("keybind", "move_left", "a")
 		config.set_value("keybind", "move_right", "d")
@@ -23,6 +22,7 @@ func _ready():
 		config.set_value("video", "disable_dialog", false)			
 		config.set_value("audio", "master_volume", 1.0)
 		config.set_value("audio", "sfx_volume", 1.0)
+		config.set_value("audio", "narrator_volume", 1.0)			
 		config.save(CONFIG_FILE)
 	else:
 		config.load(CONFIG_FILE)
