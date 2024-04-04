@@ -9,7 +9,8 @@ const lines = [
 	"Luckily I just finished creating my brand new teleportation potion.",
 	"That's also how I'm always ahead of you.",
 	"This is quite a revolutionary invention and requires lots of rare Slimium to brew.",
-	"Which is why it's going to cost you 200 coins, I'm sorry, but that's the best I can offer."
+	"Which is why it's going to cost you 200 coins, I'm sorry, but that's the best I can offer.",
+	"You can use teleportation potions by pressing your hotbar slot 1 keybind and then right clicking your desired location."
 ]
 
 const sounds = [
@@ -20,7 +21,8 @@ const sounds = [
 	preload("res://assets/sfx/narrator/l9_5.mp3"),
 	preload("res://assets/sfx/narrator/l9_6.mp3"),
 	preload("res://assets/sfx/narrator/l9_7.mp3"),
-	preload("res://assets/sfx/narrator/l9_8.mp3")	
+	preload("res://assets/sfx/narrator/l9_8.mp3"),
+	preload("res://assets/sfx/narrator/l9_9.mp3")
 ]
 
 var is_playing = false

@@ -21,7 +21,6 @@ var hp: = 100:
 			if value <= 0:
 				health_bar.health = 0
 				dead = true
-				print("Enabled in shopkeeper")
 				GameManager.main.level.get_node("Finish").enable()
 				queue_free()
 var def = 1.0

@@ -15,7 +15,6 @@ func _ready():
 	animation.play("idle")
 
 func _physics_process(_delta):
-	print(GameManager.cur_level, spawnlevel)
 	if GameManager.cur_level != spawnlevel:
 		free()
 	else:

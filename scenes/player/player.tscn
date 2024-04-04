@@ -567,7 +567,6 @@ scale_amount_max = 4.0
 color = Color(0, 0.54902, 0.54902, 1)
 
 [node name="UnduckRayCast" type="RayCast2D" parent="."]
-position = Vector2(-16, 0)
 
 [node name="TeleportShapeCast" type="ShapeCast2D" parent="."]
 visible = false

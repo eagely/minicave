@@ -532,7 +532,7 @@ rotation = 1.5708
 [node name="Spikes11" parent="SpikeHolder" instance=ExtResource("4_g4rg6")]
 position = Vector2(711, 327)
 rotation = 1.5708
-scale = Vector2(0.677567, 0.650272)
+scale = Vector2(0.9, 0.863)
 
 [node name="Spikes12" parent="SpikeHolder" instance=ExtResource("4_g4rg6")]
 position = Vector2(711, 270)

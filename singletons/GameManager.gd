@@ -57,6 +57,8 @@ func play_tutorial():
 func stop_tutorial():
 	cur_level -= 1
 	load_next_level()
+	if main.level.has_node("Finish"):
+		main.level.get_node("Finish").timeout = 3
 	main.hide_all_non_menus()
 	open(main.title_screen)
 
@@ -196,12 +198,7 @@ func boss_slain():
 		main.level.find_child("Finish").enable()
 	var pos = main.level.find_child("Boss").global_position
 	var coin_offset = 16
-	var gray_positions = generate_points(pos.x - coin_offset * 8, pos.x + coin_offset * 8, pos.y, 32)
-	var red_positions = generate_points(pos.x - coin_offset * 8 -8, pos.x + coin_offset * 8, pos.y, 32)
-	for p in gray_positions:
-		var coin = main.gray_coin_scene.instantiate()
-		coin.position = p
-		main.level.get_node("CoinHolder").add_child(coin)
+	var red_positions = generate_points(pos.x - coin_offset * 8 -8, pos.x + coin_offset * 8, pos.y, 8)
 	for p in red_positions:
 		var coin = main.red_coin_scene.instantiate()
 		coin.position = p
@@ -213,12 +210,13 @@ func boss_slain():
 
 func _on_level_loaded(id):
 	if id % 5 == 0:
-		print("Disabling finish")
 		main.level.find_child("Finish").disable()
 	if id == 5:
 		music("boss")
 	elif id == 10:
 		music("laserquest")
+	elif id == 15:
+		music("final")
 	elif last_song and "boss laserquest".contains(last_song):
 		music("underground")
 		

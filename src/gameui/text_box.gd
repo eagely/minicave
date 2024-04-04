@@ -36,7 +36,11 @@ func display_text(text_to_display, sound, vol, just_audio):
 	$Narrator.volume_db = vol
 	$Narrator.play()
 	label.text = ""
-	display_letter()
+	if just_audio:
+		await $Narrator.finished
+		emit_signal("finished_displaying")
+	else:
+		display_letter()
 	
 func display_letter():
 	label.text += text[index]

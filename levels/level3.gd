@@ -6,7 +6,7 @@ var keybinds = ConfigFileHandler.load_keybindings()
 	"You might be wondering how you can get up this ledge.",
 	"Luckily, I just brewed some more leaping potions.",
 	"You can interact with me to open my shop. For you I'll do 50 coins.",
-	"To use potions, you can press the hotbar ykeys " + ConfigFileHandler.get_display_name(keybinds.hotbar_1) + ", " + ConfigFileHandler.get_display_name(keybinds.hotbar_2) + " and " + ConfigFileHandler.get_display_name(keybinds.hotbar_3) + "."
+	"To use potions, you can press the hotbar keys " + ConfigFileHandler.get_display_name(keybinds.hotbar_1) + ", " + ConfigFileHandler.get_display_name(keybinds.hotbar_2) + " and " + ConfigFileHandler.get_display_name(keybinds.hotbar_3) + "."
 ]
 
 const sounds = [

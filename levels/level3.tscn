@@ -588,6 +588,12 @@ position = Vector2(1824, 416)
 [node name="RedCoin2" parent="CoinHolder" instance=ExtResource("14_1842u")]
 position = Vector2(504, 80)
 
+[node name="RedCoin3" parent="CoinHolder" instance=ExtResource("14_1842u")]
+position = Vector2(1792, 416)
+
+[node name="RedCoin4" parent="CoinHolder" instance=ExtResource("14_1842u")]
+position = Vector2(1760, 416)
+
 [node name="Background" parent="." instance=ExtResource("14_ch3sf")]
 
 [node name="TextureRect" type="TextureRect" parent="Background"]

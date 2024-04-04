@@ -537,7 +537,6 @@ position = Vector2(128, 928)
 [node name="Background" parent="." instance=ExtResource("4_5g2na")]
 
 [node name="TextureRect" type="TextureRect" parent="Background"]
-visible = false
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("5_ra7b0")
