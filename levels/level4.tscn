@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c6vbsu06m5n2"]
+[gd_scene load_steps=32 format=3 uid="uid://c6vbsu06m5n2"]
 
 [ext_resource type="Script" path="res://levels/level4.gd" id="1_b4c8e"]
 [ext_resource type="Texture2D" uid="uid://cml6o4r8qb6f3" path="res://assets/bricks.png" id="2_p0ytl"]
@@ -17,7 +17,9 @@
 [ext_resource type="Theme" uid="uid://dlypel4u7trjt" path="res://assets/shop_red.tres" id="15_hvakd"]
 [ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/until_boss_label.tres" id="16_fc2nr"]
 [ext_resource type="PackedScene" uid="uid://co2cmogtundd" path="res://scenes/gameui/background.tscn" id="17_0xy5b"]
+[ext_resource type="Texture2D" uid="uid://cknmc5r2si4w3" path="res://assets/shop/Coin_Gems/MonedaD.png" id="17_64cke"]
 [ext_resource type="Texture2D" uid="uid://jxlu6j3g4v3q" path="res://assets/backgrounds/SBS - Seamless Space Backgrounds - Large 1024x1024/Large 1024x1024/Blue Nebula/Blue_Nebula_06-1024x1024.png" id="18_250tr"]
+[ext_resource type="FontFile" uid="uid://d2nanr55e7tpq" path="res://assets/fonts/m5x7.ttf" id="18_x3rcl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_itcuw"]
 texture = ExtResource("2_p0ytl")
@@ -544,6 +546,10 @@ region = Rect2(32, 32, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ee1v"]
 atlas = ExtResource("14_cvi6q")
 region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqqsx"]
+atlas = ExtResource("17_64cke")
+region = Rect2(0, 0, 16, 16)
 
 [node name="Level4" type="Node2D"]
 script = ExtResource("1_b4c8e")
@@ -1164,13 +1170,56 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -56.0
+offset_left = -60.0
 offset_top = 133.0
-offset_right = 64.0
+offset_right = 60.0
 offset_bottom = 181.0
 grow_horizontal = 2
 theme = ExtResource("16_fc2nr")
 text = "SHOP"
+
+[node name="CoinControl" type="Control" parent="Shopkeeper/ShopLayer/Shop"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -30.0
+offset_top = -280.0
+offset_right = 34.0
+offset_bottom = -200.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="CoinIcon" type="TextureRect" parent="Shopkeeper/ShopLayer/Shop/CoinControl"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_cqqsx")
+
+[node name="Label" type="Label" parent="Shopkeeper/ShopLayer/Shop/CoinControl"]
+layout_mode = 1
+offset_left = -48.0
+offset_right = 16.0
+offset_bottom = 29.0
+theme_override_fonts/font = ExtResource("18_x3rcl")
+theme_override_font_sizes/font_size = 36
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Available" type="Label" parent="Shopkeeper/ShopLayer/Shop/CoinControl"]
+layout_mode = 0
+offset_left = -26.0
+offset_top = -19.0
+offset_right = 81.0
+offset_bottom = 5.0
+text = "Available"
 
 [node name="Background" parent="." instance=ExtResource("17_0xy5b")]
 

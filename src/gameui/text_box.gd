@@ -1,5 +1,7 @@
 extends MarginContainer
 
+signal finished_displaying
+
 @onready var label = $MarginContainer/Label
 @onready var timer = $LetterDisplayTimer
 @onready var audio_stream_player = $AudioStreamPlayer
@@ -11,9 +13,10 @@ var letter_time = 0.04
 var space_time = 0.08
 var punctuation_time = 0.3
 
-signal finished_displaying
-
-func display_text(text_to_display, sound, vol):
+func display_text(text_to_display, sound, vol, just_audio):
+	if just_audio:
+		$NinePatchRect.hide()
+		label.modulate.a = 0
 	text = text_to_display
 	label.text = text_to_display
 	
@@ -29,7 +32,7 @@ func display_text(text_to_display, sound, vol):
 	global_position.x -= size.x / 2
 	global_position.y -= size.y + 24
 
-	$Narrator.stream = load_mp3(sound)
+	$Narrator.stream = sound
 	$Narrator.volume_db = vol
 	$Narrator.play()
 	label.text = ""
@@ -50,23 +53,13 @@ func display_letter():
 			timer.start(space_time)
 		_:
 			timer.start(letter_time)
-			
-			#var new_audio_player = audio_stream_player.duplicate()
-			#new_audio_player.pitch_scale += randf_range(-0.1, 0.1)
-			#if text[index] in ["a", "e", "i", "o", "u"]:
-			#	new_audio_player.pitch_scale += 0.2
-			#get_tree().root.add_child(new_audio_player)
-			#new_audio_player.volume_db = GameManager.main.find_child("SfxVolumeSlider").value if GameManager.main.find_child("SfxVolumeSlider").value > -30 else -80		
-			#new_audio_player.play()
-			#await new_audio_player.finished
-			#new_audio_player.queue_free()
 
 
 func _on_letter_display_timer_timeout():
 	display_letter()
 
-func load_mp3(path):
-	var file = FileAccess.open(path, FileAccess.READ)
-	var sound = AudioStreamMP3.new()
-	sound.data = file.get_buffer(file.get_length())
-	return sound
+#func load_mp3(path):
+#	var file = FileAccess.open(path, FileAccess.READ)
+#	var sound = AudioStreamMP3.new()
+#	sound.data = file.get_buffer(file.get_length())
+#	return sound

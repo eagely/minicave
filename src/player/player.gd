@@ -5,8 +5,8 @@ signal died
 @onready var health_bar = $UI/HealthBar
 
 const SPEED = 300
-const STANDING_HEIGHT = 80
-const DUCKING_HEIGHT = 40
+const STANDING_HEIGHT = 78
+const DUCKING_HEIGHT = 39
 
 var max_hp = 100
 var hp = max_hp
@@ -57,6 +57,11 @@ var is_meleeing = false
 var attack_speed = 1.0
 var shoot_speed = 0.4
 var coins_on_cur_level = 0
+var potions_on_cur_level = {
+	"teleportation": 0,
+	"shrinking": 0,
+	"leaping": 0
+}
 var last_checked_level = 1
 var bullet_count = 1
 
@@ -67,6 +72,7 @@ func _ready():
 	GameManager.connect("gained_coins", _on_gained_coins)
 	GameManager.connect("level_loaded", _on_level_loaded)
 	GameManager.connect("ability_selected", _on_ability_selected)
+	GameManager.connect("bought_potion", _on_potion_bought)
 
 func _physics_process(delta):
 	velocity.y += get_gravity() * delta
@@ -205,6 +211,17 @@ func hit(damage):
 			emit_signal("died")
 			health_bar.health = max_hp
 			GameManager.lose_coins(coins_on_cur_level)
+			GameManager.remove_item("teleportation", potions_on_cur_level.teleportation)
+			GameManager.remove_item("leaping", potions_on_cur_level.leaping)
+			GameManager.remove_item("shrinking", potions_on_cur_level.shrinking)
+			if GameManager.cur_level % 5 != 0:
+				while scale.x < 1:
+					perform_unshrink()
+			potions_on_cur_level = {
+				"teleportation": 0,
+				"shrinking": 0,
+				"leaping": 0
+			}
 		else:
 			health_bar.health = hp
 		GameManager.shake_screen()
@@ -256,7 +273,7 @@ func perform_shrinking(skill):
 		def *= 2
 		$Camera.zoom *= 1.5
 		GameManager.remove_item("shrinking")
-		$ShrinkParticles.emitting = true		
+		$ShrinkParticles.emitting = true
 	else:
 		GameManager.shake_screen(20 * scale.x)
 
@@ -282,11 +299,19 @@ func _on_gained_coins(amt):
 		coins_on_cur_level = 0
 	$UI/CoinControl/Label.text = str(GameManager.coins)
 
+func _on_potion_bought(potname):
+	if last_checked_level == GameManager.cur_level:
+		potions_on_cur_level[potname] += 1
 
 func _on_level_loaded(id):
 	if id != last_checked_level:
 		last_checked_level = id
 		coins_on_cur_level = 0
+		potions_on_cur_level = {
+			"teleportation": 0,
+			"shrinking": 0,
+			"leaping": 0
+		}
 		if 5 - (id % 5) != 5:
 			$UI/UntilBoss.show()
 			$UI/UntilBoss.text = "Stages until boss: " + str(5 - (id % 5))

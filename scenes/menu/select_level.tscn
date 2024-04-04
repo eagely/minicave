@@ -1,0 +1,199 @@
+[gd_scene load_steps=10 format=3 uid="uid://bsxxy5wp6xunf"]
+
+[ext_resource type="Theme" uid="uid://bjxk1xqmcp0ov" path="res://assets/panel_container.tres" id="1_1sfxx"]
+[ext_resource type="Script" path="res://src/menu/select_level.gd" id="1_aedt1"]
+[ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/until_boss_label.tres" id="2_i0o0q"]
+[ext_resource type="FontFile" uid="uid://cs6ulgaffsemh" path="res://assets/fonts/superstar_memesbruh03.ttf" id="3_jdsu2"]
+[ext_resource type="Theme" uid="uid://dch4c6hrobjhl" path="res://assets/back_button.tres" id="3_nvqa8"]
+
+[sub_resource type="Theme" id="Theme_58550"]
+Button/font_sizes/font_size = 128
+Button/fonts/font = ExtResource("3_jdsu2")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_htoyu"]
+bg_color = Color(0.764706, 0.0196078, 0.0509804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7l2d2"]
+bg_color = Color(0.764706, 0.0196078, 0.0509804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jl8gk"]
+bg_color = Color(0.764706, 0.0196078, 0.0509804, 1)
+
+[node name="SelectLevel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aedt1")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -536.0
+offset_top = -364.0
+offset_right = 536.0
+offset_bottom = 364.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_1sfxx")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme = SubResource("Theme_58550")
+theme_override_constants/h_separation = 32
+theme_override_constants/v_separation = 32
+columns = 5
+
+[node name="1" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "1"
+
+[node name="2" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "2"
+
+[node name="3" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "3"
+
+[node name="4" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "4"
+
+[node name="5" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_htoyu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_htoyu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_htoyu")
+theme_override_styles/focus = SubResource("StyleBoxFlat_htoyu")
+text = "5"
+
+[node name="6" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "6"
+
+[node name="7" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "7"
+
+[node name="8" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "8"
+
+[node name="9" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "9"
+
+[node name="10" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_7l2d2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_7l2d2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7l2d2")
+theme_override_styles/focus = SubResource("StyleBoxFlat_7l2d2")
+text = "10"
+
+[node name="11" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "11"
+
+[node name="12" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "12"
+
+[node name="13" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "13"
+
+[node name="14" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "14"
+
+[node name="15" type="Button" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_jl8gk")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jl8gk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jl8gk")
+theme_override_styles/focus = SubResource("StyleBoxFlat_jl8gk")
+text = "15"
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -56.0
+offset_top = 133.0
+offset_right = 64.0
+offset_bottom = 181.0
+grow_horizontal = 2
+theme = ExtResource("2_i0o0q")
+text = "Select Level"
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 72.0
+offset_right = 219.0
+offset_bottom = 120.0
+theme = ExtResource("3_nvqa8")
+text = "<- BACK"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/1" to="." method="_on_1_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/2" to="." method="_on_2_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/3" to="." method="_on_3_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/4" to="." method="_on_4_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/5" to="." method="_on_5_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/6" to="." method="_on_6_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/7" to="." method="_on_7_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/8" to="." method="_on_8_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/9" to="." method="_on_9_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/10" to="." method="_on_10_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/11" to="." method="_on_11_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/12" to="." method="_on_12_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/13" to="." method="_on_13_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/14" to="." method="_on_14_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/15" to="." method="_on_15_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

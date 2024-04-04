@@ -1,5 +1,8 @@
 extends Menu
 
+func _process(delta):
+	$CoinControl/Label.text = str(GameManager.coins)
+
 func _on_buy_teleportation():
 	var price = int($PanelContainer/MarginContainer/GridContainer/Teleportation/Button.text)
 	if price == 2:

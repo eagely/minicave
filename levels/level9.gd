@@ -13,14 +13,14 @@ const lines = [
 ]
 
 const sounds = [
-	"res://assets/sfx/narrator/l9_1.mp3",
-	"res://assets/sfx/narrator/l9_2.mp3",
-	"res://assets/sfx/narrator/l9_3.mp3",
-	"res://assets/sfx/narrator/l9_4.mp3",
-	"res://assets/sfx/narrator/l9_5.mp3",
-	"res://assets/sfx/narrator/l9_6.mp3",
-	"res://assets/sfx/narrator/l9_7.mp3",
-	"res://assets/sfx/narrator/l9_8.mp3"	
+	preload("res://assets/sfx/narrator/l9_1.mp3"),
+	preload("res://assets/sfx/narrator/l9_2.mp3"),
+	preload("res://assets/sfx/narrator/l9_3.mp3"),
+	preload("res://assets/sfx/narrator/l9_4.mp3"),
+	preload("res://assets/sfx/narrator/l9_5.mp3"),
+	preload("res://assets/sfx/narrator/l9_6.mp3"),
+	preload("res://assets/sfx/narrator/l9_7.mp3"),
+	preload("res://assets/sfx/narrator/l9_8.mp3")	
 ]
 
 var is_playing = false

@@ -5,6 +5,7 @@ signal gained_coins(amt)
 signal level_loaded(id)
 signal skill_unlocked(name)
 signal ability_selected(ability)
+signal bought_potion(name)
 
 const SLOT_INDEX = {
 	"teleportation": 0,
@@ -60,6 +61,20 @@ func stop_tutorial():
 	open(main.title_screen)
 
 
+func load_level(id):
+	if id > ConfigFileHandler.load_general_settings().highscore:
+		return
+	cur_level = id
+	main.hide_all_non_menus()
+	close(main.get_node("UI").get_node("SelectLevel"))
+	main.load_level(id)
+	emit_signal("level_loaded", id)
+	DialogManager.cancel_dialog()
+	if (main.level as Node2D).has_meta("is_playing"):
+		main.level.is_playing = false
+	if main.level.has_node("Finish"):
+		main.level.get_node("Finish").timeout = 3
+
 func load_next_level():
 	if cur_level == 0:
 		stop_tutorial()
@@ -70,6 +85,8 @@ func load_next_level():
 		player.process_mode = Node.PROCESS_MODE_PAUSABLE		
 	went_back = false
 	cur_level += 1
+	if ConfigFileHandler.load_general_settings().highscore < cur_level:
+		ConfigFileHandler.save_general_setting("highscore", cur_level)
 	DialogManager.cancel_dialog()
 	main.load_level(cur_level)
 	emit_signal("level_loaded", cur_level)
@@ -104,6 +121,8 @@ func back():
 		open(main.options)
 	elif cur_menu.name == "OptionsMenu":
 		open(main.title_screen)
+	elif cur_menu.name == "SelectLevel":
+		open(main.title_screen)
 	else:
 		open(last_menu)
 
@@ -112,10 +131,11 @@ func add_item(item_name):
 	items[item_name] += 1
 	if items[item_name] > 0:
 		player.get_node("UI").get_node("Hotbar").slots[SLOT_INDEX[item_name]].show_full()
+	emit_signal("bought_potion", item_name)
 
 
-func remove_item(item_name):
-	items[item_name] -= 1
+func remove_item(item_name, amt = 1):
+	items[item_name] -= amt
 	if items[item_name] <= 0:	
 		player.get_node("UI").get_node("Hotbar").slots[SLOT_INDEX[item_name]].show_empty()
 		items[item_name] = 0
@@ -173,7 +193,7 @@ func boss_slain():
 	open(main.ability_select)
 	if cur_level != 15:
 		music("underground")
-	main.level.find_child("Finish").enable()
+		main.level.find_child("Finish").enable()
 	var pos = main.level.find_child("Boss").global_position
 	var coin_offset = 16
 	var gray_positions = generate_points(pos.x - coin_offset * 8, pos.x + coin_offset * 8, pos.y, 32)
@@ -193,6 +213,7 @@ func boss_slain():
 
 func _on_level_loaded(id):
 	if id % 5 == 0:
+		print("Disabling finish")
 		main.level.find_child("Finish").disable()
 	if id == 5:
 		music("boss")

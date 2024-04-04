@@ -19,10 +19,11 @@ func _ready():
 		config.set_value("keybind", "unshrink", "u")
 		config.set_value("video", "fullscreen", true)
 		config.set_value("video", "screen_shake", true)
-		config.set_value("video", "disable_dialog", false)			
+		config.set_value("video", "disable_dialog", false)
 		config.set_value("audio", "master_volume", 1.0)
 		config.set_value("audio", "sfx_volume", 1.0)
-		config.set_value("audio", "narrator_volume", 1.0)			
+		config.set_value("audio", "narrator_volume", 1.0)
+		config.set_value("general", "highscore", 1)
 		config.save(CONFIG_FILE)
 	else:
 		config.load(CONFIG_FILE)

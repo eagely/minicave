@@ -567,8 +567,10 @@ scale_amount_max = 4.0
 color = Color(0, 0.54902, 0.54902, 1)
 
 [node name="UnduckRayCast" type="RayCast2D" parent="."]
+position = Vector2(-16, 0)
 
 [node name="TeleportShapeCast" type="ShapeCast2D" parent="."]
+visible = false
 shape = SubResource("CapsuleShape2D_ur73w")
 target_position = Vector2(0, 8)
 
@@ -703,6 +705,7 @@ libraries = {
 
 [node name="UnshrinkArea" type="Area2D" parent="."]
 process_mode = 1
+visible = false
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UnshrinkArea"]

@@ -3,12 +3,12 @@ extends Node2D
 
 const lines = [
 	"You've done it! The shaking has calmed thanks to you.",
-	"As a reward, my strength potions are now permanently priced at 100 coins.",
+	"As a reward, my shrinking potions are now permanently priced at 100 coins.",
 ]
 
 const sounds = [
-	"res://assets/sfx/narrator/l6_1.mp3",
-	"res://assets/sfx/narrator/l6_2.mp3"
+	preload("res://assets/sfx/narrator/l6_1.mp3"),
+	preload("res://assets/sfx/narrator/l6_2.mp3")
 ]
 
 var is_playing = false

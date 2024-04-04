@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bqa01enlvsw02"]
+[gd_scene load_steps=30 format=3 uid="uid://bqa01enlvsw02"]
 
 [ext_resource type="Script" path="res://levels/level7.gd" id="1_s37y5"]
 [ext_resource type="PackedScene" uid="uid://dn1xkadhtfg5e" path="res://scenes/level/finish.tscn" id="2_0nfgk"]
@@ -16,6 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://x200wtwi2ton" path="res://assets/potions.png" id="12_d3s4l"]
 [ext_resource type="Theme" uid="uid://dlypel4u7trjt" path="res://assets/shop_red.tres" id="13_15o4t"]
 [ext_resource type="Theme" uid="uid://7v05cnvo5w3p" path="res://assets/until_boss_label.tres" id="14_uuy0h"]
+[ext_resource type="Texture2D" uid="uid://cknmc5r2si4w3" path="res://assets/shop/Coin_Gems/MonedaD.png" id="15_2d47a"]
+[ext_resource type="FontFile" uid="uid://d2nanr55e7tpq" path="res://assets/fonts/m5x7.ttf" id="16_krd8r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_itcuw"]
 texture = ExtResource("2_p0ytl")
@@ -543,6 +545,10 @@ region = Rect2(32, 32, 16, 16)
 atlas = ExtResource("12_d3s4l")
 region = Rect2(0, 32, 16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqqsx"]
+atlas = ExtResource("15_2d47a")
+region = Rect2(0, 0, 16, 16)
+
 [node name="Level7" type="Node2D"]
 script = ExtResource("1_s37y5")
 
@@ -785,6 +791,58 @@ text = "LOCKED
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 0
+text = " ??? "
+
+[node name="Locked7" type="Control" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("13_15o4t")
+
+[node name="TextureRect" type="TextureRect" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked7"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_0ee1v")
+
+[node name="Label" type="Label" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked7"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "LOCKED
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Shopkeeper/ShopLayer/Shop/PanelContainer/MarginContainer/GridContainer/Locked7"]
 visible = false
 layout_mode = 1
 anchors_preset = 7
@@ -1065,13 +1123,56 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -56.0
+offset_left = -60.0
 offset_top = 133.0
-offset_right = 64.0
+offset_right = 60.0
 offset_bottom = 181.0
 grow_horizontal = 2
 theme = ExtResource("14_uuy0h")
 text = "SHOP"
+
+[node name="CoinControl" type="Control" parent="Shopkeeper/ShopLayer/Shop"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -30.0
+offset_top = -280.0
+offset_right = 34.0
+offset_bottom = -200.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="CoinIcon" type="TextureRect" parent="Shopkeeper/ShopLayer/Shop/CoinControl"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_cqqsx")
+
+[node name="Label" type="Label" parent="Shopkeeper/ShopLayer/Shop/CoinControl"]
+layout_mode = 1
+offset_left = -48.0
+offset_right = 16.0
+offset_bottom = 29.0
+theme_override_fonts/font = ExtResource("16_krd8r")
+theme_override_font_sizes/font_size = 36
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Available" type="Label" parent="Shopkeeper/ShopLayer/Shop/CoinControl"]
+layout_mode = 0
+offset_left = -26.0
+offset_top = -19.0
+offset_right = 81.0
+offset_bottom = 5.0
+text = "Available"
 
 [node name="Background" parent="." instance=ExtResource("7_3f2m1")]
 

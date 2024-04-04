@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgr4tokjoyjw1"]
+[gd_scene load_steps=7 format=3 uid="uid://cgr4tokjoyjw1"]
 
 [ext_resource type="Script" path="res://levels/level16.gd" id="1_r7qbo"]
 [ext_resource type="Texture2D" uid="uid://cml6o4r8qb6f3" path="res://assets/bricks.png" id="2_p0ytl"]
+[ext_resource type="FontFile" uid="uid://cs6ulgaffsemh" path="res://assets/fonts/superstar_memesbruh03.ttf" id="4_sigp4"]
 [ext_resource type="PackedScene" uid="uid://brc575q1lft3m" path="res://scenes/level/start.tscn" id="5_40fie"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_itcuw"]
@@ -490,6 +491,7 @@ sources/0 = SubResource("TileSetAtlasSource_itcuw")
 script = ExtResource("1_r7qbo")
 
 [node name="Terrain" type="TileMap" parent="."]
+visible = false
 tile_set = SubResource("TileSet_q40q5")
 format = 2
 layer_0/tile_data = PackedInt32Array(589838, 65536, 3, 589839, 65536, 3, 524301, 196608, 1, 589837, 262144, 3, 458765, 196608, 1, 393229, 196608, 1, 393232, 196608, 1, 458768, 196608, 1, 524304, 196608, 1, 589840, 327680, 3, 327693, 262144, 2, 327694, 65536, 3, 327695, 65536, 3, 327696, 327680, 2)
@@ -497,6 +499,7 @@ layer_0/tile_data = PackedInt32Array(589838, 65536, 3, 589839, 65536, 3, 524301,
 [node name="MobSpawners" type="Node2D" parent="."]
 
 [node name="Start" parent="." instance=ExtResource("5_40fie")]
+visible = false
 position = Vector2(960, 480)
 
 [node name="SpikeHolder" type="Node2D" parent="."]
@@ -520,24 +523,43 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -659.0
-offset_top = -768.0
-offset_right = 660.0
+offset_left = -717.5
+offset_top = -2072.0
+offset_right = 718.5
+offset_bottom = 2.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 32
+theme_override_fonts/font = ExtResource("4_sigp4")
+theme_override_font_sizes/font_size = 48
 text = "Hooded Protagonist: Penzilla
+
 Slimes: kenney
+
 Tileset Bricks: arithmetic
+
 Potions: allnew
+
 Spikes: omniclause
+
 Portals: ninjafool
+
 Menu background: SlashDashGamesStudio
+
 Speedy Golem and The Summoner: darkpixel-kronovi
+
 Health Bar: fliflifly
+
 Final boss: creativekind
 
-Asset credits (itch.io usernames):
+
+
+^^^ Asset credits (itch.io usernames) ^^^
+
+
 
 This game was made in 7 days for the HawkesJam #1
 
+
+
 Thanks for playing!"
+horizontal_alignment = 1
+vertical_alignment = 1

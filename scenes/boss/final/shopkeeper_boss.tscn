@@ -1,7 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://ygx1vxgxkbmp"]
+[gd_scene load_steps=22 format=3 uid="uid://ygx1vxgxkbmp"]
 
 [ext_resource type="Texture2D" uid="uid://bfl7tfk5k11nv" path="res://assets/shop/wizard.png" id="1_nb2fl"]
 [ext_resource type="Script" path="res://src/boss/final/shopkeeper_boss.gd" id="1_uf85q"]
+[ext_resource type="FontFile" uid="uid://cs6ulgaffsemh" path="res://assets/fonts/superstar_memesbruh03.ttf" id="3_q4of5"]
+[ext_resource type="Script" path="res://src/gameui/health_bar.gd" id="4_pog81"]
+[ext_resource type="Theme" uid="uid://tascrttksu2c" path="res://assets/boss_name.tres" id="5_y4g4y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rvar7"]
 atlas = ExtResource("1_nb2fl")
@@ -81,11 +84,28 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q2p34"]
-radius = 16.0
-height = 64.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_lvxg3"]
+radius = 16.6208
 
-[node name="ShopkeeperBoss" type="CharacterBody2D"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g5f6a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o61on"]
+bg_color = Color(0.658824, 0.0980392, 0.101961, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vad1j"]
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_color = Color(0, 0, 0, 0.27451)
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_otjl5"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="ShopkeeperBoss" type="CharacterBody2D" groups=["Attackable"]]
+scale = Vector2(2, 2)
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("1_uf85q")
@@ -96,11 +116,63 @@ frame = 9
 frame_progress = 1.0
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2(-3, -1)
-shape = SubResource("CapsuleShape2D_q2p34")
+position = Vector2(-3.5, -12.5)
+shape = SubResource("CircleShape2D_lvxg3")
+
+[node name="Hitbox2" type="CollisionShape2D" parent="."]
+position = Vector2(-3.5, 11.5)
+shape = SubResource("CircleShape2D_lvxg3")
 
 [node name="TelportTimer" type="Timer" parent="."]
 wait_time = 1.1
 autostart = true
 
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HealthBar" type="ProgressBar" parent="UI"]
+z_index = 1
+offset_left = 768.0
+offset_top = 864.0
+offset_right = 1152.0
+offset_bottom = 896.0
+theme_override_fonts/font = ExtResource("3_q4of5")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/background = SubResource("StyleBoxEmpty_g5f6a")
+theme_override_styles/fill = SubResource("StyleBoxFlat_o61on")
+value = 75.0
+script = ExtResource("4_pog81")
+
+[node name="DamageBar" type="ProgressBar" parent="UI/HealthBar"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_vad1j")
+theme_override_styles/fill = SubResource("StyleBoxFlat_otjl5")
+value = 85.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="UI/HealthBar"]
+wait_time = 0.4
+one_shot = true
+
+[node name="Label" type="Label" parent="UI"]
+offset_left = 768.0
+offset_top = 808.0
+offset_right = 1152.0
+offset_bottom = 856.0
+theme = ExtResource("5_y4g4y")
+text = "The shopkeeper"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DeadTimer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
 [connection signal="timeout" from="TelportTimer" to="." method="_on_telport_timer_timeout"]
+[connection signal="timeout" from="UI/HealthBar/Timer" to="UI/HealthBar" method="_on_timer_timeout"]
+[connection signal="timeout" from="DeadTimer" to="." method="_on_dead_timer_timeout"]

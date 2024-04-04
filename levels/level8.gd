@@ -8,9 +8,9 @@ const lines = [
 ]
 
 const sounds = [
-	"res://assets/sfx/narrator/l8_1.mp3",
-	"res://assets/sfx/narrator/l8_2.mp3",
-	"res://assets/sfx/narrator/l8_3.mp3"
+	preload("res://assets/sfx/narrator/l8_1.mp3"),
+	preload("res://assets/sfx/narrator/l8_2.mp3"),
+	preload("res://assets/sfx/narrator/l8_3.mp3")
 ]
 
 var is_playing = false

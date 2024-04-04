@@ -9,10 +9,10 @@ const lines = [
 	"Avoid those slimes on the way."
 ]
 const sounds = [
-	"res://assets/sfx/narrator/l1_1.mp3",
-	"res://assets/sfx/narrator/l1_2.mp3",
-	"res://assets/sfx/narrator/l1_3.mp3",
-	"res://assets/sfx/narrator/l1_4.mp3",
+	preload("res://assets/sfx/narrator/l1_1.mp3"),
+	preload("res://assets/sfx/narrator/l1_2.mp3"),
+	preload("res://assets/sfx/narrator/l1_3.mp3"),
+	preload("res://assets/sfx/narrator/l1_4.mp3"),
 ]
 
 var is_playing = false

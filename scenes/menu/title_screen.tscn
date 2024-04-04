@@ -44,9 +44,9 @@ text = "options"
 layout_mode = 2
 text = "tutorial"
 
-[node name="Quit" type="Button" parent="VBoxContainer"]
+[node name="SelectLevel" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "quit"
+text = "select level"
 
 [connection signal="mouse_entered" from="VBoxContainer/TextureRect" to="." method="_on_texture_rect_mouse_entered"]
 [connection signal="mouse_entered" from="VBoxContainer/Play" to="." method="hover_sound"]
@@ -55,5 +55,5 @@ text = "quit"
 [connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Tutorial" to="." method="hover_sound"]
 [connection signal="pressed" from="VBoxContainer/Tutorial" to="." method="_on_tutorial_pressed"]
-[connection signal="mouse_entered" from="VBoxContainer/Quit" to="." method="hover_sound"]
-[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/SelectLevel" to="." method="hover_sound"]
+[connection signal="pressed" from="VBoxContainer/SelectLevel" to="." method="_on_select_level_pressed"]

@@ -1,5 +1,7 @@
 extends Node
 
+signal finished_displaying
+
 @onready var text_box_scene = preload("res://scenes/gameui/text_box.tscn")
 
 var dialog_lines = []
@@ -11,10 +13,12 @@ var is_dialog_active = false
 var global_disable = false
 var shrink_scale = Vector2(1, 1)
 var volume = 1.0
+var can_advance_line = true
 
 func start_dialog(position, lines, new_sounds = null):
-	if is_dialog_active or global_disable:
+	if is_dialog_active:
 		return
+	cur_line_index = 0
 	dialog_lines = lines
 	text_box_position = position
 	sounds = new_sounds	
@@ -23,14 +27,16 @@ func start_dialog(position, lines, new_sounds = null):
 	
 func show_text_box():
 	text_box = text_box_scene.instantiate()
+	text_box.finished_displaying.connect(_on_text_box_finished_displaying)
 	text_box.scale = shrink_scale
 	GameManager.main.level.add_child(text_box)
 	text_box.global_position = text_box_position
 	if sounds:
-		text_box.display_text(dialog_lines[cur_line_index], sounds[cur_line_index], volume)
-	
+		text_box.display_text(dialog_lines[cur_line_index], sounds[cur_line_index], volume, global_disable)
+	can_advance_line = false
+		
 func _unhandled_input(event):
-	if event.is_action_pressed("advance_dialog") and is_dialog_active:
+	if (event.is_action_pressed("advance_dialog") or (global_disable and can_advance_line)) and is_dialog_active:
 		text_box.queue_free()
 		cur_line_index += 1
 		if cur_line_index >= dialog_lines.size():
@@ -43,3 +49,7 @@ func cancel_dialog():
 	is_dialog_active = false
 	cur_line_index = 0
 	dialog_lines = []
+	
+func _on_text_box_finished_displaying():
+	can_advance_line = true
+	

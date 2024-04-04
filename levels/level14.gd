@@ -9,10 +9,10 @@ const lines = [
 ]
 
 const sounds = [
-	"res://assets/sfx/narrator/l14_1.mp3",
-	"res://assets/sfx/narrator/l14_2.mp3",
-	"res://assets/sfx/narrator/l14_3.mp3",
-	"res://assets/sfx/narrator/l14_4.mp3"
+	preload("res://assets/sfx/narrator/l14_1.mp3"),
+	preload("res://assets/sfx/narrator/l14_2.mp3"),
+	preload("res://assets/sfx/narrator/l14_3.mp3"),
+	preload("res://assets/sfx/narrator/l14_4.mp3")
 ]
 
 var is_playing = false
@@ -21,3 +21,7 @@ func _on_start_body_entered(body):
 	if not is_playing and body == GameManager.player:
 		DialogManager.start_dialog($Shopkeeper.global_position + Vector2(0, -64), lines, sounds)
 		is_playing = true
+
+
+func _on_button_pressed():
+	GameManager.bought_for_cheap = true

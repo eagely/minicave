@@ -61,5 +61,5 @@ func _on_sfx_volume_slider_value_changed(value):
 			ConfigFileHandler.save_audio_setting("sfx_volume", value / 100)
 
 func _on_narrator_volume_slider_value_changed(value):
-	DialogManager.volume = value
+	DialogManager.volume = value if value > -30 else -80
 	ConfigFileHandler.save_audio_setting("narrator_volume", value / 100)

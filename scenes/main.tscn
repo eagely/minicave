@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b3weat1gqoefh"]
+[gd_scene load_steps=25 format=3 uid="uid://b3weat1gqoefh"]
 
 [ext_resource type="PackedScene" uid="uid://bukr5hyq68ulg" path="res://scenes/menu/title_screen.tscn" id="1_0kc2i"]
 [ext_resource type="Script" path="res://src/main.gd" id="1_rwanx"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://w2gyww87g5j3" path="res://scenes/menu/keybind_menu.tscn" id="6_kmhoo"]
 [ext_resource type="PackedScene" uid="uid://ca41fdnkl7t1y" path="res://scenes/menu/ability_select.tscn" id="6_ptxgm"]
 [ext_resource type="PackedScene" uid="uid://csaidm4ve14hg" path="res://scenes/menu/options_menu.tscn" id="7_rkhj1"]
+[ext_resource type="PackedScene" uid="uid://bsxxy5wp6xunf" path="res://scenes/menu/select_level.tscn" id="7_s4cu2"]
 [ext_resource type="AudioStream" uid="uid://822ko6p0ber4" path="res://assets/sfx/coin.wav" id="8_b5ufc"]
 [ext_resource type="AudioStream" uid="uid://etscoubhtoub" path="res://assets/sfx/hit.wav" id="8_iwsv7"]
 [ext_resource type="PackedScene" uid="uid://cc8lcilbckkev" path="res://levels/level1.tscn" id="9_0qrs6"]
@@ -85,6 +86,9 @@ visible = false
 [node name="AbilitySelect" parent="UI" instance=ExtResource("6_ptxgm")]
 visible = false
 
+[node name="SelectLevel" parent="UI" instance=ExtResource("7_s4cu2")]
+visible = false
+
 [node name="Sfx" type="Node" parent="."]
 
 [node name="coin" type="AudioStreamPlayer" parent="Sfx"]
@@ -152,6 +156,7 @@ libraries = {
 
 [connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="open_options" from="UI/TitleScreen" to="." method="_on_title_screen_open_options"]
+[connection signal="open_select_level" from="UI/TitleScreen" to="." method="_on_title_screen_open_select_level"]
 [connection signal="start_game" from="UI/TitleScreen" to="." method="start_or_continue"]
 [connection signal="open_keybinds" from="UI/OptionsMenu" to="." method="_on_options_menu_open_keybinds"]
 [connection signal="finished" from="Music/underground" to="." method="_on_underground_finished"]

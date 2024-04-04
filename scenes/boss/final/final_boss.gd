@@ -26,6 +26,7 @@ var hp = 100.0:
 func _ready():
 	health_bar.health = 100
 
+
 func _process(_delta):
 	direction = player.position - position
 	

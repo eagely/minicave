@@ -7,6 +7,7 @@ var in_game = false
 @onready var keybinds = $UI/KeybindMenu
 @onready var options = $UI/OptionsMenu
 @onready var ability_select = $UI/AbilitySelect
+@onready var select_level = $UI/SelectLevel
 var level
 var player
 var mob_scene = preload("res://scenes/enemy/mob.tscn")
@@ -37,7 +38,6 @@ func start_or_continue():
 		in_game = true
 
 func start_new():
-	player.start(level.get_node("Start").position)
 	clear_mobs()
 	for spawner in level.get_node("MobSpawners").get_children():
 		if spawner.position == Vector2.ZERO:
@@ -52,6 +52,7 @@ func start_new():
 		for coin in level.get_node("CoinHolder").get_children():
 			coins.append([coin.global_position, coin.name])
 	unpause()
+	player.start(level.get_node("Start").global_position) # This causes it
 
 func unpause():
 	get_tree().paused = false
@@ -66,6 +67,9 @@ func unpause():
 	for mob in mobs:
 		if is_instance_valid(mob):
 			mob.show()
+	if level.has_node("Finish") and GameManager.cur_level % 5 != 0:
+		level.get_node("Finish").enable()
+		
 	
 
 func show_title_screen():
@@ -78,7 +82,10 @@ func show_options():
 	GameManager.open(options)
 
 func load_level(id):
+	player.global_position = Vector2.ZERO
 	var next = load("res://levels/level" + str(id) + ".tscn").instantiate()
+	if next.has_node("Finish"):
+		next.get_node("Finish").disable()
 	var cur = get_node("Level")
 	if cur:
 		remove_child(cur)
@@ -237,11 +244,18 @@ func _on_mob_died(pos, type):
 func _on_underground_finished():
 	GameManager.music("underground")
 
+
 func _on_boss_finished():
 	GameManager.music("boss")
+
 
 func _on_laserquest_finished():
 	GameManager.music("laserquest")
 
+
 func _on_final_finished():
 	GameManager.music("final")
+
+
+func _on_title_screen_open_select_level():
+	GameManager.open(select_level)

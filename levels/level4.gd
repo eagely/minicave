@@ -12,13 +12,13 @@ extends Node2D
 ]
 
 const sounds = [
-	"res://assets/sfx/narrator/l4_1.mp3",
-	"res://assets/sfx/narrator/l4_2.mp3",
-	"res://assets/sfx/narrator/l4_3.mp3",
-	"res://assets/sfx/narrator/l4_4.mp3",
-	"res://assets/sfx/narrator/l4_5.mp3",
-	"res://assets/sfx/narrator/l4_6.mp3",
-	"res://assets/sfx/narrator/l4_7.mp3"	
+	preload("res://assets/sfx/narrator/l4_1.mp3"),
+	preload("res://assets/sfx/narrator/l4_2.mp3"),
+	preload("res://assets/sfx/narrator/l4_3.mp3"),
+	preload("res://assets/sfx/narrator/l4_4.mp3"),
+	preload("res://assets/sfx/narrator/l4_5.mp3"),
+	preload("res://assets/sfx/narrator/l4_6.mp3"),
+	preload("res://assets/sfx/narrator/l4_7.mp3")	
 ]
 
 var is_playing = false
