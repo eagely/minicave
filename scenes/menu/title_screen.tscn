@@ -31,6 +31,7 @@ grow_vertical = 2
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
 layout_mode = 2
 texture = ExtResource("3_knceb")
+stretch_mode = 3
 
 [node name="Play" type="Button" parent="VBoxContainer"]
 layout_mode = 2

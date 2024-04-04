@@ -27,6 +27,11 @@ var def = 1.0
 
 func _ready():
 	hp = 100
+	GameManager.abilities_unlocked = {
+	"ATTACK_SPEED": false,
+	"HEALING": false,
+	"STRENGTH": false
+	}
 
 func _on_telport_timer_timeout():
 	if DialogManager.is_dialog_active:
@@ -44,5 +49,7 @@ func _on_telport_timer_timeout():
 	GameManager.main.get_node("TemporaryElements").add_child(minion)
 
 func hit(dmg):
+	if DialogManager.is_dialog_active:
+		return
 	hp -= dmg * 0.2
 

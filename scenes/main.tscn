@@ -136,6 +136,7 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("18_7uw7l")
 stretch_mode = 1
+metadata/_edit_lock_ = true
 
 [node name="LevelFade" type="CanvasLayer" parent="."]
 layer = 100
